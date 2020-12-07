@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'board.apps.BoardConfig',
     'rest_framework',
     'knox',
+    'frontend',
 ]
 
 MIDDLEWARE = [
