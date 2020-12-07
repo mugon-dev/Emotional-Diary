@@ -2,3 +2,12 @@
 *.pyc
 db.sqlite3
 __pycache__
+<<<<<<< Updated upstream
+=======
+emotion_diary/.vscode/settings.json
+
+emotion_diary/frontend/node_modules/
+emotion_diary/frontend/static/frontend/
+emotion_diary/env-diary/
+.vscode/
+>>>>>>> Stashed changes
