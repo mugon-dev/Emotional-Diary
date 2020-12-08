@@ -1,4 +1,5 @@
 /env_diary
+.idea
 *.pyc
 db.sqlite3
 __pycache__
