@@ -20,6 +20,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('member/', include("member.urls")),
     path('member/auth', include("knox.urls")),
+
     path('board/', include('board.urls')),
-    path('', include('frontend.urls')),
+    path('frontend/', include('frontend.urls')),
+
 ]
