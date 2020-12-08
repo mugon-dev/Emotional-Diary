@@ -1,15 +1,3 @@
-/env_diary
-.idea
-*.pyc
-db.sqlite3
-__pycache__
-emotion_diary/.vscode/settings.json
-
-emotion_diary/frontend/node_modules/
-emotion_diary/frontend/static/frontend/
-emotion_diary/frontend/package-lock.json
-
-Emotion_diary_spring/emotion_diary/.mvn/wrapper/maven-wrapper.jar
 HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar
@@ -43,4 +31,3 @@ build/
 
 ### VS Code ###
 .vscode/
-Emotion_diary_spring/emotion_diary/.mvn/
