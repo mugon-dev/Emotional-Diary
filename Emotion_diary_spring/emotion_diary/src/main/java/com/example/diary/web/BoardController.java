@@ -3,6 +3,7 @@ package com.example.diary.web;
 import java.util.List;
 import java.util.Properties;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.python.core.PyFunction;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.diary.domain.board.Board;
+import com.example.diary.domain.board.BoardRepository;
 import com.example.diary.domain.member.Member;
 import com.example.diary.service.BoardService;
 
@@ -30,11 +32,19 @@ import lombok.RequiredArgsConstructor;
 public class BoardController {
 	private final BoardService boardService;
 	private final HttpSession session;
+	private final BoardRepository boardRepository;
 
 	// 글 등록
 	@PostMapping("/board")
-	public ResponseEntity<?> save(@RequestBody Board board) {
+	public ResponseEntity<?> save(HttpServletRequest request,@RequestBody Board board) {
+		System.out.println("board???");
+//		session = request.getSession();
+//		System.out.println("세션?");
+		System.out.println("위에"+request.getSession());
+		String ss= (String) session.getAttribute("principal");
+		System.out.println(request);
 		Member principal = (Member) session.getAttribute("principal");
+		System.out.println("보드꺼."+principal);
 		boardService.글쓰기(board, principal);
 		return new ResponseEntity<String>("ok", HttpStatus.CREATED);
 	}
@@ -43,6 +53,11 @@ public class BoardController {
 	@GetMapping("/board/{id}")
 	public ResponseEntity<?> detail(@PathVariable int id) {
 		return new ResponseEntity<Board>(boardService.글상세(id), HttpStatus.OK);
+	}
+	
+	@GetMapping("/board/one/{id}")
+	public Board oneDetail(@PathVariable int id) {
+		return boardRepository.findById(id).get();
 	}
 
 	private static PythonInterpreter intPre;
@@ -71,8 +86,7 @@ public class BoardController {
 	@PutMapping("/board/{id}")
 	public ResponseEntity<?> update(@RequestBody Board board, @PathVariable int id) {
 		Member principal = (Member) session.getAttribute("principal");
-//		int result = boardService.글수정(board, id, principal);
-		int result = 1;
+		int result = boardService.글수정(board, id, principal);
 		if (result == 1) {
 			return new ResponseEntity<String>("ok", HttpStatus.OK);
 		} else {
@@ -84,8 +98,7 @@ public class BoardController {
 	@DeleteMapping("/board/{id}")
 	public ResponseEntity<?> delete(@PathVariable int id) {
 		Member principal = (Member) session.getAttribute("principal");
-//		int result = boardService.글삭제(id, principal);
-		int result = 1;
+		int result = boardService.글삭제(id, principal);
 		if (result == 1) {
 			return new ResponseEntity<String>("ok", HttpStatus.OK);
 		} else {

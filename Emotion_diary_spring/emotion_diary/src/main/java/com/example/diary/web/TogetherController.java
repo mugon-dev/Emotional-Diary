@@ -59,8 +59,7 @@ public class TogetherController {
 		HttpSession session = request.getSession();
 		if(session.getAttribute("principal")!=null) {
 			Member member = (Member)session.getAttribute("principal");
-			int gno = Integer.parseInt(together.getTno());
-			togetherService.togetherUpdate(gno, together);
+			togetherService.togetherUpdate(together.getTno(), together);
 			return new ResponseEntity<String>("ok",HttpStatus.OK);
 		}
 		

@@ -41,6 +41,9 @@ public class FilterConfig {
 		FilterRegistrationBean<JwtAuthorizationFilter> bean = 
 				new FilterRegistrationBean<>(new JwtAuthorizationFilter(memberRepository));
 		bean.addUrlPatterns("/person/*");
+		
+		bean.addUrlPatterns("/together/*");
+		
 		bean.setOrder(2); // 낮은 번호부터 실행됨.
 		return bean;
 	}

@@ -40,10 +40,10 @@ public class Board {
 	@CreationTimestamp
 	private Timestamp createTime;
 	
-//	@JsonIgnoreProperties({"board"})
-//	@JoinColumn(name="memberId")
-//	@ManyToOne
-//	private Member member;
+	@JsonIgnoreProperties({"board"})
+	@JoinColumn(name="memberId")
+	@ManyToOne
+	private Member member;
 	
 	
 	

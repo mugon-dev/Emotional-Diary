@@ -34,6 +34,7 @@ public class JwtAuthorizationFilter implements Filter {
 		HttpServletResponse resp = (HttpServletResponse) response;
 		
 		String jwtToken = req.getHeader(JwtProps.header);
+		System.out.println(jwtToken);
 
 		if (jwtToken == null) {
 			PrintWriter out = resp.getWriter();
@@ -41,12 +42,16 @@ public class JwtAuthorizationFilter implements Filter {
 			out.flush();
 		} else {
 			jwtToken = jwtToken.replace(JwtProps.auth, "");
+			System.out.println("토큰있음.."+jwtToken);
 
 			try {
 				int personId = JWT.require(Algorithm.HMAC512(JwtProps.secret)).build().verify(jwtToken).getClaim("id").asInt();
+				System.out.println(personId);
 				HttpSession session = req.getSession();
-				Member memberEntity = memberRepository.findById(personId).get();
+				Member memberEntity = memberRepository.findByMno(personId);
+				System.out.println("dfdf");
 				session.setAttribute("principal", memberEntity);
+				System.out.println("제발..");
 				chain.doFilter(request, response);
 			} catch (Exception e) {
 				PrintWriter out = resp.getWriter();

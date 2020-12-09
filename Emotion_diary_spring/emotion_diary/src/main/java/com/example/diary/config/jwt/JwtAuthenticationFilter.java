@@ -61,7 +61,7 @@ public class JwtAuthenticationFilter implements Filter {
 
 					String jwtToken = JWT.create().withSubject("토큰제목")
 							.withExpiresAt(new Date(System.currentTimeMillis() + 1000 * 60 * 60))
-							.withClaim("id", memberEntity.getId()).sign(Algorithm.HMAC512(JwtProps.secret));
+							.withClaim("id", memberEntity.getMno()).sign(Algorithm.HMAC512(JwtProps.secret));
 
 					resp.addHeader(JwtProps.header, JwtProps.auth + jwtToken);
 					out.print("ok");
