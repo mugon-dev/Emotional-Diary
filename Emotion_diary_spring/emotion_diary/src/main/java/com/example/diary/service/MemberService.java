@@ -1,5 +1,9 @@
 package com.example.diary.service;
 
-public class MemberService {
+import org.springframework.stereotype.Service;
 
+@Service
+public class MemberService {
+	
+	
 }

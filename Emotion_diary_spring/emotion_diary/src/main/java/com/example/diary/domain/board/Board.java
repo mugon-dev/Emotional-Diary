@@ -38,7 +38,7 @@ public class Board {
 	private String contents;
 	
 	@CreationTimestamp
-	private Timestamp dateTime;
+	private Timestamp createTime;
 	
 	@JsonIgnoreProperties({"board"})
 	@JoinColumn(name="memberId")

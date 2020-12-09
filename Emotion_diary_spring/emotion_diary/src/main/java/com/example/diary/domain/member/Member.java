@@ -27,7 +27,7 @@ public class Member {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private String no;
+	private String mno;
 	
 	@Column(length = 50)
 	private String id;
@@ -37,8 +37,9 @@ public class Member {
 	
 	@Column(length = 40)
 	private String name;
+
 	
-	@JsonIgnoreProperties({"member"})
-	@OneToMany(mappedBy = "member", fetch=FetchType.LAZY)
-	private List<Board> board;
+//	@JsonIgnoreProperties({"member"})
+//	@OneToMany(mappedBy = "member", fetch=FetchType.LAZY)
+//	private List<Board> board;
 }

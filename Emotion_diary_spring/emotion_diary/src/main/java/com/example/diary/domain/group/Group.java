@@ -5,8 +5,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import com.example.diary.domain.member.Member;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,6 +32,9 @@ public class Group {
 	@Column(length = 500)
 	private String gcode;
 	
+	@JsonIgnoreProperties({"board"})
+	@ManyToOne
+	private Member member;
 	
 
 }
