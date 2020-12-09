@@ -15,7 +15,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     //로그인 버튼 이벤트
-    public void ClickLoginBtn(View view){
+    public void btn_login(View view){
         Intent intent = new Intent(this,MainActivity.class);
         startActivity(intent);
      //   finish(); //뒤로가기 눌러도 메인으로 로그인화면으로 안넘어감
