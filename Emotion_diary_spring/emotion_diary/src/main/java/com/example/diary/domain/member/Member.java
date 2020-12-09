@@ -27,7 +27,7 @@ public class Member {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private String mno;
+	private int mno;
 	
 	@Column(length = 50)
 	private String id;

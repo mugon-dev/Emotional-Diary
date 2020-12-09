@@ -29,21 +29,21 @@ public class Board {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private String bno;
+	private int bno;
 	
 	@Column(length = 500)
 	private String title;
 	
-	@Column(length = 10000)
+	@Column(length = 1000)
 	private String contents;
 	
 	@CreationTimestamp
 	private Timestamp createTime;
 	
-	@JsonIgnoreProperties({"board"})
-	@JoinColumn(name="memberId")
-	@ManyToOne
-	private Member member;
+//	@JsonIgnoreProperties({"board"})
+//	@JoinColumn(name="memberId")
+//	@ManyToOne
+//	private Member member;
 	
 	
 	

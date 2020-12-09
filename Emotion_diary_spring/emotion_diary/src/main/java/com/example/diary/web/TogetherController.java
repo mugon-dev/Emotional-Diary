@@ -14,37 +14,37 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.diary.domain.group.Group;
-import com.example.diary.domain.group.GroupRepository;
 import com.example.diary.domain.member.Member;
-import com.example.diary.service.GroupService;
+import com.example.diary.domain.together.Together;
+import com.example.diary.domain.together.TogetherRepository;
+import com.example.diary.service.TogetherService;
 import com.example.diary.service.MemberService;
 
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/group")
+@RequestMapping("/together")
 @RequiredArgsConstructor
-public class GroupController {
+public class TogetherController {
 	
-	private final GroupService groupService;
+	private final TogetherService togetherService;
 	private final MemberService memberService;
-	private final GroupRepository groupRepository; 
+	private final TogetherRepository togetherRepository; 
 	
 	@GetMapping("/")
-	public List<Group> GroupList() {
-		return groupRepository.findAll();
+	public List<Together> togetherList() {
+		return togetherRepository.findAll();
 	}
 	
 	
 	@PostMapping("/save")
-	public ResponseEntity<?> groupSave(HttpServletRequest request, @RequestBody Group group){
-		System.out.println("groupSave Controller");
+	public ResponseEntity<?> togetherSave(HttpServletRequest request, @RequestBody Together together){
+		System.out.println("togetherSave Controller");
 		
 		HttpSession session = request.getSession();
 		if(session.getAttribute("principal")!=null) {
 			Member member = (Member)session.getAttribute("principal");
-			groupService.groupSave(member,group);
+			togetherService.togetherSave(member,together);
 			return new ResponseEntity<String>("ok",HttpStatus.OK);
 		}
 		
@@ -53,14 +53,14 @@ public class GroupController {
 	}
 	
 	@PutMapping("/update")
-	public ResponseEntity<?> groupUpdate(HttpServletRequest request, @RequestBody Group group){
-		System.out.println("groupSave Controller");
+	public ResponseEntity<?> togetherUpdate(HttpServletRequest request, @RequestBody Together together){
+		System.out.println("togetherSave Controller");
 		
 		HttpSession session = request.getSession();
 		if(session.getAttribute("principal")!=null) {
 			Member member = (Member)session.getAttribute("principal");
-			int gno = Integer.parseInt(group.getGno());
-			groupService.groupUpdate(gno, group);
+			int gno = Integer.parseInt(together.getTno());
+			togetherService.togetherUpdate(gno, together);
 			return new ResponseEntity<String>("ok",HttpStatus.OK);
 		}
 		

@@ -1,4 +1,4 @@
-package com.example.diary.domain.group;
+package com.example.diary.domain.together;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,20 +21,20 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Group {
+public class Together {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private String gno;
+	private int tno;
 	
 	@Column(length = 50)
-	private String gname;
+	private String tname;
 	
 	@Column(length = 500)
-	private String gcode;
+	private String tcode;
 	
-	@JsonIgnoreProperties({"board"})
-	@ManyToOne
-	private Member member;
-	
+//	@JsonIgnoreProperties({"board"})
+//	@ManyToOne
+//	private Member member;
+//	
 
 }
