@@ -3,8 +3,9 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view
 from rest_framework import viewsets, permissions, generics, status
-from .serializers import CreateUserSerializer, UserSerializer, LoginUserSerializer
+from .serializers import CreateUserSerializer, UserSerializer, LoginUserSerializer, BaseProfileSerializer
 from knox.models import AuthToken
+from .models import Profile
 
 # Create your views here.
 
@@ -27,8 +28,7 @@ class RegistrationAPI(generics.GenericAPIView):
         return Response(
             {
                 "user": UserSerializer(
-                    user, context=self.get_serializer_context()
-                ).data,
+                    user, context=self.get_serializer_context()).data,
                 "token": AuthToken.objects.create(user)[1],
             }
         )
@@ -52,8 +52,16 @@ class LoginAPI(generics.GenericAPIView):
 
 
 class UserAPI(generics.RetrieveAPIView):
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [
+        permissions.IsAuthenticated,
+    ]
     serializer_class = UserSerializer
 
     def get_object(self):
-        return self.request
+        return self.request.user
+
+
+class ProfileUpdateAPI(generics.UpdateAPIView):
+    lookup_field = "user_pk"
+    queryset = Profile.objects.all()
+    serializer_class = BaseProfileSerializer
