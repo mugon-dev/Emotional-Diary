@@ -40,6 +40,6 @@ public class Member {
 
 	
 	@JsonIgnoreProperties({"member"})
-	@OneToMany(mappedBy = "member")
+	@OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
 	private List<Board> board;
 }

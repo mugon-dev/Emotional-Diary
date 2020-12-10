@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.example.diary.domain.member.Member;
+import com.example.diary.domain.member.MemberMapping;
 import com.example.diary.domain.member.MemberRepository;
 
 public class JwtAuthorizationFilter implements Filter {
@@ -45,13 +46,14 @@ public class JwtAuthorizationFilter implements Filter {
 			System.out.println("토큰있음.."+jwtToken);
 
 			try {
-				int personId = JWT.require(Algorithm.HMAC512(JwtProps.secret)).build().verify(jwtToken).getClaim("id").asInt();
-				System.out.println(personId);
+				int id = JWT.require(Algorithm.HMAC512(JwtProps.secret)).build().verify(jwtToken).getClaim("id").asInt();
+				System.out.println(id);
 				HttpSession session = req.getSession();
-				Member memberEntity = memberRepository.findByMno(personId);
-				System.out.println("dfdf");
-				session.setAttribute("principal", memberEntity);
-				System.out.println("제발..");
+				session.setAttribute("id", id);
+//				MemberMapping memberEntity =  memberRepository.findByOne(id);
+//				System.out.println(memberEntity);
+//				session.setAttribute("principal", memberEntity);
+//				System.out.println("제발..");
 				chain.doFilter(request, response);
 			} catch (Exception e) {
 				PrintWriter out = resp.getWriter();

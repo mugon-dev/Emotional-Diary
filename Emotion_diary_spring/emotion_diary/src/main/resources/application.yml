@@ -4,9 +4,9 @@ server:
 spring:     
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/cos?serverTimezone=Asia/Seoul
+    url: jdbc:mysql://localhost:3306/diary?serverTimezone=Asia/Seoul
     username: cos
-    password: bitc5600
+    password: 1234
     
   jpa:
     open-in-view: true

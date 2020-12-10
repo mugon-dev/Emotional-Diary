@@ -23,29 +23,29 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.diary.domain.board.Board;
 import com.example.diary.domain.board.BoardRepository;
 import com.example.diary.domain.member.Member;
+import com.example.diary.domain.member.MemberRepository;
 import com.example.diary.service.BoardService;
 
 import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor
 @RestController
+@RequiredArgsConstructor
 public class BoardController {
-	private final BoardService boardService;
 	private final HttpSession session;
+	private final BoardService boardService;
 	private final BoardRepository boardRepository;
+	private final MemberRepository memberRepository;
 
 	// 글 등록
 	@PostMapping("/board")
 	public ResponseEntity<?> save(HttpServletRequest request,@RequestBody Board board) {
-		System.out.println("board???");
-//		session = request.getSession();
-//		System.out.println("세션?");
-		System.out.println("위에"+request.getSession());
-		String ss= (String) session.getAttribute("principal");
-		System.out.println(request);
-		Member principal = (Member) session.getAttribute("principal");
-		System.out.println("보드꺼."+principal);
-		boardService.글쓰기(board, principal);
+//		System.out.println("board save 호출");
+//		System.out.println("세션?"+session.getId());
+//		Member principal = (Member) session.getAttribute("principal");
+		int id = (int) session.getAttribute("id");
+		System.out.println("보드꺼."+id);
+		Member member = memberRepository.findByMno(id);
+		boardService.글쓰기(board, member);
 		return new ResponseEntity<String>("ok", HttpStatus.CREATED);
 	}
 
@@ -85,7 +85,9 @@ public class BoardController {
 	// 글 수정
 	@PutMapping("/board/{id}")
 	public ResponseEntity<?> update(@RequestBody Board board, @PathVariable int id) {
-		Member principal = (Member) session.getAttribute("principal");
+		int sid = (int) session.getAttribute("id");
+		System.out.println("멤버 id."+sid);
+		Member principal = memberRepository.findByMno(sid);
 		int result = boardService.글수정(board, id, principal);
 		if (result == 1) {
 			return new ResponseEntity<String>("ok", HttpStatus.OK);
@@ -97,7 +99,11 @@ public class BoardController {
 	// 글 삭제
 	@DeleteMapping("/board/{id}")
 	public ResponseEntity<?> delete(@PathVariable int id) {
-		Member principal = (Member) session.getAttribute("principal");
+		System.out.println("삭제호출");
+		int sid = (int) session.getAttribute("id");
+		System.out.println("멤버 id."+sid);
+		Member principal = memberRepository.findByMno(sid);
+		
 		int result = boardService.글삭제(id, principal);
 		if (result == 1) {
 			return new ResponseEntity<String>("ok", HttpStatus.OK);
