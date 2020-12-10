@@ -19,7 +19,8 @@ public class BoardService {
 
 	@Transactional
 	public void 글쓰기(Board board, Member principal) {
-//		board.setMember(principal);
+		System.out.println("글쓰기서비스");
+		board.setMember(principal);
 		boardRepository.save(board);
 	}
 
@@ -41,6 +42,7 @@ public class BoardService {
 	//글수정
 	@Transactional
 	public int 글수정(Board board, int id, Member principal) {
+		System.out.println("글수정 서비스");
 		//글 검색
 		Board boardEntity = boardRepository.findById(id)
 				.orElseThrow(() -> new IllegalArgumentException(id + "는 존재하지 않습니다"));
@@ -56,6 +58,7 @@ public class BoardService {
 	
 	@Transactional
 	public int 글삭제(int id, Member principal) {
+		System.out.println("글삭제");
 		//글 검색
 		Board boardEntity = boardRepository.findById(id).orElseThrow(()->new IllegalArgumentException(id+"는 존재하지 않습니다"));
 		//작성자 확인

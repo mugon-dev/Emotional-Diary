@@ -48,7 +48,6 @@ public class JwtAuthenticationFilter implements Filter {
 			try {
 				Member member = om.readValue(req.getInputStream(), Member.class);
 				System.out.println(member);
-
 				// 1번 username, password를 DB에 던짐
 				Member memberEntity = memberRepository.findByUsernameAndPassword(member.getId(), member.getPw());
 				// 2번 값이 있으면 있다?. 없다?
