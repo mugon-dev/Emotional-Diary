@@ -15,9 +15,8 @@ from matplotlib.transforms import Affine2D
 # 감정사전 불러오기
 
 
-def load_emolex():
-    emolex_df = pd.read_excel(
-        '/Users/jmg/workspace/djangotest1/NRC-Emotion-Lexicon-v0.92-In105Languages-Nov2017Translations.xlsx')
+def load_emolex(emolex):
+    emolex_df = pd.read_excel(emolex)
     return emolex_df
 
 # 감정 사전에서 감정 간의 상관관계
@@ -31,8 +30,8 @@ def corr_emotion(emolex_df):
 # 게시글 하나 불러와서 형태소 분석
 
 
-def load_content(Board):
-    target = Board.contents
+def load_content(board):
+    target = board.contents
     okt = Okt()
     nouns = okt.nouns(target)
     return nouns
@@ -40,11 +39,12 @@ def load_content(Board):
 # 형태소 분석한 결과 가져와서 워드 클라우드 생성
 
 
-def wordcloud(nouns):
+def wordcloud(nouns,root,board):
     count = Counter(nouns)
     tag = count.most_common(30)
     taglist = pytagcloud.make_tags(tag)
-    pytagcloud.create_tag_image(taglist, '/Users/jmg/workspace/djangotest1/wordcloud.jpg',
+    save = root+"wordcloud"+board.bno
+    pytagcloud.create_tag_image(taglist, save,
                                 size=(900, 600), fontname='Korean', rectangular=False)
 
 # 감정사전의 단어와 분석할 대상의 명사가 같은 것들을 뽑아 데이터프레임 생성
@@ -60,29 +60,29 @@ def emo_dataframe(nouns, emolex_df):
 # 감정분석 결과 바 그래프
 
 
-def bar_graph(emotion_sum):
+def bar_graph(emotion_sum,root,board):
     x = ["Positive", "Negative", "Anger", "Anticipation",
          "Disgust", "Fear", "Joy", "Sadness", "Surprise", "Trust"]
     plt.bar(x, emotion_sum, width=0.3, color='blue')
-    plt.show()
+    plt.savefig(root+"bar"+board.bno)
 
 # 선그래프
 
 
-def line_graph(emotion_sum):
+def line_graph(emotion_sum,root,board):
     x = ["Positive", "Negative", "Anger", "Anticipation",
          "Disgust", "Fear", "Joy", "Sadness", "Surprise", "Trust"]
     plt.plot(x, emotion_sum)
-    plt.show()
+    plt.savefig(root+"line"+board.bno)
 
 # 파이그래프
 
 
-def pie_graph(emotion_sum):
+def pie_graph(emotion_sum,root,board):
     x = ["Positive", "Negative", "Anger", "Anticipation",
          "Disgust", "Fear", "Joy", "Sadness", "Surprise", "Trust"]
     plt.pie(emotion_sum, labels=x, autopct='%.1f%%')
-    plt.show()
+    plt.savefig(root+"pie"+board.bno)
 
 # 레이더 그래프
 
@@ -125,20 +125,22 @@ def raider_graph(emotion_sum):
     plt.show()
 
     # 게시글 하나 분석
-    def analysis_one_content():
+    def analysis_one_content(board, emolex, root):
         # 게시글 호출, 형태소 분석
-        nouns = load_content()
+        nouns = load_content(board)
         # 워드클라우드 생성
-        wordcloud()
+        wordcloud(root,board)
         # 감정사전 호출
-        emolex_df = load_emolex()
+        emolex_df = load_emolex(emolex)
         # 감정사전으로 분석
         emotion_sum = emotion_sum(nouns, emolex_df)
         # 바 그래프
-        bar_graph(emotion_sum)
+        bar_graph(emotion_sum,root,board)
         # 파이 그래프
-        pie_graph(emotion_sum)
+        pie_graph(emotion_sum,root,board)
         # 선그래프
-        line_graph(emotion_sum)
+        line_graph(emotion_sum,root,board)
         # 레이더 그래프
-        raider_graph(emotion_sum)
+        raider_graph(emotion_sum,root,board)
+        
+        retrun "분석 완료"
