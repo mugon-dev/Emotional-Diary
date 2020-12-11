@@ -40,9 +40,14 @@ public class FilterConfig {
 		System.out.println("JwtAuthorizationFilter 필터 등록");
 		FilterRegistrationBean<JwtAuthorizationFilter> bean = 
 				new FilterRegistrationBean<>(new JwtAuthorizationFilter(memberRepository));
-		bean.addUrlPatterns("/member/*");
+		bean.addUrlPatterns("/member/update");
+		bean.addUrlPatterns("/member/delete");
+		bean.addUrlPatterns("/member/get/*");
+		bean.addUrlPatterns("/member/logout");
+		
 		bean.addUrlPatterns("/board/*");
 		bean.addUrlPatterns("/together/*");
+		
 		
 		bean.setOrder(2); // 낮은 번호부터 실행됨.
 		return bean;

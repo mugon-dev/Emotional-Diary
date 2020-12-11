@@ -43,7 +43,7 @@ public class MemberController {
 		return new ResponseEntity<String>("ok", HttpStatus.OK);
 	}
 
-	@GetMapping("/{id}")
+	@GetMapping("/get/{id}")
 	public Member memberone(@PathVariable int id) {
 		
 

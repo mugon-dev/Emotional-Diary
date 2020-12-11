@@ -1,3 +1,7 @@
+# -*- coding: utf-8 -*-
+import sys
+sys.path.append("C:\ProgramData\Anaconda3\Lib\site-packages")
+
 import konlpy
 from collections import Counter
 from konlpy.tag import Okt
@@ -11,6 +15,11 @@ from math import pi
 from matplotlib.path import Path
 from matplotlib.spines import Spine
 from matplotlib.transforms import Affine2D
+
+def testFunc(a,b):
+    print("TEST FUNC")
+    c = a+b
+    return c
 
 # 감정사전 불러오기
 
@@ -143,4 +152,3 @@ def raider_graph(emotion_sum):
         # 레이더 그래프
         raider_graph(emotion_sum,root,board)
         
-        retrun "분석 완료"

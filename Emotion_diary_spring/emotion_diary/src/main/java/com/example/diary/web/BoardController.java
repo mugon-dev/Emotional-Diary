@@ -44,9 +44,15 @@ public class BoardController {
 //		Member principal = (Member) session.getAttribute("principal");
 		int id = (int) session.getAttribute("id");
 		System.out.println("보드꺼."+id);
-		Member member = memberRepository.findByMno(id);
-		boardService.글쓰기(board, member);
-		return new ResponseEntity<String>("ok", HttpStatus.CREATED);
+		if(session.getAttribute("id")!=null) {
+			Member member = memberRepository.findByMno(id);
+			boardService.글쓰기(board, member);
+			return new ResponseEntity<String>("글등록 완료", HttpStatus.CREATED);	
+		}else {
+			return new ResponseEntity<String>("글등록 실패 ", HttpStatus.FORBIDDEN);
+		}
+		
+		
 	}
 
 	// 글 상세
