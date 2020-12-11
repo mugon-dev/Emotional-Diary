@@ -1,5 +1,7 @@
 import konlpy
 from collections import Counter
+
+import matplotlib
 from konlpy.tag import Okt
 import matplotlib.pyplot as plt
 from matplotlib import font_manager, rc
@@ -11,7 +13,8 @@ from math import pi
 from matplotlib.path import Path
 from matplotlib.spines import Spine
 from matplotlib.transforms import Affine2D
-import _thread
+from threading import Thread
+matplotlib.use('Agg')
 
 
 # api/static/wordcloud.jpg
@@ -100,6 +103,9 @@ def pie_graph(emotion_sum, root, board):
 
 
 def raider_graph(emotion_sum, root, board):
+    # plotThread = Thread(target=raider_graph)
+    # plotThread.daemon = True
+    # plotThread.start()
     result_df = pd.DataFrame(emotion_sum).T
     labels = result_df.columns[0:]
     num_labels = len(labels)
@@ -108,7 +114,6 @@ def raider_graph(emotion_sum, root, board):
     my_palette = plt.cm.get_cmap("Set2", len(result_df.index))
     fig = plt.figure(figsize=(20, 20))
     fig.set_facecolor("#EAEAE3")
-    # _thread.start_new_thread(raider_graph,fig)
     for i, row in result_df.iterrows():
         color = my_palette(i)
         data = result_df.iloc[i].tolist()
@@ -136,7 +141,8 @@ def raider_graph(emotion_sum, root, board):
         plt.title('test', size=20, color=color, x=-0.2, y=1.2, ha='left')
 
     plt.tight_layout(pad=5)  # subplot간 패딩 조절
-    plt.savefig(root+ "pie" + str(board.bno) + ".png", dpi=100, facecolor=("#EAEAE3"), transparent=True, bbox_inches='tight')
+    plt.savefig(root + "raider" + str(board.bno) + ".png", dpi=100, facecolor=("#EAEAE3"), transparent=True, bbox_inches='tight')
+    # plotThread.join()
 
     # 게시글 하나 분석
 def analysisOneContent(board, emolex, root):
