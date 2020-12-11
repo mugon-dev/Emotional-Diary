@@ -8,4 +8,12 @@ public class BoardData {
     private String title;
     private String content;
 
+    public BoardData(Date date, String name, String title, String content){
+        this.date = date;
+        this.name = name;
+        this.title = title;
+        this.content = content;
+    }
+    public int getDate()
+    }
 }
