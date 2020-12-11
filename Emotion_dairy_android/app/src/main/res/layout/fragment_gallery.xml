@@ -10,16 +10,23 @@
 
     <TextView
         android:id="@+id/ttt"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:gravity="center"
+        android:text="그룹 이름"
+        android:textSize="30dp" />
 
     <com.prolificinteractive.materialcalendarview.MaterialCalendarView
         android:id="@+id/calendarView3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        >
+        app:mcv_calendarMode="week">
 
     </com.prolificinteractive.materialcalendarview.MaterialCalendarView>
+
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 </LinearLayout>
