@@ -9,16 +9,17 @@
 
 
     <TextView
+        android:id="@+id/ttt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hello World!" />
 
     <com.prolificinteractive.materialcalendarview.MaterialCalendarView
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/calendarView2"
+        android:id="@+id/calendarView3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:mcv_selectionColor="#00F"
-        app:mcv_calendarMode="week"
-        app:mcv_showOtherDates="all" />
+        >
+
+    </com.prolificinteractive.materialcalendarview.MaterialCalendarView>
+
 </LinearLayout>

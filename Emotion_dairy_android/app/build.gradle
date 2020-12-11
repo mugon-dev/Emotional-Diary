@@ -35,14 +35,10 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
     implementation "androidx.lifecycle:lifecycle-viewmodel:2.2.0"
     implementation 'com.google.code.gson:gson:2.8.6'
+    compile 'com.prolificinteractive:material-calendarview:1.4.3'
 
-    allprojects {
-        repositories {
-            maven { url 'https://jitpack.io' }
-        }
-    }
 
-        implementation 'com.github.prolificinteractive:material-calendarview:2.0.1'
+
 
     android {
         compileOptions {

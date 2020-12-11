@@ -27,6 +27,7 @@ import com.applandeo.materialcalendarview.CalendarView;
 import com.applandeo.materialcalendarview.EventDay;
 import com.applandeo.materialcalendarview.listeners.OnDayClickListener;
 import com.example.emotion_dairy.R;
+import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -42,7 +43,7 @@ import java.util.List;
 import static android.content.Context.MODE_NO_LOCALIZED_COLLATORS;
 
 public class HomeFragment extends Fragment {
-
+    MaterialCalendarView mvc;
 
     private HomeViewModel HomeViewModel;
 
@@ -51,7 +52,6 @@ public class HomeFragment extends Fragment {
         HomeViewModel =
                 ViewModelProviders.of(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
-
 
         //추가
         List<EventDay> events = new ArrayList<>();
