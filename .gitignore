@@ -47,3 +47,4 @@ Emotion_diary_spring/emotion_diary/.mvn/
 Emotion_diary_spring/emotion_diary/.jython_cache
 *.pkc
 Emotion_diary_spring/Analysis/.pydevproject
+Emotion_Analysis/emo_env/
