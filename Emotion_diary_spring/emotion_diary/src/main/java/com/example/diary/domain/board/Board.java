@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -42,7 +43,7 @@ public class Board {
 	
 	@JsonIgnoreProperties({"board"})
 	@JoinColumn(name="memberId")
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	private Member member;
 	
 	

@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.diary.domain.board.Board;
 import com.example.diary.domain.board.BoardRepository;
+import com.example.diary.domain.board.BoardSaveRequestDto;
 import com.example.diary.domain.member.Member;
 import com.example.diary.domain.member.MemberRepository;
 import com.example.diary.service.BoardService;
@@ -35,34 +36,58 @@ public class BoardController {
 	private final BoardService boardService;
 	private final BoardRepository boardRepository;
 	private final MemberRepository memberRepository;
+	private final RestfulController restfulController;
 
 	// 글 등록
 	@PostMapping("/board")
-	public ResponseEntity<?> save(HttpServletRequest request,@RequestBody Board board) {
+	public ResponseEntity<?> save(HttpServletRequest request, @RequestBody Board board) {
 //		System.out.println("board save 호출");
 //		System.out.println("세션?"+session.getId());
 //		Member principal = (Member) session.getAttribute("principal");
 		int id = (int) session.getAttribute("id");
-		System.out.println("보드꺼."+id);
-		if(session.getAttribute("id")!=null) {
+		System.out.println("보드꺼." + id);
+		if (session.getAttribute("id") != null) {
 			Member member = memberRepository.findByMno(id);
 			boardService.글쓰기(board, member);
-			return new ResponseEntity<String>("글등록 완료", HttpStatus.CREATED);	
-		}else {
+			return new ResponseEntity<String>("글등록 완료", HttpStatus.CREATED);
+		} else {
 			return new ResponseEntity<String>("글등록 실패 ", HttpStatus.FORBIDDEN);
 		}
-		
-		
+
 	}
 
 	// 글 상세
-	@GetMapping("/board/{id}")
-	public ResponseEntity<?> detail(@PathVariable int id) {
-		return new ResponseEntity<Board>(boardService.글상세(id), HttpStatus.OK);
+//	@GetMapping("/board/{id}")
+//	public ResponseEntity<?> detail(@PathVariable int id) {
+//		System.out.println("boardDetail");
+////		restfulController.send(boardService.글상세(id));
+//		return new ResponseEntity<Board>(boardService.글상세(id), HttpStatus.OK);
+//	}
+
+	// 글 상세
+	@GetMapping("/board/de/{id}")
+	public Board boardDetail(@PathVariable int id) {
+		System.out.println("boardDetail");
+		
+		Board board = boardService.글상세(id);
+		
+		BoardSaveRequestDto dto = new BoardSaveRequestDto();
+		dto.setBno(board.getBno());
+		dto.setContents(board.getContents());
+		dto.setTitle(board.getTitle());
+		
+		restfulController.send(dto);
+		return board;
 	}
-	
+
 	@GetMapping("/board/one/{id}")
 	public Board oneDetail(@PathVariable int id) {
+		Board board = boardService.글상세(id);
+		BoardSaveRequestDto dto = new BoardSaveRequestDto();
+		dto.setBno(board.getBno());
+		dto.setContents(board.getContents());
+		dto.setTitle(board.getTitle());
+		System.out.println(dto);
 		return boardRepository.findById(id).get();
 	}
 
@@ -81,8 +106,7 @@ public class BoardController {
 		System.out.println(pyobj.toString());
 
 	}
-	
-	
+
 	@GetMapping("/board/{userId}")
 	public ResponseEntity<?> myBoardList(@PathVariable String userId) {
 		return new ResponseEntity<List<Board>>(boardService.내글목록(userId), HttpStatus.OK);
@@ -92,7 +116,7 @@ public class BoardController {
 	@PutMapping("/board/{id}")
 	public ResponseEntity<?> update(@RequestBody Board board, @PathVariable int id) {
 		int sid = (int) session.getAttribute("id");
-		System.out.println("멤버 id."+sid);
+		System.out.println("멤버 id." + sid);
 		Member principal = memberRepository.findByMno(sid);
 		int result = boardService.글수정(board, id, principal);
 		if (result == 1) {
@@ -107,9 +131,9 @@ public class BoardController {
 	public ResponseEntity<?> delete(@PathVariable int id) {
 		System.out.println("삭제호출");
 		int sid = (int) session.getAttribute("id");
-		System.out.println("멤버 id."+sid);
+		System.out.println("멤버 id." + sid);
 		Member principal = memberRepository.findByMno(sid);
-		
+
 		int result = boardService.글삭제(id, principal);
 		if (result == 1) {
 			return new ResponseEntity<String>("ok", HttpStatus.OK);

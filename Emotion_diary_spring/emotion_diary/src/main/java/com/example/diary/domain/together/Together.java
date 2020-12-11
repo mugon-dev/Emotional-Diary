@@ -2,6 +2,7 @@ package com.example.diary.domain.together;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -32,9 +33,10 @@ public class Together {
 	@Column(length = 500)
 	private String tcode;
 	
-//	@JsonIgnoreProperties({"board"})
-//	@ManyToOne
-//	private Member member;
-//	
+	@JsonIgnoreProperties({"board"})
+	@JoinColumn(name="mno")
+	@ManyToOne(fetch = FetchType.LAZY)
+	private Member member;
+
 
 }

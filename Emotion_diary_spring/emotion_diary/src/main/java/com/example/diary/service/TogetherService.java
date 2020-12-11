@@ -21,7 +21,7 @@ public class TogetherService {
 	@Transactional
 	public void togetherSave(Member member,Together together) {
 		System.out.println("togetherSave 호출");
-//		together.setMember(member);
+		together.setMember(member);
 		togetherRepositorty.save(together);
 	}
 	

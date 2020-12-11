@@ -1,6 +1,7 @@
 package com.example.diary.web;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.http.HttpStatus;
@@ -39,53 +40,63 @@ public class MemberController {
 	// 로그아웃
 	@GetMapping("/logout")
 	public ResponseEntity<?> logout() {
+		System.out.println("logout 호출");
+		int sid = (int) session.getAttribute("id");
+		System.out.println("mno:"+sid);
 		session.invalidate();
-		return new ResponseEntity<String>("ok", HttpStatus.OK);
+		System.out.println("mno 삭제?"+sid);
+		
+		if(session.getAttribute("id")!=null) {
+//			session.removeAttribute("id");
+			return new ResponseEntity<String>("logout 실패", HttpStatus.OK);
+		}else {
+			return new ResponseEntity<String>("logout", HttpStatus.OK);
+		}
 	}
+
+	
 
 	@GetMapping("/get/{id}")
 	public Member memberone(@PathVariable int id) {
-		
 
 		Member member = memberRepository.findByMno(id);
 
 		return member;
 	}
-	
-	//수정
+
+	// 수정
 	@PutMapping("/update")
-	public ResponseEntity<?> update(HttpServletRequest request, @RequestBody Member member){
+	public ResponseEntity<?> update(HttpServletRequest request, @RequestBody Member member) {
 		System.out.println("update 호출");
-		int sid=(int) session.getAttribute("id");
+		int sid = (int) session.getAttribute("id");
 		System.out.println(sid);
-		if(session.getAttribute("id")!=null) {
+		if (session.getAttribute("id") != null) {
 			Member originMember = memberRepository.findByMno(sid);
 			int id = originMember.getMno();
-			System.out.println("id: "+originMember.getId());
-			System.out.println("member: "+member);
-			memberService.update(id,member);
-			return new ResponseEntity<String>("ok",HttpStatus.OK);
+			System.out.println("id: " + originMember.getId());
+			System.out.println("member: " + member);
+			memberService.update(id, member);
+			return new ResponseEntity<String>("ok", HttpStatus.OK);
 		}
-		return new ResponseEntity<String>("You don't have authorization",HttpStatus.FORBIDDEN);
+		return new ResponseEntity<String>("You don't have authorization", HttpStatus.FORBIDDEN);
 	}
-	
-	
-	//삭제
+
+	// 삭제
 	@DeleteMapping("/delete")
-	public ResponseEntity<?> delete(HttpServletRequest request,@RequestBody Member member){
+	public ResponseEntity<?> delete(HttpServletRequest request, @RequestBody Member member) {
 		System.out.println("delete 호출");
-		int sid=(int) session.getAttribute("id");
+		int sid = (int) session.getAttribute("id");
 		System.out.println(sid);
 
-		if(session.getAttribute("id") != null) {
+		if (session.getAttribute("id") != null) {
 			Member originMember = memberRepository.findByMno(sid);
 			int id = originMember.getMno();
-			System.out.println("id: "+originMember.getId());
+			System.out.println("id: " + originMember.getId());
 			memberService.delete(id);
-		}else {
+		} else {
 			System.out.println("session=null");
 		}
-		return new ResponseEntity<String>("ok",HttpStatus.CREATED);
+		return new ResponseEntity<String>("ok", HttpStatus.CREATED);
 	}
 
 }
