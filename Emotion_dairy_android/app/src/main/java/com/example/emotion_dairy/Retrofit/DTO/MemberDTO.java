@@ -59,6 +59,6 @@ public class MemberDTO {
     @Override
     public String toString()
     {
-        return "ClassPojo [pw = "+pw+", name = "+name+", id = "+id+", mno = "+mno+"]";
+        return "MemberDTO [pw = "+pw+", name = "+name+", id = "+id+", mno = "+mno+"]";
     }
 }

@@ -11,7 +11,7 @@ public class SoloBoardDTO {
 
     private String contents;
 
-    private Timestamp createTime;
+    private String createTime;
 
     private MemberDTO member;
 
@@ -37,12 +37,12 @@ public class SoloBoardDTO {
         this.contents = contents;
     }
 
-    public Timestamp getCreateTime ()
+    public String getCreateTime ()
     {
         return createTime;
     }
 
-    public void setCreateTime (Timestamp createTime)
+    public void setCreateTime (String createTime)
     {
         this.createTime = createTime;
     }
@@ -70,7 +70,7 @@ public class SoloBoardDTO {
     public SoloBoardDTO() {
     }
 
-    public SoloBoardDTO(String bno, String contents, Timestamp createTime, MemberDTO member, String title) {
+    public SoloBoardDTO(String bno, String contents, String createTime, MemberDTO member, String title) {
         this.bno = bno;
         this.contents = contents;
         this.createTime = createTime;
@@ -81,6 +81,6 @@ public class SoloBoardDTO {
     @Override
     public String toString()
     {
-        return "ClassPojo [bno = "+bno+", contents = "+contents+", createTime = "+createTime+", member = "+member+", title = "+title+"]";
+        return "SoloBoardDTO [bno = "+bno+", contents = "+contents+", createTime = "+createTime+", member = "+member+", title = "+title+"]";
     }
 }

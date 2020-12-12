@@ -24,7 +24,6 @@
             android:layout_height="wrap_content"
             app:type="one_day_picker"
             app:eventsEnabled="true"
-
             >
 
         </com.applandeo.materialcalendarview.CalendarView>

@@ -39,6 +39,8 @@ import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.sql.Timestamp;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.time.format.DateTimeFormatter;
@@ -47,6 +49,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -70,7 +73,6 @@ public class HomeFragment extends Fragment {
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         api = HttpClient.getRetrofit().create(ApiInterface.class);
-        getBoard();
         activity = (MainActivity) getActivity();
     }
 
@@ -103,6 +105,7 @@ public class HomeFragment extends Fragment {
 //        calendar1
 
         CalendarView calendarView = (CalendarView) root.findViewById(R.id.calendarView);
+        getBoard(calendarView);
         calendarView.setEvents(events);
 
 
@@ -147,7 +150,7 @@ public class HomeFragment extends Fragment {
     }
 
 
-    public void getBoard() {
+    public void getBoard(CalendarView cv) {
         String auth = PreferenceManager.getString(getContext(),"Auth");
         Log.d("log","토큰 찍힘");
         Log.d("log",auth);
@@ -156,10 +159,33 @@ public class HomeFragment extends Fragment {
             @Override
             public void onResponse(Call<ArrayList<SoloBoardDTO>> call, Response<ArrayList<SoloBoardDTO>> response) {
                 ArrayList<SoloBoardDTO> result = response.body();
+                List<EventDay> events = new ArrayList<>();
                 Log.d("log", "데이터 통신 성공");
                 Log.d("log", result.toString());
                 for(int i=0;i<result.size();i++){
-                    Log.d("log","result"+i+" : "+result.get(i).toString());
+                    Log.d("log","result"+i+" : "+result.get(i).getCreateTime());
+
+                    Calendar cal = Calendar.getInstance();
+                    Log.d("log","들어옴");
+                    SimpleDateFormat dateFormat = new SimpleDateFormat(("yyyy-MM-dd"));
+                    Log.d("log","들어옴2");
+                    try {
+                        Date date = dateFormat.parse(result.get(i).getCreateTime());
+                        Log.d("log","들어옴3");
+                        cal.setTime(date);
+                        Log.d("log",cal.toString());
+                        events.add(new EventDay(cal,R.drawable.sample_icon));
+                        cv.setEvents(events);
+
+                    } catch (ParseException e) {
+                        Log.d("log",e.getMessage());
+                        e.printStackTrace();
+                    }
+
+
+
+
+//                    SoloBoardDTO a1 = new SoloBoardDTO(getString())
                 }
             }
 
@@ -170,27 +196,7 @@ public class HomeFragment extends Fragment {
             }
         });
     }
-    public void getBoardTest() {
-        String auth = PreferenceManager.getString(getContext(),"Auth");
-        Log.d("log","토큰 찍힘");
-        Log.d("log",auth);
-        Call<SoloBoardDTO> call = api.requestSoloBoardTest(auth);
-        call.enqueue(new Callback<SoloBoardDTO>() {
-            @Override
-            public void onResponse(Call<SoloBoardDTO> call, Response<SoloBoardDTO> response) {
-                SoloBoardDTO result = response.body();
 
-                Log.d("log", "데이터 통신 성공");
-                Log.d("log", result.toString());
-            }
-
-            @Override
-            public void onFailure(Call<SoloBoardDTO> call, Throwable t) {
-                Log.d("log","에러:"+t.getMessage());
-                Log.d("log", "통신 실패");
-            }
-        });
-    }
 
 
 }
