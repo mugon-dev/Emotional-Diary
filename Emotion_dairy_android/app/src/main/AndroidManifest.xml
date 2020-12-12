@@ -12,7 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.board.BoardWrite"></activity>
+        <activity android:name=".BoardWrite"></activity>
+        <activity android:name=".ui.board.BoardWrite" />
         <activity android:name=".Board.BoardWrite" />
         <activity
             android:name=".MainActivity"

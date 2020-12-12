@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#EAEAE3"
     android:orientation="vertical"
-    android:layout_weight="1">
+    tools:context=".BoardWrite"
+    android:background="@color/backColor">
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/textView7"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="title" />
+        android:text="Title" />
 
     <EditText
         android:id="@+id/edWriteTitle"
@@ -20,10 +20,10 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="제목을 입력하세요" />
+        android:hint="제목을 입력하세요"/>
 
     <TextView
-        android:id="@+id/textView11"
+        android:id="@+id/textView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="content" />
@@ -34,22 +34,24 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:gravity="start|top"
-        android:inputType="textMultiLine" />
+        android:inputType="textMultiLine"
+        android:hint="내용을 입력하세요"/>
 
     <RadioGroup
+        android:id="@+id/rgSelectGroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <RadioButton
-            android:id="@+id/rbPrivate"
+            android:id="@+id/rbViewPrivate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="나만보기" />
     </RadioGroup>
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btnBoardWrite"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Button" />
+        android:text="글쓰기" />
 </LinearLayout>

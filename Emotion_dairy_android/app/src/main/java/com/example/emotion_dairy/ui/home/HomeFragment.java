@@ -27,6 +27,7 @@ import com.annimon.stream.Stream;
 import com.applandeo.materialcalendarview.CalendarView;
 import com.applandeo.materialcalendarview.EventDay;
 import com.applandeo.materialcalendarview.listeners.OnDayClickListener;
+import com.example.emotion_dairy.BoardWrite;
 import com.example.emotion_dairy.MainActivity;
 import com.example.emotion_dairy.R;
 import com.example.emotion_dairy.Retrofit.ApiInterface;
@@ -136,8 +137,8 @@ public class HomeFragment extends Fragment {
         btnWrite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("login", "btnWrite");
-                activity.changeFragment("write");
+                Intent intent = new Intent(getContext(), BoardWrite.class);
+                startActivity(intent);
             }
         });
 

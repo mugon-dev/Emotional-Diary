@@ -10,7 +10,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.applandeo.materialcalendarview.EventDay;
-import com.example.emotion_dairy.ui.write.BoardWriteFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
@@ -31,7 +30,6 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
 
-    BoardWriteFragment fragment_write;
 
     private AppBarConfiguration mAppBarConfiguration;
 
@@ -67,13 +65,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void changeFragment(String str){
-        Log.d("login","changeFragment");
-        fragment_write=new BoardWriteFragment();
-        if(str.equals("write")){
-            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,fragment_write).commit();
-        }
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
