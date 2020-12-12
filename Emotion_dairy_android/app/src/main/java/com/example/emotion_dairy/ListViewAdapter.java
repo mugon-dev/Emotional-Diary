@@ -16,8 +16,8 @@ public class ListViewAdapter extends BaseAdapter{
     private ArrayList<ListViewItem> listViewItemList = new ArrayList<ListViewItem>();
 
     //ListViewAdapter 의 생성자
-    public ListViewAdapter(ArrayList<ListViewItem> listViewItems) {
-        listViewItems=listViewItemList;
+    public ListViewAdapter() {
+
     }
 
 
@@ -39,9 +39,9 @@ public class ListViewAdapter extends BaseAdapter{
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         convertView = inflater.inflate(R.layout.list_view_item, parent,false);
-
+        Log.d("log","들어가기 전");
         // "listview_item" Layout을 inflate하여 convertView 참조 획득.
-        if (convertView == null) {
+
             // 화면에 표시될 View(Layout이 inflate된)으로부터 위젯에 대한 참조 획득
             Log.d("log","들어옴;;;;;");
             TextView titleTextView = (TextView) convertView.findViewById(R.id.tv_title);
@@ -52,10 +52,13 @@ public class ListViewAdapter extends BaseAdapter{
             ListViewItem listViewItem = listViewItemList.get(position);
 
             // 아이템 내 각 위젯에 데이터 반영 ( Test 중 )
+            titleTextView.setText(listViewItem.getTitle());
+            nameTextView.setText(listViewItem.getName());
+            dateTextView.setText(listViewItem.getDate());
             //iconImageView.setImageDrawable(listViewItem.getIcon());
             //titleTextView.setText(listViewItem.getTitle());
             //descTextView.setText(listViewItem.getDesc());
-        }
+
             return convertView;
     }
     // 지정한 위치(position)에 있는 데이터와 관계된 아이템(row)의 ID를 리턴. : 필수 구현
@@ -70,15 +73,15 @@ public class ListViewAdapter extends BaseAdapter{
         return listViewItemList.get(position) ;
     }
 
-//    // 아이템 데이터 추가를 위한 함수.
-//    public void addItem(String title, String content,String name, String date) {
-//        ListViewItem item = new ListViewItem();
-//
-//        item.setTitle(title);
-//        item.setContent(content);
-//        item.setName(name);
-//        item.setDate(date);
-//
-//        listViewItemList.add(item);
-//    }
+    // 아이템 데이터 추가를 위한 함수.
+    public void addItem(String title, String content,String name, String date) {
+        ListViewItem item = new ListViewItem();
+
+        item.setTitle(title);
+        item.setContent(content);
+        item.setName(name);
+        item.setDate(date);
+
+        listViewItemList.add(item);
+    }
 }

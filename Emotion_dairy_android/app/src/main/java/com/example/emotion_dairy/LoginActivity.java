@@ -45,6 +45,7 @@ public class LoginActivity extends AppCompatActivity {
     public void login(ReqLoginDTO reqLoginDTO){
         Call<String> call = api.requestPostLogin(reqLoginDTO);
         call.enqueue(new Callback<String>(){
+
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 Log.d("login",response.body().toString());
@@ -54,6 +55,7 @@ public class LoginActivity extends AppCompatActivity {
                     Log.d("login","로그인 성공");
 
                     //SharedPreferences 로그인 정보 저장
+                    PreferenceManager.clear(LoginActivity.this);
                     PreferenceManager.setString(LoginActivity.this,"Auth",auth);
                     //저장데이터 확인
                     String text = PreferenceManager.getString(LoginActivity.this,"auth");

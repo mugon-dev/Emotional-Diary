@@ -48,39 +48,21 @@ public class GalleryFragment extends Fragment {
                 .setCalendarDisplayMode(CalendarMode.WEEKS)
                 .commit();
 
-        //     final TextView textView = root.findViewById(R.id.text_gallery);
-        //    galleryViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-        //      @Override
-        //    public void onChanged(@Nullable String s) {
-        //      textView.setText(s);
-        //   }
-        // });
-
 
 // Adapter 생성
-//        adapter = new ListViewAdapter();
-//
-//        // 리스트뷰 객체 생성 및 Adapter 설정
-//        listview = (ListView) root.findViewById(R.id.listView);
-//        listview.setAdapter(adapter);
-//
-//        // 리스트 뷰 아이템 추가.
-//        adapter.addItem("테스트제목1","테스트내용1","테스트이름1","테스트날짜1");
-//        adapter.addItem("테스트제목2","테스트내용2","테스트이름2","테스트날짜2");
-//        adapter.addItem("테스트제목3","테스트내용3","테스트이름3","테스트날짜3");
-//        adapter.addItem("테스트제목3","테스트내용3","테스트이름3","테스트날짜3");
+        adapter = new ListViewAdapter();
 
-//        ArrayList<ListViewItem> listViewItems= new ArrayList<ListViewItem>();
-//
-//        for(int i=1;i<5;i++){
-//            ListViewItem list = new ListViewItem("date"+i,"name"+i,"title"+i,"content"+i);
-//            listViewItems.add(list);
-//        }
-//        adapter = new ListViewAdapter(listViewItems);
-//        Log.d("log",listViewItems.get(1).toString());
+        // 리스트뷰 객체 생성 및 Adapter 설정
+        listview = (ListView) root.findViewById(R.id.listView);
+        listview.setAdapter(adapter);
+
+        // 리스트 뷰 아이템 추가.
+        adapter.addItem("테스트제목1","테스트내용1","테스트이름1","테스트날짜1");
+        adapter.addItem("테스트제목2","테스트내용2","테스트이름2","테스트날짜2");
+        adapter.addItem("테스트제목3","테스트내용3","테스트이름3","테스트날짜3");
+        adapter.addItem("테스트제목3","테스트내용3","테스트이름3","테스트날짜3");
 
 
-    final ListViewAdapter myAdapter = new ListViewAdapter(this,);
 
         return root;
     }
