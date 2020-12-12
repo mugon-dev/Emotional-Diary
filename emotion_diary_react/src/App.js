@@ -4,8 +4,8 @@ import Intro from './pages/Intro';
 import Login from './pages/user/Login';
 import Join from './pages/user/Join';
 import DiaryHome from './pages/diary/DiaryHome';
-import OurDiary from './pages/diary/OurDiary';
 import styled from 'styled-components';
+import Footer from './components/Footer';
 
 const AppStyle = styled.div`
   font-family: 'TDTDTadakTadak';
@@ -20,6 +20,7 @@ function App() {
         <Route path="/join" component={Join} />
         <Route path="/diary" component={DiaryHome} />
       </Switch>
+      <Footer />
     </AppStyle>
   );
 }

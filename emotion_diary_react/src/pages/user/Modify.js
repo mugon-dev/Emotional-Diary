@@ -1,25 +1,69 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 
 const Modify = () => {
+  const history = useHistory();
+
+  const [user, setUser] = useState({
+    userId: '',
+    userName: '',
+    password: '',
+    rePassword: '',
+  });
+
+  function inputHandle(e) {
+    setUser({
+      ...user,
+      [e.target.name]: e.target.value,
+    });
+  }
+
+  function reset(e) {
+    e.preventDefault();
+    setUser({
+      userId: '',
+      password: '',
+    });
+  }
+  function submitModify(e) {
+    e.preventDefault();
+
+    fetch().then().then();
+  }
+
   return (
     <div>
-      <h1>회원정보 수정</h1>
-      <div>워드 클라우드</div>
       <div>
-        <label>id</label>
-        <div> id 보여줌</div>
+        <label>userId</label>
+        <div>{user.userId}</div>
+        <br />
+        <label>userName</label>
+        <input
+          type="text"
+          name="userName"
+          onChange={inputHandle}
+          value={user.userName}
+        />
         <br />
         <label>pw</label>
-        <input type="password" name="pw" />
+        <input
+          type="password"
+          name="password"
+          onChange={inputHandle}
+          value={user.password}
+        />
         <br />
         <label>pw 확인 </label>
-        <input type="password" name="pw" />
+        <input
+          type="password"
+          name="rePassword"
+          value={user.rePassword}
+          onChange={inputHandle}
+        />
         <br />
-        <label>이름</label>
-        <input type="text" name="name" />
         <div>
           <button>취소</button>
-          <button>회원가입</button>
+          <button onClick={submitModify}>수정</button>
         </div>
       </div>
     </div>
