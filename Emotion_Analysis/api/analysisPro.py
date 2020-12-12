@@ -33,6 +33,7 @@ def corr_emotion(emolex_df, dir):
     f, ax = plt.subplots(figsize=(20, 20))
     sns.heatmap(emolex_df.corr(), annot=True, linewidths=0.6, fmt=".4f", ax=ax)
     plt.savefig(dir, dpi=100, facecolor=("#EAEAE3"), transparent=True, bbox_inches='tight')
+    plt.close()
 
 
 # 게시글 하나 불러와서 형태소 분석
@@ -77,7 +78,7 @@ def bar_graph(emotion_sum, root, board):
     plt.barh(x, emotion_sum, color='blue')
     plt.xlim(0,emotion_sum.sum(axis=0))
     plt.savefig(root + "bar" + str(board.bno) + ".png", dpi=100, facecolor=("#EAEAE3"), transparent=True, bbox_inches='tight')
-
+    plt.close()
 
 # 선그래프
 
@@ -87,7 +88,7 @@ def line_graph(emotion_sum, root, board):
          "Disgust", "Fear", "Joy", "Sadness", "Surprise", "Trust"]
     plt.plot(x, emotion_sum)
     plt.savefig(root + "line" + str(board.bno) + ".png", dpi=100, facecolor=("#EAEAE3"), transparent=True, bbox_inches='tight')
-
+    plt.close()
 
 # 파이그래프
 
@@ -97,7 +98,7 @@ def pie_graph(emotion_sum, root, board):
          "Disgust", "Fear", "Joy", "Sadness", "Surprise", "Trust"]
     plt.pie(emotion_sum, labels=x, autopct='%.1f%%')
     plt.savefig(root + "pie" + str(board.bno) + ".png", dpi=100, facecolor=("#EAEAE3"), transparent=True, bbox_inches='tight')
-
+    plt.close()
 
 # 레이더 그래프
 
@@ -142,6 +143,7 @@ def raider_graph(emotion_sum, root, board):
 
     plt.tight_layout(pad=5)  # subplot간 패딩 조절
     plt.savefig(root + "raider" + str(board.bno) + ".png", dpi=100, facecolor=("#EAEAE3"), transparent=True, bbox_inches='tight')
+    plt.close()
     # plotThread.join()
 
     # 게시글 하나 분석
