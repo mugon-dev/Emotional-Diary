@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 const MyDiaryWrite = () => {
   const history = useHistory();
@@ -28,12 +28,55 @@ const MyDiaryWrite = () => {
       };
     });
   }
+  function submitWrite(e) {
+    e.preventDefault();
+
+    console.log('submitPost() 실행');
+
+    //let form = document.getElementById('form');
+    //const formData = new FormData(form);
+
+    /* if (board3.image1 === '' && board3.image2 === '') {
+      alert('사진을 한장이상 업로드 해주세요!');
+    } else {
+      console.log('fetch 실행');
+      fetch('http://localhost:8000/board3/write', {
+        method: 'POST',
+        headers: {
+          Authorization: localStorage.getItem('Authorization'),
+        },
+        body: formData,
+      })
+        .then((res) => res.text())
+        .then((res) => {
+          if (res === 'ok') {
+            alert('글이 등록되었습니다.');
+            //history.push("/board3");
+          } else {
+          }
+        });
+    } */
+  }
   return (
     <div>
       <form>
-        <input type="text" name="title" value={diary.title} />
+        <input
+          type="text"
+          name="title"
+          value={diary.title}
+          onChange={inputHandle}
+        />
         <textarea name="content">{diary.content}</textarea>
-        <input type="file" name="image" value={diary.image1} />
+        <input
+          type="file"
+          name="image"
+          value={diary.image1}
+          onChange={uploadImg}
+        />
+        <button onClick={submitWrite}>작성</button>
+        <Link to="/diary">
+          <button>취소</button>
+        </Link>
       </form>
     </div>
   );

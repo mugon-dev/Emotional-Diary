@@ -17,7 +17,7 @@ const MainStyle = styled.div`
   justify-content: space-around;
   border: 2px solid #003458;
   border-radius: 10px;
-
+  background-color: #eaeae3;
   &::-webkit-scrollbar {
     /* 세로 스크롤 넓이 */
     width: 8px;

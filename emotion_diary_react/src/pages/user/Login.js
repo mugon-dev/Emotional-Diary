@@ -2,24 +2,32 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
-import { login } from '../../reducer';
+import { login } from '../../store';
 
 const LoginBoxStyle = styled.div`
   display: grid;
-  grid-template-columns: 20% 80%;
+
+  height: 500px;
+  grid-template-columns: 50% 40%;
+  border: 1px solid #003458;
+  align-items: center;
+  margin: 10px 10px;
 `;
 const InputStyle = styled.input`
+  display: grid;
   height: 35px;
-  width: 40%;
+  width: 100%;
   color: rgb(100, 100, 100);
   font-size: 15px;
   border: 1px solid #003458;
   border-radius: 6px;
-  margin: 10px 10px;
+`;
+const LabelStyle = styled.div`
+  font-size: 23px;
 `;
 const ButtonBoxStyle = styled.div`
-  width: 700px;
-  grid-template-columns: auto;
+  display: grid;
+  grid-template-columns: auto auto auto;
   justify-content: end;
 `;
 const ButtonStyle = styled.button`
@@ -34,6 +42,11 @@ const ButtonStyle = styled.button`
   cursor: pointer;
   margin: 10px;
 `;
+const TitleStyle = styled.div`
+  font-size: 60px;
+  text-align: center;
+`;
+
 const Login = () => {
   const [user, setUser] = useState({
     id: '',
@@ -78,14 +91,13 @@ const Login = () => {
         }
 
         // console.log('hhh', res.text());
-        return res.json();
+        return res.text();
       })
       .then((res) => {
         console.log(res);
-        if (res.state === 'ok') {
+        if (res === 'ok') {
           localStorage.setItem('user', user.id);
           alert('로그인 완료');
-
           dispatch(login());
           history.push('/diary');
         } else {
@@ -96,11 +108,13 @@ const Login = () => {
 
   return (
     <div>
-      <div>당신의 감정은 어떠한가요 ?</div>
+      <TitleStyle>당신의 감정은 어떠한가요 ?</TitleStyle>
+
       <LoginBoxStyle>
-        <div>워드클라우드</div>
+        <h1>워드 클라우드 사진</h1>
         <form>
-          <label>아이디</label>
+          <LabelStyle>아이디</LabelStyle>
+          <br />
           <InputStyle
             type="text"
             name="id"
@@ -108,7 +122,8 @@ const Login = () => {
             value={user.id}
           />
           <br />
-          <label>비밀번호</label>
+          <LabelStyle>비밀번호</LabelStyle>
+          <br />
           <InputStyle
             type="password"
             name="pw"
@@ -119,9 +134,7 @@ const Login = () => {
             <Link to="/join">
               <ButtonStyle>회원가입</ButtonStyle>
             </Link>
-            <Link to="/diary">
-              <ButtonStyle onClick={submitLogin}>로그인</ButtonStyle>
-            </Link>
+            <ButtonStyle onClick={submitLogin}>로그인</ButtonStyle>
             <ButtonStyle onClick={reset}>취소</ButtonStyle>
           </ButtonBoxStyle>
         </form>

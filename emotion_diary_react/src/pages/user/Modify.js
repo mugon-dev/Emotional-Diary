@@ -1,9 +1,31 @@
 import React, { useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import styled from 'styled-components';
 
+const InputStyle = styled.input`
+  height: 35px;
+  width: 100%;
+  color: rgb(100, 100, 100);
+  font-size: 15px;
+  border: 1px solid #003458;
+  border-radius: 6px;
+  margin: 10px 10px;
+`;
+const ModifyStyle = styled.div`
+  display: grid;
+  grid-template-columns: 20% 100%;
+`;
+const LabelBoxStyle = styled.div`
+  display: grid;
+`;
+const InputBoxStyle = styled.div`
+  display: grid;
+`;
+const ButtonBoxStyle = styled.div`
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-content: end;
+`;
 const Modify = () => {
-  const history = useHistory();
-
   const [user, setUser] = useState({
     userId: '',
     userName: '',
@@ -33,39 +55,46 @@ const Modify = () => {
 
   return (
     <div>
-      <div>
-        <label>userId</label>
-        <div>{user.userId}</div>
-        <br />
-        <label>userName</label>
-        <input
-          type="text"
-          name="userName"
-          onChange={inputHandle}
-          value={user.userName}
-        />
-        <br />
-        <label>pw</label>
-        <input
-          type="password"
-          name="password"
-          onChange={inputHandle}
-          value={user.password}
-        />
-        <br />
-        <label>pw 확인 </label>
-        <input
-          type="password"
-          name="rePassword"
-          value={user.rePassword}
-          onChange={inputHandle}
-        />
-        <br />
-        <div>
-          <button>취소</button>
+      <ModifyStyle>
+        <LabelBoxStyle>
+          <label>userId</label>
+          <label>userName</label>
+
+          <label>pw</label>
+
+          <label>pw 확인 </label>
+        </LabelBoxStyle>
+        <InputBoxStyle>
+          <div>{user.userId}</div>
+          <br />
+
+          <InputStyle
+            type="text"
+            name="userName"
+            onChange={inputHandle}
+            value={user.userName}
+          />
+          <br />
+          <InputStyle
+            type="password"
+            name="password"
+            onChange={inputHandle}
+            value={user.password}
+          />
+          <br />
+          <InputStyle
+            type="password"
+            name="rePassword"
+            value={user.rePassword}
+            onChange={inputHandle}
+          />
+          <br />
+        </InputBoxStyle>
+        <ButtonBoxStyle>
+          <button onClick={reset}>취소</button>
           <button onClick={submitModify}>수정</button>
-        </div>
-      </div>
+        </ButtonBoxStyle>
+      </ModifyStyle>
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const MyDiaryDetail = () => {
   //
@@ -9,21 +9,6 @@ const MyDiaryDetail = () => {
     image1: '',
   });
 
-  function inputHandle(e) {
-    setDiary({
-      ...diary,
-      [e.target.name]: e.target.value,
-    });
-  }
-  function reset(e) {
-    e.preventDefault();
-    setDiary({
-      id: '',
-      title: '',
-      content: '',
-      image: '',
-    });
-  }
   return (
     <div>
       <div>title</div>
