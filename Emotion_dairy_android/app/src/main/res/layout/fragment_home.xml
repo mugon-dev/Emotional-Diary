@@ -44,8 +44,8 @@
             android:gravity="center"
             android:text="ㅋㅋ" />
 
-        <EditText
-            android:id="@+id/editTextTextPersonName"
+        <TextView
+            android:id="@+id/tv_contentview"
             android:layout_width="match_parent"
             android:layout_height="157dp"
             android:hint="내용을 입력하세요"

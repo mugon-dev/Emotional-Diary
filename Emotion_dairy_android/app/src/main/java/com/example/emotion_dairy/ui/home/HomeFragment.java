@@ -39,6 +39,7 @@ import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.sql.Array;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -67,6 +68,9 @@ public class HomeFragment extends Fragment {
     private Retrofit mRetrofit;
     private ApiInterface api;
     private HomeViewModel HomeViewModel;
+    private ArrayList<SoloBoardDTO> result;
+
+
 
 
     @Override
@@ -90,6 +94,9 @@ public class HomeFragment extends Fragment {
         HomeViewModel =
                 ViewModelProviders.of(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
+
+        TextView contentView = (TextView) root.findViewById(R.id.tv_contentview);
+        TextView titleView = (TextView) root.findViewById(R.id.tv_contentview);
 
         //추가
         List<EventDay> events = new ArrayList<>();
@@ -126,9 +133,20 @@ public class HomeFragment extends Fragment {
                 //tv_date.setText(clickedDayCalendar.getTime().toString().substring(0,10));
 
                 //선택날짜 출력하기
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy년 MM월 dd일");
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 String strDate = simpleDateFormat.format(clickedDayCalendar.getTime());
                 tv_date.setText(strDate);
+
+                //출력된 date값이랑 ArrayList<SoloBoardDTO>에서 createTime이랑 비교해서
+                //값이 같으면 참조값 찾아서 findbyid해서 set해줌.
+                int index = -1;
+                for (int i = 0; i < result.size(); i++) {
+                    if (strDate.equals(result.get(i).getCreateTime())) {
+                        index = i;
+                        break;
+                    }
+                }
+                contentView.setText(result.get(index).getContents());
 
             }
         });
@@ -158,7 +176,7 @@ public class HomeFragment extends Fragment {
         call.enqueue(new Callback<ArrayList<SoloBoardDTO>>() {
             @Override
             public void onResponse(Call<ArrayList<SoloBoardDTO>> call, Response<ArrayList<SoloBoardDTO>> response) {
-                ArrayList<SoloBoardDTO> result = response.body();
+                result = response.body();
                 List<EventDay> events = new ArrayList<>();
                 Log.d("log", "데이터 통신 성공");
                 Log.d("log", result.toString());
@@ -166,12 +184,9 @@ public class HomeFragment extends Fragment {
                     Log.d("log","result"+i+" : "+result.get(i).getCreateTime());
 
                     Calendar cal = Calendar.getInstance();
-                    Log.d("log","들어옴");
                     SimpleDateFormat dateFormat = new SimpleDateFormat(("yyyy-MM-dd"));
-                    Log.d("log","들어옴2");
                     try {
                         Date date = dateFormat.parse(result.get(i).getCreateTime());
-                        Log.d("log","들어옴3");
                         cal.setTime(date);
                         Log.d("log",cal.toString());
                         events.add(new EventDay(cal,R.drawable.sample_icon));
