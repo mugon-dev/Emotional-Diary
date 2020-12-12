@@ -1,6 +1,7 @@
 package com.example.emotion_dairy.Retrofit;
 
 import com.example.emotion_dairy.Retrofit.DTO.Authorization;
+import com.example.emotion_dairy.Retrofit.DTO.ReqJoinDTO;
 import com.example.emotion_dairy.Retrofit.DTO.ReqLoginDTO;
 import com.example.emotion_dairy.Retrofit.DTO.ResLoginDTO;
 
@@ -13,4 +14,7 @@ public interface ApiInterface {
     //로그인
     @POST("loginProc")
     Call<String> requestPostLogin(@Body ReqLoginDTO reqLoginDTO);
+
+    @POST("member/join")
+    Call<String> requestPostJoin(@Body ReqJoinDTO reqJoinDTO);
 }

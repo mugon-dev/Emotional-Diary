@@ -12,6 +12,7 @@ import com.example.emotion_dairy.Retrofit.ApiInterface;
 import com.example.emotion_dairy.Retrofit.DTO.ReqLoginDTO;
 import com.example.emotion_dairy.Retrofit.DTO.ResLoginDTO;
 import com.example.emotion_dairy.Retrofit.HttpClient;
+import com.example.emotion_dairy.SharedPreferences.PreferenceManager;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -47,8 +48,17 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 Log.d("login",response.body().toString());
+                String auth = response.headers().get("Authorization");
+                Log.d("login",auth);
                 if(response.body().toString().equals("ok")){
                     Log.d("login","로그인 성공");
+
+                    //SharedPreferences 로그인 정보 저장
+                    PreferenceManager.setString(LoginActivity.this,"Auth",auth);
+                    //저장데이터 확인
+                    String text = PreferenceManager.getString(LoginActivity.this,"auth");
+                    Log.d("login","auth = "+auth);
+
                     Intent intent = new Intent(LoginActivity.this,MainActivity.class);
                     startActivity(intent);
                 }

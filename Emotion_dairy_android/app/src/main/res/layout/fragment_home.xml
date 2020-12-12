@@ -29,6 +29,12 @@
 
         </com.applandeo.materialcalendarview.CalendarView>
 
+        <Button
+            android:id="@+id/btnWrite"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="글쓰기" />
+
         <TextView
             android:id="@+id/tv_date"
             android:layout_width="match_parent"

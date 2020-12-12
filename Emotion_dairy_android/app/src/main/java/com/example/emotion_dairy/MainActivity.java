@@ -1,6 +1,7 @@
 package com.example.emotion_dairy;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.widget.Button;
@@ -9,6 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.applandeo.materialcalendarview.EventDay;
+import com.example.emotion_dairy.ui.write.BoardWriteFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
@@ -29,7 +31,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
 
-
+    BoardWriteFragment fragment_write;
 
     private AppBarConfiguration mAppBarConfiguration;
 
@@ -59,8 +61,18 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
+        //회원정보 ( 닉네임, 그룹 1,2,3 가져옴 )
 
+        //Fragment Manager
 
+    }
+
+    public void changeFragment(String str){
+        Log.d("login","changeFragment");
+        fragment_write=new BoardWriteFragment();
+        if(str.equals("write")){
+            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,fragment_write).commit();
+        }
     }
 
     @Override

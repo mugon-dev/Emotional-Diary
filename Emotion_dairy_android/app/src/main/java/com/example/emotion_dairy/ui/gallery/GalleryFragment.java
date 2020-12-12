@@ -20,7 +20,6 @@ import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 public class GalleryFragment extends Fragment {
 
     private GalleryViewModel galleryViewModel;
-
     MaterialCalendarView mvc;
     TextView tx;
 

@@ -1,6 +1,7 @@
 package com.example.emotion_dairy.ui.home;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -26,6 +27,7 @@ import com.annimon.stream.Stream;
 import com.applandeo.materialcalendarview.CalendarView;
 import com.applandeo.materialcalendarview.EventDay;
 import com.applandeo.materialcalendarview.listeners.OnDayClickListener;
+import com.example.emotion_dairy.MainActivity;
 import com.example.emotion_dairy.R;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 
@@ -45,7 +47,22 @@ import static android.content.Context.MODE_NO_LOCALIZED_COLLATORS;
 public class HomeFragment extends Fragment {
     MaterialCalendarView mvc;
 
+    MainActivity activity;
+
     private HomeViewModel HomeViewModel;
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        activity = (MainActivity) getActivity();
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+
+        activity = null;
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -86,6 +103,17 @@ public class HomeFragment extends Fragment {
               String strDate = simpleDateFormat.format(clickedDayCalendar.getTime());
                 tv_date.setText(strDate);
 
+            }
+        });
+
+        //글쓰기
+        Button btnWrite;
+        btnWrite=(Button)root.findViewById(R.id.btnWrite);
+        btnWrite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("login","btnWrite");
+                activity.changeFragment("write");
             }
         });
 

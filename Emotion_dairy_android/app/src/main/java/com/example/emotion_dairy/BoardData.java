@@ -14,6 +14,4 @@ public class BoardData {
         this.title = title;
         this.content = content;
     }
-    public int getDate()
-    }
 }
