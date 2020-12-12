@@ -39,7 +39,7 @@ public class Member {
 	@Column(length = 40)
 	private String name;
 
-	@JsonIgnoreProperties({ "member" })
+	@JsonIgnoreProperties({ "member"})
 	@OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
 	private List<Board> board;
 

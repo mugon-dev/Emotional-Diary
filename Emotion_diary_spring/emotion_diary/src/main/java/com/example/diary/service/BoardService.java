@@ -30,13 +30,13 @@ public class BoardService {
 	}
 	
 	@Transactional
-	public void 글목록() {
-		
+	public List<Board> 글목록() {
+		return boardRepository.findAll();
 	}
 	
 	@Transactional
-	public List<Board> 내글목록(String userId) {
-		return boardRepository.selectMyBoard(userId);	
+	public List<Board> 내글목록(int MemberId) {
+		return boardRepository.findAllMemberId(MemberId);	
 		}
 	
 	//글수정
@@ -69,4 +69,6 @@ public class BoardService {
 			return 0;
 		}
 	}
+
+	
 }
