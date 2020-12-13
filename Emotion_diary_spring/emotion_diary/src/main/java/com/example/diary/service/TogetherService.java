@@ -28,10 +28,12 @@ public class TogetherService {
 	//생성, 삭제, 수정
 	
 	@Transactional
-	public void togetherSave(Member member,Together together) {
+	public int togetherSave(Member member,Together together) {
 		System.out.println("togetherSave 호출");
 		together.setMember(member);
 		togetherRepositorty.save(together);
+		return 1; 
+		
 	}
 	
 	@Transactional

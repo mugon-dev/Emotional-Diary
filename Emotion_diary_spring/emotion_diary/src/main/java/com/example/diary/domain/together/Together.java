@@ -38,5 +38,8 @@ public class Together {
 	@ManyToOne()
 	private Member member;
 
+	
+
+
 
 }

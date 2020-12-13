@@ -19,22 +19,32 @@ public class TmemberService {
 	
 	//생성, 삭제, 수정
 	
+		//그룹 생성시 자동으로 그룹가입
+		@Transactional
+		public void tmemberAutoSave(Member member,int tno) {
+			System.out.println("togetherSave 호출");
+			Tmember tmember = new Tmember();
+			tmember.setMember(member);
+			tmember.setTno(tno);
+			tmemberRepository.save(tmember);
+		}
+		
+		//그룹 가입
 		@Transactional
 		public void tmemberSave(Member member,Together together) {
 			System.out.println("togetherSave 호출");
 			Tmember tmember = new Tmember();
 			tmember.setMember(member);
-			tmember.setTogether(together);
+			tmember.setTno(together.getTno());
 			tmemberRepository.save(tmember);
 		}
 		
-
-//		@Transactional
-//		public void tmemberDelete(int gno) {
-//			System.out.println("togetherDelete 호출");
-//			tmemberRepository.deleteById(gno);
-//		}
-//		
+		@Transactional
+		public void tmemberDelete(int mid,int tno) {
+			System.out.println("togetherDelete 호출");
+			tmemberRepository.deleteByMidandTno(mid,tno);
+		}
+		
 //		@Transactional
 //		public void tmemberUpdate(int gno,Together together) {
 //			System.out.println("togetherUpdate 호출");

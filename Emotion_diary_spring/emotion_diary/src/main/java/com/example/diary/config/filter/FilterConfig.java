@@ -47,7 +47,7 @@ public class FilterConfig {
 		
 		bean.addUrlPatterns("/board/*");
 		bean.addUrlPatterns("/together/*");
-//		bean.addUrlPatterns("/tmember/*");
+		bean.addUrlPatterns("/tmember/*");
 		
 		
 		

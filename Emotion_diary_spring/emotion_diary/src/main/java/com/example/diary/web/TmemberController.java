@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,59 +32,70 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @RestController
 public class TmemberController {
-	
+
 	private final HttpSession session;
 	private final TmemberRepository tmemberRepository;
 	private final MemberRepository memberRepository;
 	private final TogetherRepository togetherRepository;
 	private final TogetherService togetherService;
 	private final TmemberService tmemberService;
-	
-	
-	@PostMapping("/save")
-	public ResponseEntity<?> tmemberSave(HttpServletRequest request, @RequestBody TmDto tmDto){
-		System.out.println("tmember Controller");
-		
-		
-		int id = (int) session.getAttribute("id");
-		System.out.println("tmember"+id);
-		
-		if(session.getAttribute("id")!=null) {
-			Member member = memberRepository.findByMno(id);
-			Together together = togetherRepository.findById(Integer.parseInt(tmDto.getId())).get();
-			if(together.getTcode().equals(tmDto.getPw())){
-				tmemberService.tmemberSave(member,together);
-				return new ResponseEntity<String>("tmember ok!",HttpStatus.OK);
 
-			}else{
-				return new ResponseEntity<String>("fail",HttpStatus.OK);
+	@PostMapping("/save")
+	public ResponseEntity<?> tmemberSave(HttpServletRequest request, @RequestBody Together together) {
+		System.out.println("tmember Controller");
+
+		int id = (int) session.getAttribute("id");
+		System.out.println("tmember" + id);
+
+		if (session.getAttribute("id") != null) {
+			Member member = memberRepository.findByMno(id);
+
+			Together togetherEntity = togetherRepository.findByTnameAndTcodeEntity(together.getTname(),
+					together.getTcode());
+
+			if (togetherEntity != null) {
+				tmemberService.tmemberSave(member, togetherEntity);
+				return new ResponseEntity<String>("tmember ok!", HttpStatus.OK);
+
+			} else {
+				return new ResponseEntity<String>("fail", HttpStatus.OK);
 			}
-			
-			
+
 		}
-		
-		return new ResponseEntity<String>("You don't have authorization",HttpStatus.FORBIDDEN);
-		
+
+		return new ResponseEntity<String>("You don't have authorization", HttpStatus.FORBIDDEN);
+
 	}
-	
-	
-	@GetMapping("/get/{id}")
-	public List<Tmember> together(@PathVariable int id) {
+
+	@GetMapping("/get")
+	public List<Tmember> getGroup() {
+		System.out.println("여기옴");
 		List<Tmember> groupList = new ArrayList<Tmember>();
-//		System.out.println("sdlkfjsdlkfj");
-//		int id = (int) session.getAttribute("id");
-//		System.out.println("=========="+id);
+		int id = (int) session.getAttribute("id");
+
 		groupList = tmemberRepository.findByMno(id);
-		
-//		System.out.println(groupList.get(0));
-//		System.out.println(groupList.get(1));
-//		System.out.println("together하나찾기");
-//		System.out.println(id);
-//		Together together = togetherRepository.findByTno(id);
-//		
 
 		return groupList;
 	}
-	
-	
+
+	// 내가 속한 그룹 탈퇴
+	@DeleteMapping("/delete/{id}")
+	public ResponseEntity<?> delete(HttpServletRequest request, @PathVariable int id) {
+		System.out.println("삭제호출");
+
+		if (session.getAttribute("id") != null) {
+			int mid = (int) session.getAttribute("id");
+			System.out.println("member id:" + mid);
+			Together together = togetherService.togetherDetail(id);
+			System.out.println("to id: " + together.getMember().getMno());
+			if (mid != together.getMember().getMno()) {
+				tmemberService.tmemberDelete(mid, id);
+				return new ResponseEntity<String>("ok", HttpStatus.OK);
+			} else {
+				return new ResponseEntity<String>("you are master", HttpStatus.FORBIDDEN);
+			}
+		}
+		return new ResponseEntity<String>("You don't have authorization", HttpStatus.FORBIDDEN);
+
+	}
 }

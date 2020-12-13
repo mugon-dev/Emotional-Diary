@@ -39,6 +39,16 @@ public class BoardService {
 		return boardRepository.findAllMemberId(MemberId);	
 		}
 	
+	@Transactional
+	public List<Board> 나만의글목록(int memberId, int tno) {
+		return boardRepository.findAllMemberIdandTno(memberId,tno);	
+		}
+	
+	@Transactional
+	public List<Board> 그룹글목록(int tno) {
+		return boardRepository.findAllTno(tno);	
+		}
+	
 	//글수정
 	@Transactional
 	public int 글수정(Board board, int id, Member principal) {

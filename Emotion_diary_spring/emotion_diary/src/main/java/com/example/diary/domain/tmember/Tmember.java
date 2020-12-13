@@ -36,9 +36,11 @@ public class Tmember {
 	@ManyToOne()
 	private Member member;
 	
-	@JsonIgnoreProperties({"mno"})
-	@JoinColumn(name="tno")
-	@ManyToOne()
-	private Together together;
+	private int tno;
+	
+//	@JsonIgnoreProperties({"mno"})
+//	@JoinColumn(name="tno")
+//	@ManyToOne()
+//	private Together together;
 	
 }

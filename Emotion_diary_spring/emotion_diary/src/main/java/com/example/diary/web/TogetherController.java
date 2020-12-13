@@ -24,6 +24,7 @@ import com.example.diary.domain.together.TogetherRepository;
 import com.example.diary.dto.TogetDto;
 import com.example.diary.service.TogetherService;
 import com.example.diary.service.MemberService;
+import com.example.diary.service.TmemberService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -36,6 +37,7 @@ public class TogetherController {
 	private final MemberService memberService;
 	private final TogetherRepository togetherRepository;
 	private final MemberRepository memberRepository;
+	private final TmemberService tmemberService;
 
 	@GetMapping("/")
 	public List<Together> togetherList() {
@@ -51,7 +53,17 @@ public class TogetherController {
 		if (session.getAttribute("id") != null) {
 			Member member = memberRepository.findByMno(id);
 //			System.out.println("member"+member);
-			togetherService.togetherSave(member, together);
+			int result = togetherService.togetherSave(member, together);
+			System.out.println("그룹 저장?"+result);
+			
+			if(result==1) {				
+				int tno = togetherRepository.findByTnameAndTcode(together.getTname(), together.getTcode());
+//				together = togetherRepository.findById(id).get();
+				System.out.println("tno: "+tno);			
+				tmemberService.tmemberAutoSave(member, tno);
+			}
+			
+			
 			return new ResponseEntity<String>("together ok!", HttpStatus.OK);
 		}
 

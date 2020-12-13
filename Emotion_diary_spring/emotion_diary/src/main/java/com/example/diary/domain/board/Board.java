@@ -44,6 +44,11 @@ public class Board {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date createTime;
 	
+	@Column(length=1000)
+	private String emotion;
+	
+	private int tno;
+	
 	@JsonIgnoreProperties({"board"})
 	@JoinColumn(name="memberId")
 	@ManyToOne(fetch = FetchType.EAGER)

@@ -44,21 +44,47 @@ public class BoardController {
 	@GetMapping("/")
 	public List<Board> boardList() {
 		System.out.println("boardList");
-		return boardService.글목록();
+		List<Board> boardAll = boardService.글목록();
+		restfulController.boardAll(boardAll);
+		return boardAll;
 	}
-	
-	
-	// 내글 목록
+
+	// 내글 목록 (그룹 상관x)
 	@GetMapping("/my")
 	public List<Board> boardMyList(HttpServletRequest request) {
 		System.out.println("boardMyList");
-		int id = (int) session.getAttribute("id");
-		if(session.getAttribute("id") !=null) {
-			return boardService.내글목록(id);
+		int mno = (int) session.getAttribute("id");
+		if (session.getAttribute("id") != null) {
+			List<Board> myList = boardService.내글목록(mno);
+			restfulController.myBoard(myList, mno);
+			return myList;
 		}
 		return null;
 	}
-	
+
+	// 내글 목록 (그룹 관련)
+	@GetMapping("/myGroup")
+	public List<Board> myBoardGroupList(HttpServletRequest request) {
+		System.out.println("boardMyList");
+		int id = (int) session.getAttribute("id");
+		if (session.getAttribute("id") != null) {
+			List<Board> myGroupList = boardService.나만의글목록(id, 0);
+			restfulController.groupBoard(myGroupList, id);
+			return myGroupList;
+		}
+		return null;
+	}
+
+	// 그룹 글 목록
+	@GetMapping("/group/{id}")
+	public List<Board> myBoardGroupList(@PathVariable int id) {
+		System.out.println("boardMyList");
+		List<Board> boardList = boardService.그룹글목록(id);
+		restfulController.groupBoard(boardList, id);
+		return boardList;
+
+	}
+
 	// 글 등록
 	@PostMapping("/save")
 	public ResponseEntity<?> save(HttpServletRequest request, @RequestBody Board board) {
@@ -67,29 +93,38 @@ public class BoardController {
 //		Member principal = (Member) session.getAttribute("principal");
 		int id = (int) session.getAttribute("id");
 		System.out.println("보드꺼." + id);
+
+		BoardSaveRequestDto dto = new BoardSaveRequestDto();
+		dto.setBno(board.getBno());
+		dto.setContents(board.getContents());
+		dto.setTitle(board.getTitle());
+
+		Board emotion = restfulController.send(dto);
+//		emotion=emotion.replace("\\","");
+
 		if (session.getAttribute("id") != null) {
 			Member member = memberRepository.findByMno(id);
+			board.setEmotion(emotion.getEmotion());
 			boardService.글쓰기(board, member);
-			return new ResponseEntity<String>("글등록 완료", HttpStatus.CREATED);
+			return new ResponseEntity<String>("ok", HttpStatus.CREATED);
 		} else {
-			return new ResponseEntity<String>("글등록 실패 ", HttpStatus.FORBIDDEN);
+			return new ResponseEntity<String>("fail", HttpStatus.FORBIDDEN);
 		}
 
 	}
-
 
 	// 글 상세
 	@GetMapping("/get/{id}")
 	public Board boardDetail(@PathVariable int id) {
 		System.out.println("boardDetail");
-		
+
 		Board board = boardService.글상세(id);
-		
+
 		BoardSaveRequestDto dto = new BoardSaveRequestDto();
 		dto.setBno(board.getBno());
 		dto.setContents(board.getContents());
 		dto.setTitle(board.getTitle());
-		
+
 //		restfulController.send(dto);
 		return board;
 	}
@@ -121,7 +156,6 @@ public class BoardController {
 
 	}
 
-
 	// 글 수정
 	@PutMapping("/{id}")
 	public ResponseEntity<?> update(@RequestBody Board board, @PathVariable int id) {
@@ -151,4 +185,5 @@ public class BoardController {
 			return new ResponseEntity<String>("fail", HttpStatus.FORBIDDEN);
 		}
 	}
+
 }
