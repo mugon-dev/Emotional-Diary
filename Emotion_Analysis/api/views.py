@@ -24,12 +24,34 @@ def load_emolex(request):
     return HttpResponse("emolex load")
 
 
-def main(request):
-    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    return HttpResponse(BASE_DIR)
+def main(APIView):
+    def post(self, request, *args, **kwargs):
+        contents = []
+        for row in request.data:
+            contents.append(row["contents"])
+        emolex = BASE_DIR + "/api/static/emolex.xlsx"
+        # 사전 호출
+        emo_df = analysisPro.load_emolex(emolex)
+        saveDIR = BASE_DIR + "/api/static/"
+        # contents 형태소 분석
+        nouns = analysisPro.group_content(contents)
+        # 감정 분석
+        emotion_sum = analysisPro.emo_dataframe(nouns, emo_df)
+        # 워드클라우드
+        analysisPro.wordcloud(nouns, saveDIR, 0)
+        # 바 그래프
+        analysisPro.bar_graph(emotion_sum, saveDIR, 0)
+        # 선 그래프
+        analysisPro.line_graph(emotion_sum, saveDIR, 0)
+        # 파이 그래프
+        analysisPro.pie_graph(emotion_sum, saveDIR, 0)
+        # 레이더 그래프
+        analysisPro.raider_graph(emotion_sum, saveDIR, 0)
+
+    return Response(status=status.HTTP_200_OK)
 
 
-class getBoard(APIView):
+class analysisOne(APIView):
     model = Board
     serializer = BoardSerializer
 
@@ -42,34 +64,85 @@ class getBoard(APIView):
         serializer.is_valid(raise_exception=True)
         board = Board(bno=request.data["bno"], title=request.data["title"], contents=request.data["contents"])
         emolex = BASE_DIR + "/api/static/emolex.xlsx"
-        # 사전 호
+        # 사전 호출
         emo_df = analysisPro.load_emolex(emolex)
         saveDIR = BASE_DIR + "/api/static/board/"
         # contents 형태소 분석
         nouns = analysisPro.load_content(board)
         # 워드클라우드
-        analysisPro.wordcloud(nouns, saveDIR, board)
+        analysisPro.wordcloud(nouns, saveDIR, board.bno)
         # 감정 분석
         emotion_sum = analysisPro.emo_dataframe(nouns, emo_df)
         # 바 그래프
-        analysisPro.bar_graph(emotion_sum,saveDIR,board)
+        analysisPro.bar_graph(emotion_sum, saveDIR, board.bno)
         # 선 그래프
-        analysisPro.line_graph(emotion_sum,saveDIR,board)
+        analysisPro.line_graph(emotion_sum, saveDIR, board.bno)
         # 파이 그래프
-        analysisPro.pie_graph(emotion_sum, saveDIR, board)
+        analysisPro.pie_graph(emotion_sum, saveDIR, board.bno)
         # 레이더 그래프
-        analysisPro.raider_graph(emotion_sum, saveDIR, board)
+        analysisPro.raider_graph(emotion_sum, saveDIR, board.bno)
 
         return Response(status=status.HTTP_200_OK)
 
 
-class test(APIView):
-
+class saveBoard(APIView):
     def post(self, request, *args, **kwargs):
         board = Board(bno=request.data["bno"], title=request.data["title"], contents=request.data["contents"])
         emolex = BASE_DIR + "/api/static/emolex.xlsx"
         emo_df = analysisPro.load_emolex(emolex)
-        saveDIR = BASE_DIR + "/api/static/board/"
+        # contents 형태소 분석
         nouns = analysisPro.load_content(board)
+        emotion = analysisPro.emo_board(nouns, emo_df)
+        return Response({"emotion":emotion}, status=status.HTTP_200_OK)
+
+class analysisGroup(APIView):
+    def post(self, request,pk=None, *args, **kwargs):
+        contents = []
+        for row in request.data:
+            contents.append(row["contents"])
+        emolex = BASE_DIR + "/api/static/emolex.xlsx"
+        # 사전 호출
+        emo_df = analysisPro.load_emolex(emolex)
+        saveDIR = BASE_DIR + "/api/static/together/"
+        # contents 형태소 분석
+        nouns = analysisPro.group_content(contents)
+        # 감정 분석
         emotion_sum = analysisPro.emo_dataframe(nouns, emo_df)
+        # 워드클라우드
+        analysisPro.wordcloud(nouns, saveDIR, pk)
+        # 바 그래프
+        analysisPro.bar_graph(emotion_sum, saveDIR, pk)
+        # 선 그래프
+        analysisPro.line_graph(emotion_sum, saveDIR, pk)
+        # 파이 그래프
+        analysisPro.pie_graph(emotion_sum, saveDIR, pk)
+        # 레이더 그래프
+        analysisPro.raider_graph(emotion_sum, saveDIR, pk)
+
+        return Response(status=status.HTTP_200_OK)
+
+class analysisMy(APIView):
+    def post(self, request, pk=None, *args, **kwargs):
+        contents = []
+        for row in request.data:
+            contents.append(row["contents"])
+        emolex = BASE_DIR + "/api/static/emolex.xlsx"
+        # 사전 호출
+        emo_df = analysisPro.load_emolex(emolex)
+        saveDIR = BASE_DIR + "/api/static/my/"
+        # contents 형태소 분석
+        nouns = analysisPro.group_content(contents)
+        # 감정 분석
+        emotion_sum = analysisPro.emo_dataframe(nouns, emo_df)
+        # 워드클라우드
+        analysisPro.wordcloud(nouns, saveDIR, pk)
+        # 바 그래프
+        analysisPro.bar_graph(emotion_sum, saveDIR, pk)
+        # 선 그래프
+        analysisPro.line_graph(emotion_sum, saveDIR, pk)
+        # 파이 그래프
+        analysisPro.pie_graph(emotion_sum, saveDIR, pk)
+        # 레이더 그래프
+        analysisPro.raider_graph(emotion_sum, saveDIR, pk)
+
         return Response(status=status.HTTP_200_OK)

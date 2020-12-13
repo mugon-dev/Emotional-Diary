@@ -2,7 +2,7 @@ import konlpy
 from collections import Counter
 
 import matplotlib
-from konlpy.tag import Okt
+from konlpy.tag import Okt, Twitter, Kkma
 import matplotlib.pyplot as plt
 from matplotlib import font_manager, rc
 import pytagcloud
@@ -14,6 +14,9 @@ from matplotlib.path import Path
 from matplotlib.spines import Spine
 from matplotlib.transforms import Affine2D
 from threading import Thread
+import pygame
+pygame.init()
+
 matplotlib.use('Agg')
 
 
@@ -40,21 +43,29 @@ def corr_emotion(emolex_df, dir):
 
 
 def load_content(board):
-    print("load_contents", board.contents)
     target = board.contents
     okt = Okt()
     nouns = okt.nouns(target)
     return nouns
 
 
+def group_content(contents):
+    okt = Okt()
+    nouns_list = []
+    for data in contents:
+        nouns = okt.nouns(data)
+        for noun in nouns:
+            nouns_list.append(noun)
+    return nouns_list
+
+
 # 형태소 분석한 결과 가져와서 워드 클라우드 생성
 
-
-def wordcloud(nouns, root, board):
+def wordcloud(nouns, root, number):
     count = Counter(nouns)
     tag = count.most_common(30)
     taglist = pytagcloud.make_tags(tag)
-    save = root + "wordcloud" + str(board.bno) + ".png"
+    save = root + "wordcloud" + str(number) + ".png"
     pytagcloud.create_tag_image(taglist, save,
                                 size=(900, 600), background=(234, 234, 227, 255), fontname='Korean', rectangular=False)
 
@@ -65,45 +76,60 @@ def wordcloud(nouns, root, board):
 def emo_dataframe(nouns, emolex_df):
     analysis_df = emolex_df[emolex_df["Korean (ko)"].isin(nouns)]
     # 감정별로 합산
-    emotion_sum = analysis_df[["Positive", "Negative", "Anger", "Anticipation","Disgust", "Fear", "Joy", "Sadness", "Surprise", "Trust"]].sum()
+    emotion_sum = analysis_df[
+        ["Positive", "Negative", "Anger", "Anticipation", "Disgust", "Fear", "Joy", "Sadness", "Surprise",
+         "Trust"]].sum()
     return emotion_sum
+
+
+def emo_board(nouns, emolex_df):
+    analysis_df = emolex_df[emolex_df["Korean (ko)"].isin(nouns)]
+    emotion_sum = analysis_df[["Anger", "Anticipation", "Disgust", "Fear", "Joy", "Sadness", "Surprise", "Trust"]].sum()
+    emotion = emotion_sum.idxmax()
+    return emotion
 
 
 # 감정분석 결과 바 그래프
 
 
-def bar_graph(emotion_sum, root, board):
+def bar_graph(emotion_sum, root, number):
     x = ["Positive", "Negative", "Anger", "Anticipation",
          "Disgust", "Fear", "Joy", "Sadness", "Surprise", "Trust"]
     plt.barh(x, emotion_sum, color='blue')
-    plt.xlim(0,emotion_sum.sum(axis=0))
-    plt.savefig(root + "bar" + str(board.bno) + ".png", dpi=100, facecolor=("#EAEAE3"), transparent=True, bbox_inches='tight')
+    plt.xlim(0, emotion_sum.sum(axis=0))
+    plt.savefig(root + "bar" + str(number) + ".png", dpi=100, facecolor=("#EAEAE3"), transparent=True,
+                bbox_inches='tight')
     plt.close()
+
 
 # 선그래프
 
 
-def line_graph(emotion_sum, root, board):
+def line_graph(emotion_sum, root, number):
     x = ["Positive", "Negative", "Anger", "Anticipation",
          "Disgust", "Fear", "Joy", "Sadness", "Surprise", "Trust"]
     plt.plot(x, emotion_sum)
-    plt.savefig(root + "line" + str(board.bno) + ".png", dpi=100, facecolor=("#EAEAE3"), transparent=True, bbox_inches='tight')
+    plt.savefig(root + "line" + str(number) + ".png", dpi=100, facecolor=("#EAEAE3"), transparent=True,
+                bbox_inches='tight')
     plt.close()
+
 
 # 파이그래프
 
 
-def pie_graph(emotion_sum, root, board):
+def pie_graph(emotion_sum, root, number):
     x = ["Positive", "Negative", "Anger", "Anticipation",
          "Disgust", "Fear", "Joy", "Sadness", "Surprise", "Trust"]
     plt.pie(emotion_sum, labels=x, autopct='%.1f%%')
-    plt.savefig(root + "pie" + str(board.bno) + ".png", dpi=100, facecolor=("#EAEAE3"), transparent=True, bbox_inches='tight')
+    plt.savefig(root + "pie" + str(number) + ".png", dpi=100, facecolor=("#EAEAE3"), transparent=True,
+                bbox_inches='tight')
     plt.close()
+
 
 # 레이더 그래프
 
 
-def raider_graph(emotion_sum, root, board):
+def raider_graph(emotion_sum, root, number):
     # plotThread = Thread(target=raider_graph)
     # plotThread.daemon = True
     # plotThread.start()
@@ -142,11 +168,14 @@ def raider_graph(emotion_sum, root, board):
         plt.title('test', size=20, color=color, x=-0.2, y=1.2, ha='left')
 
     plt.tight_layout(pad=5)  # subplot간 패딩 조절
-    plt.savefig(root + "raider" + str(board.bno) + ".png", dpi=100, facecolor=("#EAEAE3"), transparent=True, bbox_inches='tight')
+    plt.savefig(root + "raider" + str(number) + ".png", dpi=100, facecolor=("#EAEAE3"), transparent=True,
+                bbox_inches='tight')
     plt.close()
     # plotThread.join()
 
     # 게시글 하나 분석
+
+
 def analysisOneContent(board, emolex, root):
     # 게시글 호출, 형태소 분석
     nouns = load_content(board)
@@ -164,4 +193,3 @@ def analysisOneContent(board, emolex, root):
     line_graph(emotion_sum, root, board)
     # 레이더 그래프
     raider_graph(emotion_sum, root, board)
-
