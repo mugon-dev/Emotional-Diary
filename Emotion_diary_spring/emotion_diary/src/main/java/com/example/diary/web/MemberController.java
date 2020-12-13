@@ -33,8 +33,22 @@ public class MemberController {
 	// 회원가입
 	@PostMapping("/join")
 	public ResponseEntity<?> join(@RequestBody Member member) {
-		memberService.join(member);
-		return new ResponseEntity<String>("ok", HttpStatus.CREATED);
+		System.out.println("join 호출");
+		
+		String checkId = member.getId();
+		System.out.println("join id: "+checkId);
+		
+		int check = memberService.check(checkId);
+		
+		if(check == 0) {
+			memberService.join(member);
+			return new ResponseEntity<String>("ok", HttpStatus.CREATED);			
+		}else if(check == 1) {
+			return new ResponseEntity<String>("id duplicate", HttpStatus.CREATED);
+		}else {
+			return new ResponseEntity<String>("fail", HttpStatus.CREATED);
+		}
+		
 	}
 
 	// 로그아웃
