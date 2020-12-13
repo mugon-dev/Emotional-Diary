@@ -47,6 +47,8 @@ public class FilterConfig {
 		
 		bean.addUrlPatterns("/board/*");
 		bean.addUrlPatterns("/together/*");
+//		bean.addUrlPatterns("/tmember/*");
+		
 		
 		
 		bean.setOrder(2); // 낮은 번호부터 실행됨.

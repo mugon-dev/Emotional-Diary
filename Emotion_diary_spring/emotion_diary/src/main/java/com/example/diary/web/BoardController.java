@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.diary.domain.board.Board;
@@ -29,6 +30,7 @@ import com.example.diary.service.BoardService;
 
 import lombok.RequiredArgsConstructor;
 
+@RequestMapping("/board")
 @RestController
 @RequiredArgsConstructor
 public class BoardController {
@@ -38,8 +40,27 @@ public class BoardController {
 	private final MemberRepository memberRepository;
 	private final RestfulController restfulController;
 
+	// 글 목록
+	@GetMapping("/")
+	public List<Board> boardList() {
+		System.out.println("boardList");
+		return boardService.글목록();
+	}
+	
+	
+	// 내글 목록
+	@GetMapping("/my")
+	public List<Board> boardMyList(HttpServletRequest request) {
+		System.out.println("boardMyList");
+		int id = (int) session.getAttribute("id");
+		if(session.getAttribute("id") !=null) {
+			return boardService.내글목록(id);
+		}
+		return null;
+	}
+	
 	// 글 등록
-	@PostMapping("/board")
+	@PostMapping("/save")
 	public ResponseEntity<?> save(HttpServletRequest request, @RequestBody Board board) {
 //		System.out.println("board save 호출");
 //		System.out.println("세션?"+session.getId());
@@ -56,16 +77,9 @@ public class BoardController {
 
 	}
 
-	// 글 상세
-//	@GetMapping("/board/{id}")
-//	public ResponseEntity<?> detail(@PathVariable int id) {
-//		System.out.println("boardDetail");
-////		restfulController.send(boardService.글상세(id));
-//		return new ResponseEntity<Board>(boardService.글상세(id), HttpStatus.OK);
-//	}
 
 	// 글 상세
-	@GetMapping("/board/de/{id}")
+	@GetMapping("/get/{id}")
 	public Board boardDetail(@PathVariable int id) {
 		System.out.println("boardDetail");
 		
@@ -76,11 +90,11 @@ public class BoardController {
 		dto.setContents(board.getContents());
 		dto.setTitle(board.getTitle());
 		
-		restfulController.send(dto);
+//		restfulController.send(dto);
 		return board;
 	}
 
-	@GetMapping("/board/one/{id}")
+	@GetMapping("/one/{id}")
 	public Board oneDetail(@PathVariable int id) {
 		Board board = boardService.글상세(id);
 		BoardSaveRequestDto dto = new BoardSaveRequestDto();
@@ -107,13 +121,9 @@ public class BoardController {
 
 	}
 
-	@GetMapping("/board/{userId}")
-	public ResponseEntity<?> myBoardList(@PathVariable String userId) {
-		return new ResponseEntity<List<Board>>(boardService.내글목록(userId), HttpStatus.OK);
-	}
 
 	// 글 수정
-	@PutMapping("/board/{id}")
+	@PutMapping("/{id}")
 	public ResponseEntity<?> update(@RequestBody Board board, @PathVariable int id) {
 		int sid = (int) session.getAttribute("id");
 		System.out.println("멤버 id." + sid);
@@ -127,7 +137,7 @@ public class BoardController {
 	}
 
 	// 글 삭제
-	@DeleteMapping("/board/{id}")
+	@DeleteMapping("/{id}")
 	public ResponseEntity<?> delete(@PathVariable int id) {
 		System.out.println("삭제호출");
 		int sid = (int) session.getAttribute("id");

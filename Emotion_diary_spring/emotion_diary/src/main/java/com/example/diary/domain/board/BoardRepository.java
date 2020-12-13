@@ -11,5 +11,6 @@ public interface BoardRepository extends JpaRepository<Board, Integer> {
 	List<Board> selectMyBoard(String userId);
 
 	
-	
+	@Query(value = "select * from board where memberId = :memberId", nativeQuery = true)
+	List<Board> findAllMemberId(int memberId);
 }
