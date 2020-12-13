@@ -1,38 +1,45 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-const InputStyle = styled.input`
-  height: 35px;
-  width: 100%;
-  color: rgb(100, 100, 100);
-  font-size: 15px;
-  border: 1px solid #003458;
-  border-radius: 6px;
-  margin: 10px 10px;
-`;
 const ModifyStyle = styled.div`
   display: grid;
-  grid-template-columns: 20% 100%;
+  grid-template-columns: auto;
+  width: 700px;
+  padding: 50px 10px 10px 10px;
+  // border: 1px solid #003458;
 `;
-const LabelBoxStyle = styled.div`
-  display: grid;
+const LabelStyle = styled.div`
+  font-size: 23px;
 `;
-const InputBoxStyle = styled.div`
-  display: grid;
-`;
+
 const ButtonBoxStyle = styled.div`
   display: grid;
   grid-template-columns: auto auto;
+  grid-column-gap: 10px;
   justify-content: end;
+  margin: 10px;
 `;
-const Modify = () => {
+const Modify = (props) => {
+  const id = props.match.params.id;
   const [user, setUser] = useState({
-    userId: '',
-    userName: '',
-    password: '',
-    rePassword: '',
+    id: '',
+    name: '',
+    pw: '',
   });
-
+  useEffect(() => {
+    fetch('http://10.100.102.31:8000/member/get/' + id, {
+      method: 'GET',
+      headers: {
+        Authorization: localStorage.getItem('Authorization'),
+      },
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        setUser(res);
+        console.log('res', res);
+        console.log('user', user);
+      });
+  }, []);
   function inputHandle(e) {
     setUser({
       ...user,
@@ -54,48 +61,64 @@ const Modify = () => {
   }
 
   return (
-    <div>
-      <ModifyStyle>
-        <LabelBoxStyle>
-          <label>userId</label>
-          <label>userName</label>
-
-          <label>pw</label>
-
-          <label>pw 확인 </label>
-        </LabelBoxStyle>
-        <InputBoxStyle>
-          <div>{user.userId}</div>
-          <br />
-
-          <InputStyle
+    <ModifyStyle>
+      <form>
+        회원 정보를 수정 해주세요
+        <div class="form-group">
+          <LabelStyle>userId</LabelStyle>
+          <input
+            class="form-control form-control-lg"
+            type="text"
+            name="userId"
+            onChange={inputHandle}
+            value={user.id}
+            readOnly={true}
+          />
+        </div>
+        <div class="form-group">
+          <LabelStyle>userName</LabelStyle>
+          <input
+            class="form-control form-control-lg"
             type="text"
             name="userName"
             onChange={inputHandle}
-            value={user.userName}
+            value={user.name}
           />
-          <br />
-          <InputStyle
+        </div>
+        <div class="form-group">
+          <LabelStyle>pw</LabelStyle>
+          <input
+            class="form-control form-control-lg"
             type="password"
             name="password"
             onChange={inputHandle}
-            value={user.password}
+            value={user.pw}
           />
-          <br />
-          <InputStyle
+        </div>
+        <div class="form-group">
+          <LabelStyle>pw 확인 </LabelStyle>
+          <input
+            class="form-control form-control-lg"
             type="password"
             name="rePassword"
             value={user.rePassword}
             onChange={inputHandle}
           />
-          <br />
-        </InputBoxStyle>
+        </div>
         <ButtonBoxStyle>
-          <button onClick={reset}>취소</button>
-          <button onClick={submitModify}>수정</button>
+          <button type="button" class="btn btn-secondary" onClick={reset}>
+            취소
+          </button>
+          <button
+            type="button"
+            class="btn btn-secondary"
+            onClick={submitModify}
+          >
+            수정
+          </button>
         </ButtonBoxStyle>
-      </ModifyStyle>
-    </div>
+      </form>
+    </ModifyStyle>
   );
 };
 

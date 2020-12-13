@@ -1,12 +1,16 @@
 import FullCalendar from '@fullcalendar/react';
 import interactionPlugin from '@fullcalendar/interaction';
 import dayGridPlugin from '@fullcalendar/daygrid';
+import bootstrapPlugin from '@fullcalendar/bootstrap';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+
 const MyDiaryStyle = styled.div`
-  width: 700px;
-  height: 900px;
-  align-items: center;
+  display: grid;
+  max-width: 100%;
+  align-content: baseline;
+  grid-template-columns: 100%;
+  padding: 10px 10px;
 `;
 
 const MyDiary = () => {
@@ -37,14 +41,17 @@ const MyDiary = () => {
     })
       .then((res) => res.json())
       .then((res) => {
-        console.log('res.bn0', res);
+        console.log('res.bno', res.bno);
 
-        setBoards(res);
+        setBoards({
+          id: res.bno,
+          title: res.title,
+          start: res.createTime,
+        });
+        //setBoards(res);
         console.log('aaa', boards);
-        console.log('bbb', eventDb);
       });
   }, []);
-  let eventGuid = 0;
   const [selectDate, setSelectDate] = useState({
     start: '',
     end: '',
@@ -95,12 +102,13 @@ const MyDiary = () => {
     <MyDiaryStyle>
       <br />
       <FullCalendar
-        plugins={[dayGridPlugin, interactionPlugin]}
+        plugins={[dayGridPlugin, interactionPlugin, bootstrapPlugin]}
         headerToolbar={{
           left: 'prev',
           center: 'title',
           right: 'next',
         }}
+        themeSystem="bootstrap"
         contentHeight="auto"
         handleWindowResize={true}
         locale="ko"
@@ -110,7 +118,8 @@ const MyDiary = () => {
         selectMirror={true}
         dayMaxEvents={true}
         weekends={true}
-        initialEvents={boards} // alternatively, use the `events` setting to fetch from a feed
+        //initialEvents={boards} // alternatively, use the `events` setting to fetch from a feed
+        events={boards}
         select={handleDateSelect}
         eventContent={renderEventContent} // custom render function
         eventClick={handleEventClick}

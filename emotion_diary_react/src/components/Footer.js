@@ -5,12 +5,14 @@ const FooterStyle = styled.div`
   display: grid;
   grid-template-columns: auto;
   justify-content: center;
+  font-size: 21px;
 `;
 const Footer = () => {
   return (
     <FooterStyle>
-      <h3>Copyright © 2018 tcpschool.co.,Ltd. All rights reserved.</h3>
-      <h4>Contact webmaster for more information. 070-1234-5678</h4>
+      Copyright © 2018 tcpschool.co.,Ltd. All rights reserved.
+      <br />
+      Contact webmaster for more information. 070-1234-5678
     </FooterStyle>
   );
 };

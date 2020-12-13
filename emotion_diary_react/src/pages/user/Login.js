@@ -2,18 +2,21 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
+import jwt_decode from 'jwt-decode';
 import { login } from '../../store';
 
+const LoginStyle = styled.div`
+  display: grid;
+`;
 const LoginBoxStyle = styled.div`
   display: grid;
-
   height: 500px;
   grid-template-columns: 50% 40%;
-  border: 1px solid #003458;
+  // border: 1px solid #003458;
   align-items: center;
   margin: 10px 10px;
 `;
-const InputStyle = styled.input`
+/* const InputStyle = styled.input`
   display: grid;
   height: 35px;
   width: 100%;
@@ -21,15 +24,7 @@ const InputStyle = styled.input`
   font-size: 15px;
   border: 1px solid #003458;
   border-radius: 6px;
-`;
-const LabelStyle = styled.div`
-  font-size: 23px;
-`;
-const ButtonBoxStyle = styled.div`
-  display: grid;
-  grid-template-columns: auto auto auto;
-  justify-content: end;
-`;
+`; 
 const ButtonStyle = styled.button`
   background-color: transparent;
   color: #003458;
@@ -42,9 +37,21 @@ const ButtonStyle = styled.button`
   cursor: pointer;
   margin: 10px;
 `;
+*/
+const LabelStyle = styled.div`
+  font-size: 23px;
+`;
+const ButtonBoxStyle = styled.div`
+  display: grid;
+  grid-template-columns: auto auto auto;
+  grid-column-gap: 10px;
+  justify-content: end;
+  margin: 10px;
+`;
 const TitleStyle = styled.div`
   font-size: 60px;
   text-align: center;
+  border: 1px solid #003458;
 `;
 
 const Login = () => {
@@ -71,6 +78,18 @@ const Login = () => {
     });
   }
 
+  function jwttoken() {
+    let mid = 0;
+    if (localStorage.getItem('Authorization') != null) {
+      let jwtTokenTemp = localStorage.getItem('Authorization');
+      let jwtToken = jwtTokenTemp.replace('Bearer ', '');
+      console.log('토큰 : ', jwtToken);
+      mid = jwt_decode(jwtToken).id;
+      console.log('mid', mid);
+      localStorage.setItem('id', mid);
+    }
+  }
+
   const submitLogin = (e) => {
     e.preventDefault();
 
@@ -89,57 +108,69 @@ const Login = () => {
           } else {
           }
         }
-
         // console.log('hhh', res.text());
         return res.text();
       })
       .then((res) => {
         console.log(res);
         if (res === 'ok') {
-          localStorage.setItem('user', user.id);
+          //유저네임 저장
+          localStorage.setItem('username', user.id);
           alert('로그인 완료');
           dispatch(login());
           history.push('/diary');
+          jwttoken();
         } else {
           alert('아이디 혹은 비번을 다시 입력하세요!');
         }
       });
   };
-
   return (
-    <div>
+    <LoginStyle>
       <TitleStyle>당신의 감정은 어떠한가요 ?</TitleStyle>
-
       <LoginBoxStyle>
         <h1>워드 클라우드 사진</h1>
         <form>
-          <LabelStyle>아이디</LabelStyle>
-          <br />
-          <InputStyle
-            type="text"
-            name="id"
-            onChange={inputHandle}
-            value={user.id}
-          />
-          <br />
-          <LabelStyle>비밀번호</LabelStyle>
-          <br />
-          <InputStyle
-            type="password"
-            name="pw"
-            onChange={inputHandle}
-            value={user.pw}
-          />
+          <div class="form-group">
+            <LabelStyle>아이디</LabelStyle>
+            <input
+              class="form-control form-control-lg"
+              type="text"
+              name="id"
+              onChange={inputHandle}
+              value={user.id}
+            />
+          </div>
+          <div class="form-group">
+            <LabelStyle>비밀번호</LabelStyle>
+            <input
+              class="form-control form-control-lg"
+              type="password"
+              name="pw"
+              onChange={inputHandle}
+              value={user.pw}
+            />
+          </div>
           <ButtonBoxStyle>
             <Link to="/join">
-              <ButtonStyle>회원가입</ButtonStyle>
+              <button type="button" class="btn btn-secondary">
+                회원가입
+              </button>
             </Link>
-            <ButtonStyle onClick={submitLogin}>로그인</ButtonStyle>
-            <ButtonStyle onClick={reset}>취소</ButtonStyle>
+            <button
+              type="button"
+              class="btn btn-secondary"
+              onClick={submitLogin}
+            >
+              로그인
+            </button>
+            <button type="button" class="btn btn-secondary" onClick={reset}>
+              취소
+            </button>
           </ButtonBoxStyle>
         </form>
       </LoginBoxStyle>
-    </div>
+    </LoginStyle>
   );
 };
 

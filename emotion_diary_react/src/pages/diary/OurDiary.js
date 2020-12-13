@@ -1,10 +1,17 @@
 import FullCalendar from '@fullcalendar/react';
 import interactionPlugin from '@fullcalendar/interaction';
-import dayGridPlugin from '@fullcalendar/daygrid';
+import timeGridPlugin from '@fullcalendar/timegrid';
+import bootstrapPlugin from '@fullcalendar/bootstrap';
 import React from 'react';
 import styled from 'styled-components';
 
-const OurDiaryStyle = styled.div``;
+const OurDiaryStyle = styled.div`
+  display: grid;
+  max-width: 100%;
+  align-content: baseline;
+  grid-template-columns: 100%;
+  padding: 10px 10px;
+`;
 const OurDiary = () => {
   let eventGuid = 0;
 
@@ -48,21 +55,24 @@ const OurDiary = () => {
       <br />
       {/*       <MyCalendar /> */}
       <FullCalendar
-        plugins={[dayGridPlugin, interactionPlugin]}
-        height="600px"
+        plugins={[timeGridPlugin, interactionPlugin, bootstrapPlugin]}
         headerToolbar={{
           left: 'prev',
-          center: 'title today',
+          center: 'title',
           right: 'next',
         }}
+        themeSystem="bootstrap"
+        contentHeight="auto"
+        handleWindowResize={true}
         locale="ko"
-        initialView="dayGridMonth"
+        initialView="timeGridWeek"
         editable={true}
         selectable={true}
         selectMirror={true}
         dayMaxEvents={true}
         weekends={true}
-        initialEvents={INITIAL_EVENTS} // alternatively, use the `events` setting to fetch from a feed
+        //initialEvents={boards} // alternatively, use the `events` setting to fetch from a feed
+        //vents={boards}
         select={handleDateSelect}
         eventContent={renderEventContent} // custom render function
         eventClick={handleEventClick}

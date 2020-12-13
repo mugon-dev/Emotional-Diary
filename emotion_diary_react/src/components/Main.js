@@ -10,14 +10,17 @@ import Modify from '../pages/user/Modify';
 
 const MainStyle = styled.div`
   display: grid;
+  grid-template-columns: auto;
+  min-height: 900px;
+  max-width: 0100%;
   overflow: scroll;
-  grid-column-gap: 10px;
   margin: 20px 20px;
-  //grid-template-columns: 70% 30%;
-  justify-content: space-around;
+  padding: 0px 0px 8px 0px;
+  justify-content: center;
   border: 2px solid #003458;
   border-radius: 10px;
   background-color: #eaeae3;
+
   &::-webkit-scrollbar {
     /* 세로 스크롤 넓이 */
     width: 8px;
@@ -39,7 +42,7 @@ const Main = () => {
     <MainStyle>
       <Switch>
         <Route exact path="/diary/" component={MyDiary} />
-        <Route path="/diary/modify" component={Modify} />
+        <Route path="/diary/usermodify/:id" component={Modify} />
         <Route path="/diary/our" component={OurDiary} />
         <Route path="/diary/write" component={MyDiaryWrite} />
         <Route path="/diary/detail" component={MyDiaryDetail} />
