@@ -23,8 +23,8 @@ def load_emolex(request):
     # analysisPro.corr_emotion(emo_df,dir)
     return HttpResponse("emolex load")
 
+class main(APIView):
 
-def main(APIView):
     def post(self, request, *args, **kwargs):
         contents = []
         for row in request.data:
@@ -48,7 +48,7 @@ def main(APIView):
         # 레이더 그래프
         analysisPro.raider_graph(emotion_sum, saveDIR, 0)
 
-    return Response(status=status.HTTP_200_OK)
+        return Response({"result":"success"},status=status.HTTP_200_OK)
 
 
 class analysisOne(APIView):
@@ -82,7 +82,7 @@ class analysisOne(APIView):
         # 레이더 그래프
         analysisPro.raider_graph(emotion_sum, saveDIR, board.bno)
 
-        return Response(status=status.HTTP_200_OK)
+        return Response({"result":"success"},status=status.HTTP_200_OK)
 
 
 class saveBoard(APIView):
@@ -119,7 +119,7 @@ class analysisGroup(APIView):
         # 레이더 그래프
         analysisPro.raider_graph(emotion_sum, saveDIR, pk)
 
-        return Response(status=status.HTTP_200_OK)
+        return Response({"result":"success"},status=status.HTTP_200_OK)
 
 class analysisMy(APIView):
     def post(self, request, pk=None, *args, **kwargs):
@@ -145,4 +145,4 @@ class analysisMy(APIView):
         # 레이더 그래프
         analysisPro.raider_graph(emotion_sum, saveDIR, pk)
 
-        return Response(status=status.HTTP_200_OK)
+        return Response({"result":"success"},status=status.HTTP_200_OK)
