@@ -3,15 +3,60 @@ package com.example.emotion_dairy;
 import java.util.Date;
 
 public class BoardData {
-    private Date date;
-    private String name;
+    private String createTime;
     private String title;
-    private String content;
+    private String contents;
+    private int tno;
 
-    public BoardData(Date date, String name, String title, String content){
-        this.date = date;
-        this.name = name;
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
+    }
+
+
+    public void setTitle(String title) {
         this.title = title;
-        this.content = content;
+    }
+
+    public void setTno(int tno) {
+        this.tno = tno;
+    }
+
+    public void setContents(String contents) {
+        this.contents = contents;
+    }
+
+    public String getCreateTime() {
+        return createTime;
+    }
+
+    public int getTno() {
+        return tno;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getContents() {
+        return contents;
+    }
+    public BoardData(){
+
+    }
+
+    public BoardData(String createTime, String title, String contents){
+        this.createTime = createTime;
+        this.title = title;
+        this.contents = contents;
+    }
+
+    @Override
+    public String toString() {
+        return "BoardData{" +
+                "date=" + createTime +
+                ", title='" + title + '\'' +
+                ", content='" + contents + '\'' +
+                ", tno='" + tno + '\'' +
+                '}';
     }
 }

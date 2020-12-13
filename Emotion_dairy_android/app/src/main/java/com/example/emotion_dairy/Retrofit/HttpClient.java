@@ -15,7 +15,7 @@ public class HttpClient {
         Gson gson = new GsonBuilder().setLenient().create();
         if(retrofit == null) {
             Retrofit.Builder builder = new Retrofit.Builder();
-            builder.baseUrl("http://10.100.102.31:8000/");
+            builder.baseUrl("http://10.100.102.14:8000/");
             builder.addConverterFactory(GsonConverterFactory.create(gson));
 
             retrofit = builder.build();

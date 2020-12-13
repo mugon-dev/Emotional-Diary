@@ -1,12 +1,15 @@
 package com.example.emotion_dairy.Retrofit;
 
+import com.example.emotion_dairy.BoardData;
 import com.example.emotion_dairy.Retrofit.DTO.Authorization;
 import com.example.emotion_dairy.Retrofit.DTO.ReqJoinDTO;
 import com.example.emotion_dairy.Retrofit.DTO.ReqLoginDTO;
+import com.example.emotion_dairy.Retrofit.DTO.ResGetGroup;
 import com.example.emotion_dairy.Retrofit.DTO.ResLoginDTO;
 import com.example.emotion_dairy.Retrofit.DTO.SoloBoardDTO;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -28,4 +31,10 @@ public interface ApiInterface {
 
     @GET("board/get/2")
     Call<SoloBoardDTO> requestSoloBoardTest(@Header("Authorization") String auth);
+
+    @POST("board/save")
+    Call<String> boardWrite(@Header("Authorization") String auth, @Body BoardData boardData);
+
+    @GET("tmember/get")
+    Call<List<ResGetGroup>> getGroup(@Header("Authorization") String auth);
 }

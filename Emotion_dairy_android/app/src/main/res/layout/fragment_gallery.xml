@@ -5,14 +5,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/backColor"
     tools:context=".ui.gallery.GalleryFragment">
 
 
-    <TextView
-        android:id="@+id/ttt"
-        android:layout_width="match_parent"
+    <Spinner
+        android:id="@+id/spinnerGroup"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
+        android:focusedByDefault="true"
+        android:gravity="center" />
+
+    <TextView
+        android:id="@+id/tvGroupName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:text="그룹 이름"
         android:textSize="30dp" />
 

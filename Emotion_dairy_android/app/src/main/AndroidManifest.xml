@@ -13,8 +13,6 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity android:name=".BoardWrite"></activity>
-        <activity android:name=".ui.board.BoardWrite" />
-        <activity android:name=".Board.BoardWrite" />
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"

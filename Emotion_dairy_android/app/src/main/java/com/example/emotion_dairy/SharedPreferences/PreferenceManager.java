@@ -3,6 +3,8 @@ package com.example.emotion_dairy.SharedPreferences;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.example.emotion_dairy.GroupList;
+
 public class PreferenceManager {
     public static final String PREFERENCES_NAME = "rebuild_preference";
     private static final String DEFAULT_VALUE_STRING = "";
@@ -29,6 +31,7 @@ public class PreferenceManager {
         editor.putInt(key, value);
         editor.commit();
     }
+
     public static String getString(Context context, String key) {
 
         SharedPreferences prefs = getPreferences(context);

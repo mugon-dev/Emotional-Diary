@@ -10,71 +10,80 @@
     android:orientation="vertical" >
 
     <ScrollView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    <LinearLayout
-        android:layout_width="417dp"
-        android:layout_height="696dp"
-        android:orientation="vertical"
-        tools:layout_editor_absoluteX="-6dp">
-
-        <com.applandeo.materialcalendarview.CalendarView
-            android:id="@+id/calendarView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:type="one_day_picker"
-            app:eventsEnabled="true"
-            >
-
-        </com.applandeo.materialcalendarview.CalendarView>
-
-        <Button
-            android:id="@+id/btnWrite"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="글쓰기" />
-
-        <TextView
-            android:id="@+id/tv_date"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:textSize="30dp"
-            android:gravity="center"
-            android:text="ㅋㅋ" />
-
-        <TextView
-            android:id="@+id/tv_contentview"
-            android:layout_width="match_parent"
-            android:layout_height="157dp"
-            android:hint="내용을 입력하세요"
-            android:background="@color/backColor"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:layout_width="417dp"
+            android:layout_height="696dp"
+            android:orientation="vertical"
+            tools:layout_editor_absoluteX="-6dp">
+
+            <com.applandeo.materialcalendarview.CalendarView
+                android:id="@+id/calendarView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:eventsEnabled="true"
+                app:type="one_day_picker">
+
+            </com.applandeo.materialcalendarview.CalendarView>
 
             <Button
-                android:id="@+id/button7"
-                android:layout_width="wrap_content"
+                android:id="@+id/btnWrite"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="수정" />
+                android:text="글쓰기" />
 
-            <Button
-                android:id="@+id/button6"
-                android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/tv_date"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="삭제" />
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:gravity="center"
+                android:text="ㅋㅋ"
+                android:textSize="30dp" />
+
+            <TextView
+                android:id="@+id/tv_contentview"
+                android:layout_width="match_parent"
+                android:layout_height="157dp"
+                android:background="@color/backColor"
+                android:ems="10"
+                android:hint="내용을 입력하세요"
+                android:inputType="textPersonName"
+                android:text="Name" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"></LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/button7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="수정" />
+
+                <Button
+                    android:id="@+id/button6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="삭제" />
+            </LinearLayout>
+
         </LinearLayout>
-
-    </LinearLayout>
 
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

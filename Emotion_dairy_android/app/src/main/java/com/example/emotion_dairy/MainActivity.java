@@ -10,11 +10,19 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.applandeo.materialcalendarview.EventDay;
+import com.example.emotion_dairy.Retrofit.ApiInterface;
+import com.example.emotion_dairy.Retrofit.DTO.ResGetGroup;
+import com.example.emotion_dairy.Retrofit.HttpClient;
+import com.example.emotion_dairy.SharedPreferences.PreferenceManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RestrictTo;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -23,15 +31,21 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class MainActivity extends AppCompatActivity {
 
-
+    ApiInterface api;
 
     private AppBarConfiguration mAppBarConfiguration;
+    List<ResGetGroup> list = new ArrayList<ResGetGroup>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,6 +54,8 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         FloatingActionButton fab = findViewById(R.id.fab);
+        api= HttpClient.getRetrofit().create(ApiInterface.class);
+        getData();
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -63,6 +79,33 @@ public class MainActivity extends AppCompatActivity {
 
         //Fragment Manager
 
+    }
+    public void getData(){
+        List<GroupList> gList=new ArrayList<GroupList>();
+        String auth = PreferenceManager.getString(this,"Auth");
+        Call<List<ResGetGroup>> call=api.getGroup(auth);
+        call.enqueue(new Callback<List<ResGetGroup>>() {
+            @Override
+            public void onResponse(Call<List<ResGetGroup>> call, Response<List<ResGetGroup>> response) {
+                list=response.body();
+                for(int i=0;i<list.size();i++){
+                    GroupList group = new GroupList(list.get(i).getTogether().getTno(),list.get(i).getTogether().getTname());
+                    gList.add(group);
+                }
+                Log.d("log","그룹데이터 : "+gList.get(0));
+                Gson gson = new GsonBuilder().create();
+                Type listType = new TypeToken<ArrayList<GroupList>>(){}.getType();
+                String jsonGroup = gson.toJson(gList,listType);
+                PreferenceManager.setString(MainActivity.this,"Group",jsonGroup);
+                Log.d("log","json data : "+jsonGroup);
+                Log.d("log","통신성공");
+            }
+
+            @Override
+            public void onFailure(Call<List<ResGetGroup>> call, Throwable t) {
+                Log.d("log","통신실패: "+t.getMessage());
+            }
+        });
     }
 
 
