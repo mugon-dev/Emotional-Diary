@@ -17,6 +17,26 @@ public class SoloBoardDTO {
 
     private String title;
 
+    private int tno;
+
+    public int getTno() {
+        return tno;
+    }
+
+    public void setTno(int tno) {
+        this.tno = tno;
+    }
+
+    public String getEmotion() {
+        return emotion;
+    }
+
+    public void setEmotion(String emotion) {
+        this.emotion = emotion;
+    }
+
+    private String emotion;
+
     public String getBno ()
     {
         return bno;
@@ -70,17 +90,26 @@ public class SoloBoardDTO {
     public SoloBoardDTO() {
     }
 
-    public SoloBoardDTO(String bno, String contents, String createTime, MemberDTO member, String title) {
+    public SoloBoardDTO(String bno, String contents, String createTime, MemberDTO member, String title, int tno, String emotion) {
         this.bno = bno;
         this.contents = contents;
         this.createTime = createTime;
         this.member = member;
         this.title = title;
+        this.tno = tno;
+        this.emotion = emotion;
     }
 
     @Override
-    public String toString()
-    {
-        return "SoloBoardDTO [bno = "+bno+", contents = "+contents+", createTime = "+createTime+", member = "+member+", title = "+title+"]";
+    public String toString() {
+        return "SoloBoardDTO{" +
+                "bno='" + bno + '\'' +
+                ", contents='" + contents + '\'' +
+                ", createTime='" + createTime + '\'' +
+                ", member=" + member +
+                ", title='" + title + '\'' +
+                ", tno=" + tno +
+                ", emotion='" + emotion + '\'' +
+                '}';
     }
 }
