@@ -38,6 +38,8 @@ import com.example.emotion_dairy.SharedPreferences.PreferenceManager;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 
+import org.w3c.dom.Text;
+
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.sql.Array;
@@ -97,8 +99,13 @@ public class HomeFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
         TextView contentView = (TextView) root.findViewById(R.id.tv_contentview);
-        TextView titleView = (TextView) root.findViewById(R.id.tv_contentview);
+        Button updateBtn = (Button) root.findViewById(R.id.btn_update);
+        Button deleteBtn = (Button) root.findViewById(R.id.btn_delete);
+        TextView titleView = (TextView) root.findViewById(R.id.tv_main_titleview);
+        Button btnWrite;
+        btnWrite = (Button) root.findViewById(R.id.btnWrite);
 
+            contentView.setLines(5);
         //추가
         List<EventDay> events = new ArrayList<>();
 
@@ -147,15 +154,26 @@ public class HomeFragment extends Fragment {
                         break;
                     }
                 }
-                if(result.get(index)!=null) {
+                if(index!=-1) {
+                    btnWrite.setVisibility(View.INVISIBLE);
+                    updateBtn.setVisibility(View.VISIBLE);
+                    deleteBtn.setVisibility(View.VISIBLE);
+                    titleView.setVisibility(View.VISIBLE);
+                    contentView.setVisibility(View.VISIBLE);
                     contentView.setText(result.get(index).getContents());
+                    Log.d("log",result.get(index).getTitle());
+                    titleView.setText((result.get(index).getTitle()));
+                }else{
+                    btnWrite.setVisibility(View.VISIBLE);
+                    updateBtn.setVisibility(View.INVISIBLE);
+                    titleView.setVisibility(View.INVISIBLE);
+                    deleteBtn.setVisibility(View.INVISIBLE);
+                    contentView.setVisibility(View.INVISIBLE);
                 }
             }
         });
 
         //글쓰기
-        Button btnWrite;
-        btnWrite = (Button) root.findViewById(R.id.btnWrite);
         btnWrite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
