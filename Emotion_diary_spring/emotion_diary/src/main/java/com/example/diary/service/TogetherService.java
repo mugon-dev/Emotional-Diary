@@ -51,11 +51,9 @@ public class TogetherService {
 	}
 	
 	@Transactional
-	public int togetherUpdate(Together together) {
+	public int togetherUpdate(Together together,int tno) {
 		System.out.println("togetherUpdate 호출");
-
-		int id = (int) session.getAttribute("id");
-		Together togetherEntity = togetherRepositorty.findById(id).get();
+		Together togetherEntity = togetherRepositorty.findById(tno).get();
 		
 		if(session.getAttribute("id")!=null) {
 			togetherEntity.setTcode(together.getTcode());

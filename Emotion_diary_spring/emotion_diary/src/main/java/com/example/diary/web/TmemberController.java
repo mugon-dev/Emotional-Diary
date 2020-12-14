@@ -58,7 +58,7 @@ public class TmemberController {
 				return new ResponseEntity<String>("tmember ok!", HttpStatus.OK);
 
 			} else {
-				return new ResponseEntity<String>("fail", HttpStatus.OK);
+				return new ResponseEntity<String>("fail", HttpStatus.FORBIDDEN);
 			}
 
 		}

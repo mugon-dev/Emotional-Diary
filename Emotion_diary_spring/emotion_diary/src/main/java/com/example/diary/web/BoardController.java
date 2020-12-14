@@ -45,6 +45,14 @@ public class BoardController {
 	public List<Board> boardList() {
 		System.out.println("boardList");
 		List<Board> boardAll = boardService.글목록();
+		return boardAll;
+	}
+	
+	// 글 목록 전체 분석
+	@GetMapping("/analysis/all")
+	public List<Board> analysisAllBoardList() {
+		System.out.println("boardList");
+		List<Board> boardAll = boardService.글목록();
 		restfulController.boardAll(boardAll);
 		return boardAll;
 	}
@@ -56,11 +64,24 @@ public class BoardController {
 		int mno = (int) session.getAttribute("id");
 		if (session.getAttribute("id") != null) {
 			List<Board> myList = boardService.내글목록(mno);
-			restfulController.myBoard(myList, mno);
 			return myList;
 		}
 		return null;
 	}
+	
+	// 내글 목록 분석 (그룹 상관x)
+	@GetMapping("/analysis/my")
+	public ResponseEntity<?> analysisBoardMyList(HttpServletRequest request) {
+		System.out.println("boardMyList");
+		int mno = (int) session.getAttribute("id");
+		if (session.getAttribute("id") != null) {
+			List<Board> myList = boardService.내글목록(mno);
+			restfulController.myBoard(myList, mno);
+			return new ResponseEntity<String>("ok", HttpStatus.OK);
+		}
+		return new ResponseEntity<String>("fail", HttpStatus.EXPECTATION_FAILED);
+	}
+	
 
 	// 내글 목록 (그룹 관련)
 	@GetMapping("/myGroup")
@@ -69,10 +90,22 @@ public class BoardController {
 		int id = (int) session.getAttribute("id");
 		if (session.getAttribute("id") != null) {
 			List<Board> myGroupList = boardService.나만의글목록(id, 0);
-			restfulController.groupBoard(myGroupList, id);
 			return myGroupList;
 		}
 		return null;
+	}
+	
+	// 내글 목록 분석 (그룹 관련)
+	@GetMapping("analysis/myGroup")
+	public ResponseEntity<?> analysisMyBoardGroupList(HttpServletRequest request) {
+		System.out.println("boardMyList");
+		int id = (int) session.getAttribute("id");
+		if (session.getAttribute("id") != null) {
+			List<Board> myGroupList = boardService.나만의글목록(id, 0);
+			restfulController.groupBoard(myGroupList, 0);
+			return new ResponseEntity<String>("ok", HttpStatus.OK);
+		}
+		return new ResponseEntity<String>("fail", HttpStatus.EXPECTATION_FAILED);
 	}
 
 	// 그룹 글 목록
@@ -80,17 +113,23 @@ public class BoardController {
 	public List<Board> myBoardGroupList(@PathVariable int id) {
 		System.out.println("boardMyList");
 		List<Board> boardList = boardService.그룹글목록(id);
-		restfulController.groupBoard(boardList, id);
 		return boardList;
+	}
+	
+	// 그룹 글 목록 분석
+	@GetMapping("analysis/group/{id}")
+	public ResponseEntity<?> analysisMyBoardGroupList(@PathVariable int id) {
+		System.out.println("boardMyList");
+		List<Board> boardList = boardService.그룹글목록(id);
+		restfulController.groupBoard(boardList, id);
+		
+		return new ResponseEntity<String>("ok", HttpStatus.OK);
 
 	}
 
 	// 글 등록
 	@PostMapping("/save")
 	public ResponseEntity<?> save(HttpServletRequest request, @RequestBody Board board) {
-//		System.out.println("board save 호출");
-//		System.out.println("세션?"+session.getId());
-//		Member principal = (Member) session.getAttribute("principal");
 		int id = (int) session.getAttribute("id");
 		System.out.println("보드꺼." + id);
 		if (session.getAttribute("id") != null) {
@@ -99,11 +138,9 @@ public class BoardController {
 			dto.setContents(board.getContents());
 			dto.setTitle(board.getTitle());
 			Board emotion = restfulController.send(dto);
+			System.out.println("emotion: "+emotion);
 			board.setEmotion(emotion.getEmotion());
 			boardService.글쓰기(board, member);
-						
-	//		emotion=emotion.replace("\\","");
-
 			return new ResponseEntity<String>("ok", HttpStatus.CREATED);
 		} else {
 			return new ResponseEntity<String>("fail", HttpStatus.FORBIDDEN);
@@ -112,6 +149,22 @@ public class BoardController {
 	}
 
 	// 글 상세
+	@GetMapping("/analysis/get/{id}")
+	public ResponseEntity<?> analysisBoardDetail(@PathVariable int id) {
+		System.out.println("boardDetail");
+
+		Board board = boardService.글상세(id);
+
+		BoardSaveRequestDto dto = new BoardSaveRequestDto();
+		dto.setBno(board.getBno());
+		dto.setContents(board.getContents());
+		dto.setTitle(board.getTitle());
+
+		restfulController.sendOne(dto);
+		return new ResponseEntity<String>("ok", HttpStatus.OK);
+	}
+	
+	// 글 하나 분석
 	@GetMapping("/get/{id}")
 	public Board boardDetail(@PathVariable int id) {
 		System.out.println("boardDetail");
@@ -123,7 +176,7 @@ public class BoardController {
 		dto.setContents(board.getContents());
 		dto.setTitle(board.getTitle());
 
-//		restfulController.send(dto);
+//			restfulController.send(dto);
 		return board;
 	}
 

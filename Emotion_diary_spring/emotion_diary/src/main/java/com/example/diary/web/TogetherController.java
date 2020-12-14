@@ -54,16 +54,19 @@ public class TogetherController {
 			Member member = memberRepository.findByMno(id);
 //			System.out.println("member"+member);
 			int result = togetherService.togetherSave(member, together);
-			System.out.println("그룹 저장?"+result);
+			System.out.println("그룹 저장?" + result);
 			
-			if(result==1) {				
-				int tno = togetherRepository.findByTnameAndTcode(together.getTname(), together.getTcode());
+			System.out.println("저장tname"+together.getTname());
+			
+			if (result == 1) {
+				Together findTogether = togetherRepository.findByTnameAndTcodeEntity(together.getTname(), together.getTcode());
+//				int tno = togetherRepository.findByTnameAndTcode(together.getTname(), together.getTcode());
 //				together = togetherRepository.findById(id).get();
-				System.out.println("tno: "+tno);			
-				tmemberService.tmemberAutoSave(member, tno);
+				System.out.println("tno: " + findTogether.getTno());
+				int findTno =findTogether.getTno();
+				tmemberService.tmemberAutoSave(member, findTno);
 			}
-			
-			
+
 			return new ResponseEntity<String>("together ok!", HttpStatus.OK);
 		}
 
@@ -80,21 +83,29 @@ public class TogetherController {
 		return together;
 	}
 
-	@PutMapping("/update")
-	public ResponseEntity<?> togetherUpdate(@RequestBody Together together) {
+	// 수정 필요
+	// tno 받아서 그 tno의 together를 호출해서 로그인한 member가 주인이 맞는지 확인 후 받아온 together를
+	// save해줘야함
+	@PutMapping("/update/{id}")
+	public ResponseEntity<?> togetherUpdate(@RequestBody Together together, @PathVariable int id) {
 		System.out.println("togetherupdate Controller");
 
-		int id = (int) session.getAttribute("id");
-		System.out.println("투게더" + id);
+		Together originTogether = togetherRepository.findByTno(id);
+		int tno = originTogether.getTno();
+		int tmno = originTogether.getMember().getMno();
 
-		int result = togetherService.togetherUpdate(together);
+		id = (int) session.getAttribute("id");
+		System.out.println("멤버 아이디" + id);
 
-		if (result == 1) {
-			return new ResponseEntity<String>("together update", HttpStatus.OK);
+		if (id == tmno) {
+			int result = togetherService.togetherUpdate(together, tno);
+			if (result == 1) {
+				return new ResponseEntity<String>("together update", HttpStatus.OK);
+			}
+			return new ResponseEntity<String>("You don't have authorization", HttpStatus.FORBIDDEN);
+		} else {
+			return new ResponseEntity<String>("member different", HttpStatus.FORBIDDEN);
 		}
-
-		return new ResponseEntity<String>("You don't have authorization", HttpStatus.FORBIDDEN);
-
 	}
 
 	// 그룹 삭제

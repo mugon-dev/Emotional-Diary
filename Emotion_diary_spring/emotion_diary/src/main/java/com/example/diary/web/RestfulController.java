@@ -45,12 +45,12 @@ public class RestfulController {
 	}
 	
 	// 전체글 분석
-		@RequestMapping("/all")
-		public void boardAll(List<Board> board) {
+	@RequestMapping("/all")
+	public void boardAll(List<Board> board) {
 
-			restTemplate.postForObject("http://10.100.102.90:7000/analysis/saveEmotion", board, Board.class);
+		restTemplate.postForObject("http://10.100.102.90:7000/analysis", board, Board.class);
 
-		}
+	}
 	
 
 	// 게시글 저장할 때 분석
@@ -58,13 +58,13 @@ public class RestfulController {
 	public Board send(BoardSaveRequestDto dto) {
 
 		Board board = restTemplate.postForObject("http://10.100.102.90:7000/analysis/saveEmotion", dto, Board.class);
-
+		
 		return board;
 	}
 
 	// 게시글 하나 분석
 	@RequestMapping("/one")
-	public Board sendAll(BoardSaveRequestDto dto) {
+	public Board sendOne(BoardSaveRequestDto dto) {
 
 		Board board = restTemplate.postForObject("http://10.100.102.90:7000/analysis/one/", dto, Board.class);
 

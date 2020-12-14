@@ -50,6 +50,22 @@ public class MemberController {
 		}
 		
 	}
+	// 중복확인
+		@PostMapping("/duplicate")
+		public ResponseEntity<?> duplicateCheck(@RequestBody Member member) {
+			System.out.println("중복확인 호출");
+			System.out.println(member.getId());
+			int check = memberService.check(member.getId());
+			System.out.println(check);
+			if(check == 0) {
+				return new ResponseEntity<String>("ok", HttpStatus.OK);			
+			}else if(check == 1) {
+				return new ResponseEntity<String>("id duplicate", HttpStatus.FORBIDDEN);
+			}else {
+				return new ResponseEntity<String>("fail", HttpStatus.BAD_REQUEST);
+			}
+			
+		}
 
 	// 로그아웃
 	@GetMapping("/logout")
@@ -99,7 +115,7 @@ public class MemberController {
 
 	// 삭제
 	@DeleteMapping("/delete")
-	public ResponseEntity<?> delete(HttpServletRequest request, @RequestBody Member member) {
+	public ResponseEntity<?> delete(HttpServletRequest request) {
 		System.out.println("delete 호출");
 		int sid = (int) session.getAttribute("id");
 		System.out.println(sid);

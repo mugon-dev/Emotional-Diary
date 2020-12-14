@@ -31,16 +31,14 @@ public class Tmember {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int tmno;
 	
-	@JsonIgnoreProperties({"tmember"})
+	@JsonIgnoreProperties({"tmember","board"})
 	@JoinColumn(name="mno")
 	@ManyToOne()
 	private Member member;
 	
-	private int tno;
-	
-//	@JsonIgnoreProperties({"mno"})
-//	@JoinColumn(name="tno")
-//	@ManyToOne()
-//	private Together together;
+	@JsonIgnoreProperties({"mno"})
+	@JoinColumn(name="tno")
+	@ManyToOne()
+	private Together together;
 	
 }

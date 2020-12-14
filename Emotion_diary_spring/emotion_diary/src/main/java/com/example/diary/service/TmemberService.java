@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 public class TmemberService {
 
 	private final TmemberRepository tmemberRepository;
+	private final TogetherRepository togetherRepository;
 	
 	//생성, 삭제, 수정
 	
@@ -24,8 +25,9 @@ public class TmemberService {
 		public void tmemberAutoSave(Member member,int tno) {
 			System.out.println("togetherSave 호출");
 			Tmember tmember = new Tmember();
+			Together together = togetherRepository.findByTno(tno);
 			tmember.setMember(member);
-			tmember.setTno(tno);
+			tmember.setTogether(together);
 			tmemberRepository.save(tmember);
 		}
 		
@@ -35,7 +37,7 @@ public class TmemberService {
 			System.out.println("togetherSave 호출");
 			Tmember tmember = new Tmember();
 			tmember.setMember(member);
-			tmember.setTno(together.getTno());
+//			tmember.setTno(together.getTno());
 			tmemberRepository.save(tmember);
 		}
 		
