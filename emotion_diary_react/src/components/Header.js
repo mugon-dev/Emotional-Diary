@@ -36,8 +36,7 @@ const Header = () => {
   console.log('header', user);
   const dispatch = useDispatch();
   function submitLogout() {
-    localStorage.removeItem('Authorization');
-    localStorage.removeItem('user');
+    localStorage.clear()
     dispatch(logout());
     console.log(isLogin);
   }

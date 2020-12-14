@@ -78,17 +78,17 @@ const Login = () => {
     });
   }
 
-  function jwttoken() {
-    let mid = 0;
-    if (localStorage.getItem('Authorization') != null) {
-      let jwtTokenTemp = localStorage.getItem('Authorization');
-      let jwtToken = jwtTokenTemp.replace('Bearer ', '');
-      console.log('토큰 : ', jwtToken);
-      mid = jwt_decode(jwtToken).id;
-      console.log('mid', mid);
-      localStorage.setItem('id', mid);
-    }
-  }
+  // function jwttoken() {
+  //   let mid = 0;
+  //   if (localStorage.getItem('Authorization') != null) {
+  //     let jwtTokenTemp = localStorage.getItem('Authorization');
+  //     let jwtToken = jwtTokenTemp.replace('Bearer ', '');
+  //     console.log('토큰 : ', jwtToken);
+  //     mid = jwt_decode(jwtToken).id;
+  //     console.log('mid', mid);
+  //     localStorage.setItem('id', mid);
+  //   }
+  // }
 
   const submitLogin = (e) => {
     e.preventDefault();
@@ -115,11 +115,20 @@ const Login = () => {
         console.log(res);
         if (res === 'ok') {
           //유저네임 저장
-          localStorage.setItem('username', user.id);
           alert('로그인 완료');
           dispatch(login());
           history.push('/diary');
-          jwttoken();
+          // jwttoken();
+          fetch('http://10.100.102.31:8000/member/get', {
+            method: 'GET',
+            headers: {
+              Authorization: localStorage.getItem('Authorization'),
+            },
+          }).then((res)=>res.json()).then((res)=>{
+            localStorage.setItem('userNo', res.mno);
+            localStorage.setItem('userId', res.id);
+            localStorage.setItem('userName', res.name);
+          })
         } else {
           alert('아이디 혹은 비번을 다시 입력하세요!');
         }
