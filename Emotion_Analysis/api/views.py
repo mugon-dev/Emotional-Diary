@@ -87,7 +87,7 @@ class analysisOne(APIView):
 
 class saveBoard(APIView):
     def post(self, request, *args, **kwargs):
-        board = Board(bno=request.data["bno"], title=request.data["title"], contents=request.data["contents"])
+        board = Board(title=request.data["title"], contents=request.data["contents"])
         emolex = BASE_DIR + "/api/static/emolex.xlsx"
         emo_df = analysisPro.load_emolex(emolex)
         # contents 형태소 분석
