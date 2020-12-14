@@ -19,6 +19,8 @@ public class SoloBoardDTO {
 
     private int tno;
 
+    private String emotion;
+
     public int getTno() {
         return tno;
     }
@@ -35,7 +37,6 @@ public class SoloBoardDTO {
         this.emotion = emotion;
     }
 
-    private String emotion;
 
     public String getBno ()
     {

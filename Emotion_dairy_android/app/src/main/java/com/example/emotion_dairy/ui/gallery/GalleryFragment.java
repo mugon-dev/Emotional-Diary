@@ -21,8 +21,15 @@ import androidx.lifecycle.ViewModelProviders;
 import com.example.emotion_dairy.GroupList;
 import com.example.emotion_dairy.ListViewAdapter;
 import com.example.emotion_dairy.ListViewItem;
+import com.example.emotion_dairy.MainActivity;
 import com.example.emotion_dairy.R;
+import com.example.emotion_dairy.Retrofit.ApiInterface;
+import com.example.emotion_dairy.Retrofit.DTO.SoloBoardDTO;
+import com.example.emotion_dairy.Retrofit.HttpClient;
 import com.example.emotion_dairy.SharedPreferences.PreferenceManager;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.CalendarMode;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
@@ -31,10 +38,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class GalleryFragment extends Fragment {
 
@@ -44,6 +56,7 @@ public class GalleryFragment extends Fragment {
 
     Map<Integer,String> groupMap = new HashMap<Integer,String>();
 
+    ApiInterface api;
 
     private GalleryViewModel galleryViewModel;
     MaterialCalendarView mvc;
@@ -56,7 +69,7 @@ public class GalleryFragment extends Fragment {
                 ViewModelProviders.of(this).get(GalleryViewModel.class);
         View root = inflater.inflate(R.layout.fragment_gallery, container, false);
 
-
+        api= HttpClient.getRetrofit().create(ApiInterface.class);
         mvc = root.findViewById(R.id.calendarView3);
         mvc.state().edit().isCacheCalendarPositionEnabled(false)
                 .setFirstDayOfWeek(1)
@@ -86,7 +99,9 @@ public class GalleryFragment extends Fragment {
         spinnerGroup.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                tvGroupName.setText(tnameList.get(i));
+                tvGroupName.setText(list.get(i).getTname());
+                Log.d("log","그룹 선택 : " + list.get(i).getTno()+" 선택됨");
+                //그룹 선택시 그룹 리스트 뽑아옴(SharedPreference or retrofit2)
             }
 
             @Override
@@ -112,6 +127,7 @@ public class GalleryFragment extends Fragment {
 
         return root;
     }
+
     public void toJson(String strJson){
 
         if(strJson!=null){

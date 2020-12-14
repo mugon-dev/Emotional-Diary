@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.applandeo.materialcalendarview.EventDay;
 import com.example.emotion_dairy.Retrofit.ApiInterface;
 import com.example.emotion_dairy.Retrofit.DTO.ResGetGroup;
+import com.example.emotion_dairy.Retrofit.DTO.SoloBoardDTO;
 import com.example.emotion_dairy.Retrofit.DTO.Together;
 import com.example.emotion_dairy.Retrofit.HttpClient;
 import com.example.emotion_dairy.SharedPreferences.PreferenceManager;
@@ -58,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         FloatingActionButton fab = findViewById(R.id.fab);
         api= HttpClient.getRetrofit().create(ApiInterface.class);
- //       getData();
+        getData();
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -83,11 +84,59 @@ public class MainActivity extends AppCompatActivity {
         //Fragment Manager
 
     }
-    public void getGroupBoardList(int tno,int last){
+//    public void getGroupBoardList(int tno){
+//        String auth = PreferenceManager.getString(this,"Auth");
+//        Call<List<SoloBoardDTO>> call = api.getGroupBoard(auth,tno);
+//        call.enqueue(new Callback<List<SoloBoardDTO>>() {
+//            @Override
+//            public void onResponse(Call<List<SoloBoardDTO>> call, Response<List<SoloBoardDTO>> response) {
+//                List<SoloBoardDTO> soloBoardDTOList = new ArrayList<SoloBoardDTO>();
+//                soloBoardDTOList= response.body();
+//                Gson gson = new GsonBuilder().create();
+//                Type listType = new TypeToken<ArrayList<SoloBoardDTO>>(){}.getType();
+//                String jsonGroupBoard = gson.toJson(groupLists,listType);
+//                PreferenceManager.removeKey(MainActivity.this,"Board"+tno);
+//                PreferenceManager.setString(MainActivity.this,"Board"+tno,jsonGroupBoard);
+//
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Call<List<SoloBoardDTO>> call, Throwable t) {
+//                Log.d("log","===================================");
+//                Log.d("log","========"+t.getMessage()+"=========");
+//                Log.d("log","===================================");
+//            }
+//        });
+//    }
+    public void getGroupBoardList(int tno){
+        String auth = PreferenceManager.getString(this,"Auth");
+        Call<ArrayList<SoloBoardDTO>> call = api.getGroupBoard(auth,tno);
+        call.enqueue(new Callback<ArrayList<SoloBoardDTO>>() {
+            @Override
+            public void onResponse(Call<ArrayList<SoloBoardDTO>> call, Response<ArrayList<SoloBoardDTO>> response) {
+                ArrayList<SoloBoardDTO> soloBoardDTOList = new ArrayList<SoloBoardDTO>();
+                soloBoardDTOList= response.body();
+                Gson gson = new GsonBuilder().create();
+                Type listType = new TypeToken<ArrayList<SoloBoardDTO>>(){}.getType();
+                String jsonGroupBoard = gson.toJson(soloBoardDTOList,listType);
+                PreferenceManager.removeKey(MainActivity.this,"Board"+tno);
+                PreferenceManager.setString(MainActivity.this,"Board"+tno,jsonGroupBoard);
+                Log.d("log","그룹"+tno+" 게시글 목록 : "+PreferenceManager.getString(MainActivity.this,"Board"+tno));
 
+
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<SoloBoardDTO>> call, Throwable t) {
+                Log.d("log","===================================");
+                Log.d("log","========"+t.getMessage()+"=========");
+                Log.d("log","========="+call);
+            }
+        });
     }
 
-    public void getGroupList(int tno,int last){
+    public void getGroupList(int tno){
         String auth = PreferenceManager.getString(this,"Auth");
         Call<Together> call = api.getGroupName(auth,tno);
         call.enqueue(new Callback<Together>() {
@@ -97,18 +146,21 @@ public class MainActivity extends AppCompatActivity {
                 GroupList groupList = new GroupList(together.getTno(),together.getTname());
                 groupLists.add(groupList);
                 for(GroupList g : groupLists){
-                    Log.d("log","그룹리스트 & 아이디 : "+g);
+                    Log.d("log","그룹리스트 뽑아봄 : " + g);
                 }
-                if(last==1){
-                    Gson gson = new GsonBuilder().create();
-                    Type listType = new TypeToken<ArrayList<GroupList>>(){}.getType();
-                    String jsonGroup = gson.toJson(groupLists,listType);
-                    PreferenceManager.removeKey(MainActivity.this,"Group");
-                    PreferenceManager.setString(MainActivity.this,"Group",jsonGroup);
+                //여기서 그룹 board 가져와서 SharedPreference 그룹별 저장
+                getGroupBoardList(tno);
 
-                    String strGroup1 = PreferenceManager.getString(MainActivity.this,"Group");
-                    Log.d("log","마지막테스트 그룹 제이슨 : "+strGroup1);
-                }
+
+                 Gson gson = new GsonBuilder().create();
+                 Type listType = new TypeToken<ArrayList<GroupList>>(){}.getType();
+                 String jsonGroup = gson.toJson(groupLists,listType);
+                 PreferenceManager.removeKey(MainActivity.this,"Group");
+                 PreferenceManager.setString(MainActivity.this,"Group",jsonGroup);
+
+                 String strGroup1 = PreferenceManager.getString(MainActivity.this,"Group");
+                 Log.d("log","마지막테스트 그룹 제이슨 : "+strGroup1);
+
             }
 
             @Override
@@ -132,14 +184,10 @@ public class MainActivity extends AppCompatActivity {
                     gList.add(strGroup);
                 }
                 for(int a : gList){
-                    int idx = gList.size();
-                    if(a==gList.get(idx-1)) {
-                        getGroupList(a, 1);
-                    }else{
-                        getGroupList(a,0);
-                    }
+                    getGroupList(a);
                 }
             }
+
 
             @Override
             public void onFailure(Call<List<ResGetGroup>> call, Throwable t) {

@@ -42,4 +42,6 @@ public interface ApiInterface {
     @GET("together/get/{id}")
     Call<Together> getGroupName(@Header("Authorization") String auth, @Path("id") int id);
 
+    @GET("board/group/{id}")
+    Call<ArrayList<SoloBoardDTO>> getGroupBoard(@Header("Authorization") String auth, @Path("id") int id);
 }
