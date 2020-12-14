@@ -84,57 +84,8 @@ public class MainActivity extends AppCompatActivity {
         //Fragment Manager
 
     }
-//    public void getGroupBoardList(int tno){
-//        String auth = PreferenceManager.getString(this,"Auth");
-//        Call<List<SoloBoardDTO>> call = api.getGroupBoard(auth,tno);
-//        call.enqueue(new Callback<List<SoloBoardDTO>>() {
-//            @Override
-//            public void onResponse(Call<List<SoloBoardDTO>> call, Response<List<SoloBoardDTO>> response) {
-//                List<SoloBoardDTO> soloBoardDTOList = new ArrayList<SoloBoardDTO>();
-//                soloBoardDTOList= response.body();
-//                Gson gson = new GsonBuilder().create();
-//                Type listType = new TypeToken<ArrayList<SoloBoardDTO>>(){}.getType();
-//                String jsonGroupBoard = gson.toJson(groupLists,listType);
-//                PreferenceManager.removeKey(MainActivity.this,"Board"+tno);
-//                PreferenceManager.setString(MainActivity.this,"Board"+tno,jsonGroupBoard);
-//
-//
-//            }
-//
-//            @Override
-//            public void onFailure(Call<List<SoloBoardDTO>> call, Throwable t) {
-//                Log.d("log","===================================");
-//                Log.d("log","========"+t.getMessage()+"=========");
-//                Log.d("log","===================================");
-//            }
-//        });
-//    }
-    public void getGroupBoardList(int tno){
-        String auth = PreferenceManager.getString(this,"Auth");
-        Call<ArrayList<SoloBoardDTO>> call = api.getGroupBoard(auth,tno);
-        call.enqueue(new Callback<ArrayList<SoloBoardDTO>>() {
-            @Override
-            public void onResponse(Call<ArrayList<SoloBoardDTO>> call, Response<ArrayList<SoloBoardDTO>> response) {
-                ArrayList<SoloBoardDTO> soloBoardDTOList = new ArrayList<SoloBoardDTO>();
-                soloBoardDTOList= response.body();
-                Gson gson = new GsonBuilder().create();
-                Type listType = new TypeToken<ArrayList<SoloBoardDTO>>(){}.getType();
-                String jsonGroupBoard = gson.toJson(soloBoardDTOList,listType);
-                PreferenceManager.removeKey(MainActivity.this,"Board"+tno);
-                PreferenceManager.setString(MainActivity.this,"Board"+tno,jsonGroupBoard);
-                Log.d("log","그룹"+tno+" 게시글 목록 : "+PreferenceManager.getString(MainActivity.this,"Board"+tno));
 
 
-            }
-
-            @Override
-            public void onFailure(Call<ArrayList<SoloBoardDTO>> call, Throwable t) {
-                Log.d("log","===================================");
-                Log.d("log","========"+t.getMessage()+"=========");
-                Log.d("log","========="+call);
-            }
-        });
-    }
 
     public void getGroupList(int tno){
         String auth = PreferenceManager.getString(this,"Auth");
@@ -148,9 +99,6 @@ public class MainActivity extends AppCompatActivity {
                 for(GroupList g : groupLists){
                     Log.d("log","그룹리스트 뽑아봄 : " + g);
                 }
-                //여기서 그룹 board 가져와서 SharedPreference 그룹별 저장
-                getGroupBoardList(tno);
-
 
                  Gson gson = new GsonBuilder().create();
                  Type listType = new TypeToken<ArrayList<GroupList>>(){}.getType();
