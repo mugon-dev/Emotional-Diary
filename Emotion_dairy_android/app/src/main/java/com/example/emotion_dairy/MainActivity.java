@@ -1,5 +1,6 @@
 package com.example.emotion_dairy;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -50,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
     NavigationView navigationView;
     TextView tvId;
     ImageView ivHeaderWC;
+    Button btnHboardWrite;
 
     ApiInterface api;
 
@@ -64,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        FloatingActionButton fab = findViewById(R.id.fab);
+        //FloatingActionButton fab = findViewById(R.id.fab);
         api= HttpClient.getRetrofit().create(ApiInterface.class);
 
         //헤더 뷰 찾기
@@ -73,17 +75,26 @@ public class MainActivity extends AppCompatActivity {
 
         tvId=(TextView) headerView.findViewById(R.id.navHeaderId);
         ivHeaderWC=(ImageView) headerView.findViewById(R.id.navHeaderImageView);
+        btnHboardWrite=headerView.findViewById(R.id.btnHboardWrite);
         String imageUrl = "http://10.100.102.90:7000/static/my/wordcloud2.png";
         Glide.with(this).load(imageUrl).into(ivHeaderWC);
 
-
-        fab.setOnClickListener(new View.OnClickListener() {
+        btnHboardWrite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent intent = new Intent(MainActivity.this,BoardWrite.class);
+                startActivity(intent);
             }
         });
+
+
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+//            }
+//        });
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each

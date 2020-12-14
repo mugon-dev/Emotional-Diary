@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/글작성"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/nav_header_height"
+    android:layout_height="wrap_content"
     android:background="@color/backColor"
     android:gravity="bottom"
     android:orientation="vertical"
@@ -14,8 +15,8 @@
 
     <ImageView
         android:id="@+id/navHeaderImageView"
-        android:layout_width="220dp"
-        android:layout_height="85dp"
+        android:layout_width="210dp"
+        android:layout_height="140dp"
         android:contentDescription="@string/nav_header_desc"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         app:srcCompat="@drawable/logo" />
@@ -24,15 +25,15 @@
         android:id="@+id/navHeaderId"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/black"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:text="로그인ID"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="@color/black" />
 
-    <TextView
-        android:id="@+id/textView"
-        android:textColor="@color/black"
+    <Button
+        android:id="@+id/btnHboardWrite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="테스트1" />
+        android:text="글쓰기" />
+
 </LinearLayout>
