@@ -6,8 +6,6 @@ import Join from './pages/user/Join';
 import DiaryHome from './pages/diary/DiaryHome';
 import styled from 'styled-components';
 import Footer from './components/Footer';
-import MyDiaryDetail from './pages/diary/MyDiaryDetail';
-import MyDiaryWrite from './pages/diary/MyDiaryWrite';
 
 const AppStyle = styled.div`
   min-height: 1050px;
@@ -30,8 +28,6 @@ function App() {
           <Route path="/login" exact={true} component={Login} />
           <Route path="/join" exact={true} component={Join} />
           <Route path="/diary" exact={true} component={DiaryHome} />
-          <Route path="/diary/detail/:id" exact={true} component={MyDiaryDetail} />
-          <Route path="/diary/write" exact={true} component={MyDiaryWrite} />
         </Switch>
       </AppBoxStyle>
       <Footer />

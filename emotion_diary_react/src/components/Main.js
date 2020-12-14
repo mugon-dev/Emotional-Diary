@@ -44,9 +44,9 @@ const Main = () => {
         <Route exact path="/diary/" component={MyDiary} />
         <Route path="/diary/usermodify/:id" component={Modify} />
         <Route path="/diary/our" component={OurDiary} />
-        <Route path="/diary/write" component={MyDiaryWrite} />
-        <Route path="/diary/detail" component={MyDiaryDetail} />
         <Route path="/diary/modify" component={MyDiaryModify} />
+        <Route path="/diary/detail/:id" component={MyDiaryDetail} />
+        <Route path="/diary/write" component={MyDiaryWrite} />
       </Switch>
     </MainStyle>
   );

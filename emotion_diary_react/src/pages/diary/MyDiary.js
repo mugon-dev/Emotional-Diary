@@ -29,6 +29,7 @@ const MyDiary = ({history}) => {
                       "id":ress.bno,
                       "title":ress.title,
                       "start":ress.createTime,
+                      "emotion":ress.emotion
                   }
               )
           });
@@ -45,8 +46,16 @@ const MyDiary = ({history}) => {
 
   
 
-  function renderEventContent() {
-    //잘모름
+  function renderEventContent(eventInfo) {
+    // 리스트 그리기
+    return (
+      <>
+        <div>
+          <p>{eventInfo.event.title}</p>
+          <img className="eventimage" src="http://10.100.102.90:7000/static/board/pie6.png" />
+        </div>
+      </>
+    )
   }
 
   function handleEventClick(clickInfo) {

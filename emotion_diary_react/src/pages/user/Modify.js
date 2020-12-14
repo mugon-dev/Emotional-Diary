@@ -27,7 +27,7 @@ const Modify = (props) => {
     pw: '',
   });
   useEffect(() => {
-    fetch('http://10.100.102.31:8000/member/get/' + id, {
+    fetch('http://10.100.102.31:8000/member/get/',{
       method: 'GET',
       headers: {
         Authorization: localStorage.getItem('Authorization'),
