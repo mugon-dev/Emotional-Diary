@@ -38,22 +38,8 @@ const Join = () => {
     pw: '',
     name: '',
   });
-  //비밀번호 확인 할때 띄어줄 메세지
-  let pMessage = '8자 이상 적어주세요';
 
-  useEffect(() => {}, [pMessage]);
-  //input 데이터 들고오는 함수
   function inputHandle(e) {
-    setUser((prevState) => {
-      // 함수형으로 쓰는 이유 : setstate 두번쓸때 값을 들고오기 우ㅐㅎ서
-      return {
-        ...prevState,
-        [e.target.name]: e.target.value,
-      };
-    });
-  }
-
-  function CheckHandle(e) {
     setUser((prevState) => {
       // 함수형으로 쓰는 이유 : setstate 두번쓸때 값을 들고오기 우ㅐㅎ서
       return {
@@ -73,22 +59,27 @@ const Join = () => {
     });
   }
 
-  //비밀번호와 비밀번호 확인이 같은지 다른지 판별해 주는 함수
-  function checkPw() {
-    console.log('check 들어옴');
-    if (user.pw === user.rePw) {
-      pMessage = '일치합니다';
-      console.log(pMessage);
-    } else {
-      pMessage = '다시 적어주세요!';
-      console.log(pMessage);
-    }
-  }
-
   function checkId(e) {
     e.preventDefault();
-
-    fetch('', {}).then().then();
+    console.log(user.id);
+    console.log(JSON.stringify(user));
+    fetch('http://10.100.102.31:8000/member/duplicate', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8',
+      },
+      body: JSON.stringify(user),
+    })
+      .then((res) => res.text())
+      .then((res) => {
+        if (res === 'ok') {
+          alert('사용가능한 아이디 입니다.');
+        } else if (res === 'id duplicate') {
+          alert('이미 사용하는 아이디 입니다.');
+        } else {
+          alert('다시 중복확인 해주세요');
+        }
+      });
   }
 
   //가입하는 함수
@@ -160,18 +151,6 @@ const Join = () => {
               placeholder="비밀번호를 입력하세요"
             />
           </div>
-          {/*  <div class="form-group">
-            <LabelStyle>비밀번호 확인 </LabelStyle>
-            <input
-              class="form-control form-control-lg"
-              type="password"
-              name="rePw"
-              value={user.rePw}
-              onChange={CheckHandle}
-              placeholder="한번 더 입력하세요."
-            />
-          </div>
-          <h3>확인 : {pMessage}</h3> */}
           <ButtonBoxStyle>
             <Link to="/login">
               <button type="button" class="btn btn-secondary" onClick={reset}>

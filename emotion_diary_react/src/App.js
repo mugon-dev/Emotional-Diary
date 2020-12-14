@@ -24,10 +24,10 @@ function App() {
     <AppStyle>
       <AppBoxStyle>
         <Switch>
-          <Route exact path="/" exact={true} component={Intro} />
-          <Route path="/login" exact={true} component={Login} />
-          <Route path="/join" exact={true} component={Join} />
-          <Route path="/diary" exact={true} component={DiaryHome} />
+          <Route exact path="/" component={Intro} />
+          <Route path="/login" component={Login} />
+          <Route path="/join" component={Join} />
+          <Route path="/diary" component={DiaryHome} />
         </Switch>
       </AppBoxStyle>
       <Footer />

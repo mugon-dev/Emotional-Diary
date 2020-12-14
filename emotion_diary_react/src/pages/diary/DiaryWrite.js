@@ -15,31 +15,25 @@ const MyDiaryWriteStyle = styled.div`
   padding: 10px 10px;
   border: 1px solid #003458;
 `;
-const MyDiaryFormStyle = styled.form`
+/* const MyDiaryFormStyle = styled.form`
   display: grid;
   align-content: center;
   grid-template-columns: 100%;
+  max-width: 100%;
   padding: 10px 10px;
   border: 1px solid #003458;
-`;
-const MyDiaryWrite = () => {
+`; */
+const DiaryWrite = (props) => {
   const history = useHistory();
-
+  const date = props.match.params.date;
+  const id = localStorage.getItem('userNo');
   const [diary, setDiary] = useState({
-    id: '',
+    memberId: id,
     title: '',
-    content: '',
-    image1: '',
+    contents: '',
+    createTime: date,
   });
-  const uploadImg = async (e) => {
-    const file = e.target.files[0];
-    setDiary((prevState) => {
-      return {
-        ...prevState,
-        [e.target.name]: file,
-      };
-    });
-  };
+
   function inputHandle(e) {
     setDiary((prevState) => {
       // 함수형으로 쓰는 이유 : setstate 두번쓸때 값을 들고오기 우ㅐㅎ서
@@ -54,29 +48,25 @@ const MyDiaryWrite = () => {
 
     console.log('submitPost() 실행');
 
-    //let form = document.getElementById('form');
-    //const formData = new FormData(form);
-
-    /* if (board3.image1 === '' && board3.image2 === '') {
-      alert('사진을 한장이상 업로드 해주세요!');
-    } else {
-      console.log('fetch 실행');
-      fetch('http://localhost:8000/board3/write', {
-        method: 'POST',
-        headers: {
-          Authorization: localStorage.getItem('Authorization'),
-        },
-        body: formData,
-      })
-        .then((res) => res.text())
-        .then((res) => {
-          if (res === 'ok') {
-            alert('글이 등록되었습니다.');
-            //history.push("/board3");
-          } else {
-          }
-        });
-    } */
+    fetch('http://10.100.102.31:8000/board/save', {
+      method: 'POST',
+      headers: {
+        Authorization: localStorage.getItem('Authorization'),
+        'Content-Type': 'application/json; charset=utf-8',
+      },
+      body: JSON.stringify(diary),
+    })
+      .then((res) => res.text())
+      .then((res) => {
+        console.log(res);
+        console.log('gkdl', diary);
+        if (res === 'ok') {
+          alert('글이 등록되었습니다.');
+          history.push('/diary');
+        } else {
+          alert('글 등록이 실패하였습니다.');
+        }
+      });
   }
   return (
     <MyDiaryWriteStyle>
@@ -92,20 +82,11 @@ const MyDiaryWrite = () => {
         <label>내용</label>
         <textarea
           class="form-control form-control-lg"
-          name="content"
-          id="exampleTextarea"
+          name="contents"
           rows="3"
-        >
-          {diary.content}
-        </textarea>
-        <label>사진</label>
-        <input
-          class="form-control-file"
-          type="file"
-          name="image"
-          value={diary.image1}
-          onChange={uploadImg}
-        />
+          onChange={inputHandle}
+          value={diary.contents}
+        ></textarea>
         <ButtonBoxStyle>
           <button class="btn btn-secondary" onClick={submitWrite}>
             작성
@@ -119,4 +100,4 @@ const MyDiaryWrite = () => {
   );
 };
 
-export default MyDiaryWrite;
+export default DiaryWrite;

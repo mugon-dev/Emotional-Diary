@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import Header from '../../components/Header';
@@ -12,9 +12,27 @@ const DiaryHomeStyle = styled.div`
 const DiaryHome = () => {
   const isLogin = useSelector((store) => store.isLogin);
   console.log(isLogin);
+  const [groups, setGroups] = useState();
+
+  useEffect(() => {
+    fetch('http://10.100.102.31:8000/tmember/get', {
+      method: 'GET',
+      headers: {
+        Authorization: localStorage.getItem('Authorization'),
+      },
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        console.log('res', res);
+        setGroups(res);
+      });
+  }, []);
+
+  console.log('ggg', groups);
+
   return (
     <DiaryHomeStyle>
-      <Header />
+      <Header groups={groups} />
       <Main />
     </DiaryHomeStyle>
   );

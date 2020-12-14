@@ -1,18 +1,17 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import styled from 'styled-components';
+import DiaryModify from '../pages/diary/DiaryModify';
+import DiaryWrite from '../pages/diary/DiaryWrite';
+import DiaryDetail from '../pages/diary/DiaryDetail';
 import MyDiary from '../pages/diary/MyDiary';
-import MyDiaryDetail from '../pages/diary/MyDiaryDetail';
-import MyDiaryModify from '../pages/diary/MyDiaryModify';
-import MyDiaryWrite from '../pages/diary/MyDiaryWrite';
-import OurDiary from '../pages/diary/OurDiary';
 import Modify from '../pages/user/Modify';
+import OurDiary from '../pages/diary/OurDiary';
 
 const MainStyle = styled.div`
   display: grid;
   grid-template-columns: auto;
-  min-height: 900px;
-  max-width: 0100%;
+  max-height: 900px;
   overflow: scroll;
   margin: 20px 20px;
   padding: 0px 0px 8px 0px;
@@ -42,11 +41,11 @@ const Main = () => {
     <MainStyle>
       <Switch>
         <Route exact path="/diary/" component={MyDiary} />
+        <Route exact path="/diary/:id" component={OurDiary} />
         <Route path="/diary/usermodify/:id" component={Modify} />
-        <Route path="/diary/our" component={OurDiary} />
-        <Route path="/diary/modify" component={MyDiaryModify} />
-        <Route path="/diary/detail/:id" component={MyDiaryDetail} />
-        <Route path="/diary/write" component={MyDiaryWrite} />
+        <Route path="/diary/modify/:id" component={DiaryModify} />
+        <Route path="/diary/detail/:id" component={DiaryDetail} />
+        <Route path="/diary/write/:date" component={DiaryWrite} />
       </Switch>
     </MainStyle>
   );

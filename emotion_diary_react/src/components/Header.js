@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
@@ -7,6 +7,7 @@ import { logout } from '../store';
 const HeaderStyle = styled.div`
   display: grid;
   min-height: 900px;
+  min-width: 200px;
   grid-template-columns: auto;
   align-content: center;
   justify-content: right;
@@ -30,21 +31,25 @@ const UserBoxStyle = styled.div`
   grid-template-columns: auto;
   justify-content: right;
 `;
-const Header = () => {
+const Header = (props) => {
+  console.log('header');
   const isLogin = useSelector((store) => store.isLogin);
-  const user = localStorage.getItem('username');
-  console.log('header', user);
+  const user = localStorage.getItem('userName');
   const dispatch = useDispatch();
+
+  const [groups, setGroups] = useState(props.groups);
+
+  console.log('propsgroup', groups);
+  //로그아웃
   function submitLogout() {
-    localStorage.clear()
+    localStorage.clear();
     dispatch(logout());
     console.log(isLogin);
   }
 
   return (
     <HeaderStyle>
-      {/*    <img src="..\\public\\images\\logo.png" alt="" /> */}
-
+      <img alt="" src="" />
       <h2>{user}님</h2>
       <UserBoxStyle>
         <Link to={'/diary/usermodify/' + user}>
@@ -56,12 +61,24 @@ const Header = () => {
           </LinkStyle>
         </Link>
       </UserBoxStyle>
+
       <Link to="/diary/">
         <LinkStyle>나의 일기</LinkStyle>
       </Link>
-      <Link to="/diary/our">
-        <LinkStyle>우리 일기</LinkStyle>
-      </Link>
+      <LinkStyle>우리 일기</LinkStyle>
+      <div>
+        그룹목록
+        <ul>aa</ul>
+        <ul>bb</ul>
+        <ul>cc</ul>
+        {/*  {groups !== null
+          ? groups.map((group) => (
+              <div key={group.tno}>
+                <Link to={'/diary/' + group.tno}>{group.tname}</Link>
+              </div>
+            ))
+          : null} */}
+      </div>
     </HeaderStyle>
   );
 };

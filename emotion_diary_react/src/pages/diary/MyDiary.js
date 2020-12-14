@@ -7,44 +7,46 @@ import styled from 'styled-components';
 
 const MyDiaryStyle = styled.div`
   display: grid;
-  max-width: 100%;
+  max-width: 80%;
   align-content: baseline;
+  //justify-content: center;
   grid-template-columns: 100%;
   padding: 10px 10px;
+  border: 1px solid #003458;
 `;
+const TitleStyle = styled.div`
+  margin: 20px 0px 20px 0px;
+  font-size: 40px;
+  border: 1px solid #003458;
+  text-align: center;
+`;
+const MyDiary = ({ history }) => {
+  console.log('mydiary');
+  const [diary, setDiary] = useState([]);
 
-const MyDiary = ({history}) => {
-  const [boards, setBoards] = useState([]);
   useEffect(() => {
-    fetch("http://10.100.102.31:8000/board/my",{
-        method: "GET",
-        headers: {
-            Authorization: localStorage.getItem("Authorization"),
-        },})
-        .then((res)=>res.json())
-        .then((res)=>{
-            let db = res.map((ress,index)=>{
-              return (
-                  index,{
-                      "id":ress.bno,
-                      "title":ress.title,
-                      "start":ress.createTime,
-                      "emotion":ress.emotion
-                  }
-              )
-          });
-          setBoards(db)
+    fetch('http://10.100.102.31:8000/board/my', {
+      method: 'GET',
+      headers: {
+        Authorization: localStorage.getItem('Authorization'),
+      },
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        let db = res.map((ress, index) => {
+          return (
+            index,
+            {
+              id: ress.bno,
+              title: ress.title,
+              start: ress.createTime,
+              emotion: ress.emotion,
+            }
+          );
         });
-
-},[]);
-
-  const [selectDate, setSelectDate] = useState({
-    start: '',
-    end: '',
-    allDay: '',
-  });
-
-  
+        setDiary(db);
+      });
+  }, []);
 
   function renderEventContent(eventInfo) {
     // 리스트 그리기
@@ -52,54 +54,30 @@ const MyDiary = ({history}) => {
       <>
         <div>
           <p>{eventInfo.event.title}</p>
-          <img className="eventimage" src="http://10.100.102.90:7000/static/board/pie6.png" />
+          <img
+            className="eventimage"
+            alt=""
+            // src="http://10.100.102.90:7000/static/board/pie6.png"
+          />
         </div>
       </>
-    )
+    );
   }
-
   function handleEventClick(clickInfo) {
     //클릭했을때 동작
-    // 다이어리 등록되었을때 그 항목 클릭 ->디테일페이지 이동하게 만들기
-    history.push("/diary/detail/"+clickInfo.event.id)
-    // history.push({
-    //   pathname: "/detail/"+clickInfo.event.id,
-    //   state:{}
-    // })
+    // 다이어리 등록되었을때 그 항목 클릭 -> 디테일페이지 이동하게 만들기
+    console.log(clickInfo);
+    history.push('/diary/detail/' + clickInfo.event.id);
   }
 
   function handleEvents() {}
 
-  // 자체 bno
-  /* function createEventId() {
-    return String(eventGuid++);
-  } */
   function handleDateSelect(selectInfo) {
-    // 빈 달력 클릭
-    console.log(boards)
-    //let title = prompt('Please enter a new title for your event');
-    let calendarApi = selectInfo.view.calendar;
-    setSelectDate({
-      start: selectInfo.startStr,
-      end: selectInfo.endStr,
-      allDay: selectInfo.allDay,
-    });
-
-    calendarApi.unselect(); // clear date selection
-
-    /* if (title) {
-      calendarApi.addEvent({
-        id: createEventId(),
-        title,
-        start: selectInfo.startStr,
-        end: selectInfo.endStr,
-        allDay: selectInfo.allDay,
-      });
-    } */
+    history.push('/diary/write/' + selectInfo.startStr);
   }
   return (
     <MyDiaryStyle>
-      <br />
+      <TitleStyle>나의 일기</TitleStyle>
       <FullCalendar
         plugins={[dayGridPlugin, interactionPlugin, bootstrapPlugin]}
         headerToolbar={{
@@ -114,20 +92,15 @@ const MyDiary = ({history}) => {
         initialView="dayGridMonth"
         editable={true}
         selectable={true}
+        eventStartEditable={false}
         selectMirror={true}
         dayMaxEvents={true}
         weekends={true}
-        //initialEvents={boards} // alternatively, use the `events` setting to fetch from a feed
-        events={boards}
+        events={diary}
         select={handleDateSelect}
         eventContent={renderEventContent} // custom render function
         eventClick={handleEventClick}
-        eventsSet={handleEvents} // called after events are initialized/added/changed/removed
-        /* you can update a remote database when these fire:
-                   eventAdd={function(){}}
-                   eventChange={function(){}}
-                   eventRemove={function(){}}
-                   */
+        eventsSet={handleEvents}
       />
     </MyDiaryStyle>
   );

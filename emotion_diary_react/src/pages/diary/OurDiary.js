@@ -1,61 +1,86 @@
 import FullCalendar from '@fullcalendar/react';
 import interactionPlugin from '@fullcalendar/interaction';
-import timeGridPlugin from '@fullcalendar/timegrid';
+import dayGridPlugin from '@fullcalendar/daygrid';
 import bootstrapPlugin from '@fullcalendar/bootstrap';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { useHistory } from 'react-router-dom';
 
 const OurDiaryStyle = styled.div`
   display: grid;
-  max-width: 100%;
+  max-width: 80%;
   align-content: baseline;
+  //justify-content: center;
   grid-template-columns: 100%;
   padding: 10px 10px;
+  border: 1px solid #003458;
 `;
-const OurDiary = () => {
-  let eventGuid = 0;
+const TitleStyle = styled.div`
+  margin: 20px 0px 20px 0px;
+  font-size: 40px;
+  border: 1px solid #003458;
+  text-align: center;
+`;
+const OurDiary = (props) => {
+  const history = useHistory();
+  const [diary, setDiary] = useState([]);
 
-  function INITIAL_EVENTS() {
-    //최초 데이터 불러오는것
-  }
-
-  function renderEventContent() {
-    //잘모름
-  }
-
-  function handleEventClick() {
-    //클릭했을때 동작
-  }
-
-  function handleEvents() {
-    //
-  }
-  function createEventId() {
-    return String(eventGuid++);
-  }
-  function handleDateSelect(selectInfo) {
-    let title = prompt('Please enter a new title for your event');
-    let calendarApi = selectInfo.view.calendar;
-
-    calendarApi.unselect(); // clear date selection
-
-    if (title) {
-      calendarApi.addEvent({
-        id: createEventId(),
-        title,
-        start: selectInfo.startStr,
-        end: selectInfo.endStr,
-        allDay: selectInfo.allDay,
+  useEffect(() => {
+    fetch('http://10.100.102.31:8000/board/my', {
+      method: 'GET',
+      headers: {
+        Authorization: localStorage.getItem('Authorization'),
+      },
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        let db = res.map((ress, index) => {
+          return (
+            index,
+            {
+              id: ress.bno,
+              title: ress.title,
+              start: ress.createTime,
+              emotion: ress.emotion,
+            }
+          );
+        });
+        setDiary(db);
       });
-    }
+  }, []);
+
+  function renderEventContent(eventInfo) {
+    // 리스트 그리기
+    return (
+      <>
+        <div>
+          <p>{eventInfo.event.title}</p>
+          <img
+            className="eventimage"
+            alt=""
+            // src="http://10.100.102.90:7000/static/board/pie6.png"
+          />
+        </div>
+      </>
+    );
+  }
+  function handleEventClick(clickInfo) {
+    //클릭했을때 동작
+    // 다이어리 등록되었을때 그 항목 클릭 -> 디테일페이지 이동하게 만들기
+    console.log(clickInfo);
+    history.push('/diary/detail/' + clickInfo.event.id);
+  }
+
+  function handleEvents() {}
+
+  function handleDateSelect(selectInfo) {
+    history.push('/diary/write/' + selectInfo.startStr);
   }
   return (
     <OurDiaryStyle>
-      <h1>교환 다이어리!</h1>
-      <br />
-      {/*       <MyCalendar /> */}
+      <TitleStyle>우리의의 일기</TitleStyle>
       <FullCalendar
-        plugins={[timeGridPlugin, interactionPlugin, bootstrapPlugin]}
+        plugins={[dayGridPlugin, interactionPlugin, bootstrapPlugin]}
         headerToolbar={{
           left: 'prev',
           center: 'title',
@@ -65,23 +90,18 @@ const OurDiary = () => {
         contentHeight="auto"
         handleWindowResize={true}
         locale="ko"
-        initialView="timeGridWeek"
+        initialView="dayGridMonth"
         editable={true}
         selectable={true}
+        eventStartEditable={false}
         selectMirror={true}
         dayMaxEvents={true}
         weekends={true}
-        //initialEvents={boards} // alternatively, use the `events` setting to fetch from a feed
-        //vents={boards}
+        events={diary}
         select={handleDateSelect}
         eventContent={renderEventContent} // custom render function
         eventClick={handleEventClick}
-        eventsSet={handleEvents} // called after events are initialized/added/changed/removed
-        /* you can update a remote database when these fire:
-                   eventAdd={function(){}}
-                   eventChange={function(){}}
-                   eventRemove={function(){}}
-                   */
+        eventsSet={handleEvents}
       />
     </OurDiaryStyle>
   );
