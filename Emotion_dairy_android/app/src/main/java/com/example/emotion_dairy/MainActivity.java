@@ -7,9 +7,11 @@ import android.view.Menu;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.applandeo.materialcalendarview.EventDay;
+import com.bumptech.glide.Glide;
 import com.example.emotion_dairy.Retrofit.ApiInterface;
 import com.example.emotion_dairy.Retrofit.DTO.ResGetGroup;
 import com.example.emotion_dairy.Retrofit.DTO.ResMyInfo;
@@ -45,7 +47,9 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
+    NavigationView navigationView;
     TextView tvId;
+    ImageView ivHeaderWC;
 
     ApiInterface api;
 
@@ -64,8 +68,13 @@ public class MainActivity extends AppCompatActivity {
         api= HttpClient.getRetrofit().create(ApiInterface.class);
 
         //헤더 뷰 찾기
-        View headerView = findViewById(R.id.nav_view);
-        tvId=headerView.findViewById(R.id.navHeaderId);
+        navigationView = findViewById(R.id.nav_view);
+        View headerView = navigationView.getHeaderView(0);
+
+        tvId=(TextView) headerView.findViewById(R.id.navHeaderId);
+        ivHeaderWC=(ImageView) headerView.findViewById(R.id.navHeaderImageView);
+        String imageUrl = "http://10.100.102.90:7000/static/my/wordcloud2.png";
+        Glide.with(this).load(imageUrl).into(ivHeaderWC);
 
 
         fab.setOnClickListener(new View.OnClickListener() {
@@ -103,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<ResMyInfo> call, Response<ResMyInfo> response) {
                 ResMyInfo resMyInfo = response.body();
                 Log.d("log","나의 정보 : "+resMyInfo.getName());
+                tvId.setText(resMyInfo.getName());
             }
 
             @Override
