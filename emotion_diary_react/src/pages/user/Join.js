@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
 const JoinStyle = styled.div`
   display: grid;
-  height: 500px;
+  min-height: 100%;
+  max-width: 70%;
+  justify-items: center;
+  border: 2px solid #003458;
   grid-template-columns: 50% 40%;
   align-items: center;
   margin: 10px 10px;
@@ -104,70 +107,64 @@ const Join = () => {
       });
   }
   return (
-    <div>
-      <TitleStyle>회원 가입</TitleStyle>
-      <JoinStyle>
-        <div>워드 클라우드</div>
-        <form>
-          <div class="form-group">
-            <LabelStyle>아이디</LabelStyle>
-            <IdBoxStyle>
-              <input
-                class="form-control form-control-lg"
-                type="text"
-                name="id"
-                value={user.id}
-                onChange={inputHandle}
-                placeholder="아이디를 입력하세요"
-              />
-              <button
-                type="button"
-                class="btn btn-secondary btn-sm"
-                onClick={checkId}
-              >
-                중복확인
-              </button>
-            </IdBoxStyle>
-          </div>
-          <div class="form-group">
-            <LabelStyle>이름</LabelStyle>
+    <JoinStyle>
+      <div>워드 클라우드</div>
+      <form>
+        <TitleStyle>회원 가입</TitleStyle>
+        <div class="form-group">
+          <LabelStyle>아이디</LabelStyle>
+          <IdBoxStyle>
             <input
               class="form-control form-control-lg"
               type="text"
-              name="name"
-              value={user.name}
+              name="id"
+              value={user.id}
               onChange={inputHandle}
-              placeholder="이름 또는 닉네임을 입력하세요"
+              placeholder="아이디를 입력하세요"
             />
-          </div>
-          <div class="form-group">
-            <LabelStyle>비밀번호</LabelStyle>
-            <input
-              class="form-control form-control-lg"
-              type="password"
-              name="pw"
-              value={user.pw}
-              onChange={inputHandle}
-              placeholder="비밀번호를 입력하세요"
-            />
-          </div>
-          <ButtonBoxStyle>
-            <Link to="/login">
-              <button type="button" class="btn btn-secondary" onClick={reset}>
-                취소
-              </button>
-            </Link>
             <button
               type="button"
-              class="btn btn-secondary"
-              onClick={submitJoin}
+              class="btn btn-secondary btn-sm"
+              onClick={checkId}
             >
-              회원가입
+              중복확인
             </button>
-          </ButtonBoxStyle>
-        </form>
-      </JoinStyle>
-    </div>
+          </IdBoxStyle>
+        </div>
+        <div class="form-group">
+          <LabelStyle>이름</LabelStyle>
+          <input
+            class="form-control form-control-lg"
+            type="text"
+            name="name"
+            value={user.name}
+            onChange={inputHandle}
+            placeholder="이름 또는 닉네임을 입력하세요"
+          />
+        </div>
+        <div class="form-group">
+          <LabelStyle>비밀번호</LabelStyle>
+          <input
+            class="form-control form-control-lg"
+            type="password"
+            name="pw"
+            value={user.pw}
+            onChange={inputHandle}
+            placeholder="비밀번호를 입력하세요"
+          />
+        </div>
+        <ButtonBoxStyle>
+          <Link to="/login">
+            <button type="button" class="btn btn-secondary" onClick={reset}>
+              취소
+            </button>
+          </Link>
+          <button type="button" class="btn btn-secondary" onClick={submitJoin}>
+            회원가입
+          </button>
+        </ButtonBoxStyle>
+      </form>
+    </JoinStyle>
   );
 };
 

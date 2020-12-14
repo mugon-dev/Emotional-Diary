@@ -1,6 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import styled from 'styled-components';
 
+const ModifyStyle = styled.div`
+  display: grid;
+  grid-template-columns: auto;
+  width: 400%;
+`;
+const ButtonBoxStyle = styled.div`
+  display: grid;
+  grid-template-columns: auto auto;
+`;
 const DiaryModify = (props) => {
   const [diary, setDiary] = useState({});
   const id = props.match.params.id;
@@ -54,7 +64,7 @@ const DiaryModify = (props) => {
     });
   }
   return (
-    <div>
+    <ModifyStyle>
       <form>
         <input
           class="form-control form-control-lg"
@@ -69,15 +79,17 @@ const DiaryModify = (props) => {
           rows="3"
           onChange={inputHandle}
           value={diary.contents}
-        ></textarea>
-        <Link to="/diary">
-          <button class="btn btn-secondary">취소</button>
-        </Link>
-        <button class="btn btn-secondary" onClick={submitModify}>
-          수정
-        </button>
+        />
+        <ButtonBoxStyle>
+          <Link to="/diary">
+            <button class="btn btn-secondary">취소</button>
+          </Link>
+          <button class="btn btn-secondary" onClick={submitModify}>
+            수정
+          </button>
+        </ButtonBoxStyle>
       </form>
-    </div>
+    </ModifyStyle>
   );
 };
 

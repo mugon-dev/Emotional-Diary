@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
-import jwt_decode from 'jwt-decode';
+//import jwt_decode from 'jwt-decode';
 import { login } from '../../store';
 
 const LoginStyle = styled.div`
@@ -10,7 +10,7 @@ const LoginStyle = styled.div`
 `;
 const LoginBoxStyle = styled.div`
   display: grid;
-  height: 500px;
+  //height: 500px;
   grid-template-columns: 50% 40%;
   // border: 1px solid #003458;
   align-items: center;

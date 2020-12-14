@@ -6,14 +6,14 @@ import { logout } from '../store';
 
 const HeaderStyle = styled.div`
   display: grid;
-  min-height: 900px;
-  min-width: 200px;
-  grid-template-columns: auto;
+  width: 95%;
+  height: 90%;
+  grid-template-columns: 100%;
   align-content: center;
   justify-content: right;
   border: 2px solid #003458;
   border-radius: 10px;
-  margin: 20px 0px 20px 20px;
+  //margin: 25px 0px 25px 25px;
   padding: 10px 10px;
   font-size: 22px;
   background-color: #eaeae3;

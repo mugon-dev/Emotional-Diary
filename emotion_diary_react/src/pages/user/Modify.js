@@ -7,9 +7,9 @@ import { logout } from '../../store';
 const ModifyStyle = styled.div`
   display: grid;
   grid-template-columns: auto;
-  width: 700px;
+  width: 100%;
   padding: 50px 10px 10px 10px;
-  // border: 1px solid #003458;
+  border: 1px solid #003458;
 `;
 const LabelStyle = styled.div`
   font-size: 23px;

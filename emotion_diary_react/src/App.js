@@ -8,15 +8,21 @@ import styled from 'styled-components';
 import Footer from './components/Footer';
 
 const AppStyle = styled.div`
-  min-height: 1050px;
+  display: grid;
+  grid-template-columns: 100%;
+  justify-items: center;
+  align-items: center;
+  height: 1070px;
+  width: 100%;
   font-family: 'TDTDTadakTadak';
   background-color: #eaeae3;
-  padding: 10px 10px;
 `;
 const AppBoxStyle = styled.div`
   border: 2px solid #003458;
   border-radius: 10px;
-  min-height: 800px;
+  height: 85%;
+  width: 90%;
+  margin: 50px 100px 0px 150px;
   background-color: #eaeae3;
 `;
 function App() {

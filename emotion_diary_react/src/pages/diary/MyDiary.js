@@ -7,15 +7,15 @@ import styled from 'styled-components';
 
 const MyDiaryStyle = styled.div`
   display: grid;
-  max-width: 80%;
-  align-content: baseline;
-  //justify-content: center;
   grid-template-columns: 100%;
+  width: 100%;
+  height: 100%;
+  justify-items: center;
   padding: 10px 10px;
-  border: 1px solid #003458;
+  border: 1px solid red;
 `;
 const TitleStyle = styled.div`
-  margin: 20px 0px 20px 0px;
+  //margin: 20px 0px 20px 0px;
   font-size: 40px;
   border: 1px solid #003458;
   text-align: center;

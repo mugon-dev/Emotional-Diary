@@ -11,20 +11,21 @@ import OurDiary from '../pages/diary/OurDiary';
 const MainStyle = styled.div`
   display: grid;
   grid-template-columns: auto;
-  max-height: 900px;
-  overflow: scroll;
-  margin: 20px 20px;
-  padding: 0px 0px 8px 0px;
+  height: 90%;
+  width: 95%;
+  //overflow: scroll;
+  //margin: 25px 25px;
   justify-content: center;
+  justify-items: center;
   border: 2px solid #003458;
   border-radius: 10px;
   background-color: #eaeae3;
 
-  &::-webkit-scrollbar {
-    /* 세로 스크롤 넓이 */
+  /* &::-webkit-scrollbar {
+    //세로 스크롤 넓이 
     width: 8px;
 
-    /* 가로 스크롤 높이 */
+    // 가로 스크롤 높이 
     height: 8px;
 
     border-radius: 6px;
@@ -33,7 +34,7 @@ const MainStyle = styled.div`
   &::-webkit-scrollbar-thumb {
     background-color: rgba(0, 0, 0, 0.3);
     border-radius: 6px;
-  }
+  } */
 `;
 
 const Main = () => {

@@ -6,8 +6,12 @@ import Main from '../../components/Main';
 
 const DiaryHomeStyle = styled.div`
   display: grid;
+  width: 100%;
+  height: 100%;
   grid-template-columns: 15% 85%;
-  max-width: 0100%;
+  align-items: center;
+  justify-items: center;
+  justify-content: space-around;
 `;
 const DiaryHome = () => {
   const isLogin = useSelector((store) => store.isLogin);

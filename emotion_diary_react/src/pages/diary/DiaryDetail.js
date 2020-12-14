@@ -2,7 +2,22 @@ import React, { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
-const ButtonBoxStyle = styled.div``;
+const DetailStyle = styled.div`
+  display: grid;
+  width: 300%;
+  border: 1px solid #003458;
+`;
+const ButtonBoxStyle = styled.div`
+  display: grid;
+  width: 100%;
+  grid-template-columns: auto auto auto;
+  grid-column-gap: 10px;
+  justify-content: end;
+  margin: 10px;
+`;
+const LabelStyle = styled.div`
+  font-size: 23px;
+`;
 const DiaryDetail = (props) => {
   const [diary, setDiary] = useState([]);
   const id = props.match.params.id;
@@ -48,26 +63,31 @@ const DiaryDetail = (props) => {
     }
   }
   return (
-    <div>
+    <DetailStyle>
       <div>{diary.bno}</div>
-
       <div>{diary.createTime}의 일기</div>
-      <label>제목</label>
+      <LabelStyle>제목</LabelStyle>
       <div>{diary.title}</div>
-      <label>내용</label>
+      <LabelStyle>내용</LabelStyle>
       <div>{diary.contents}</div>
 
       <div>{diary.emotion}</div>
       <ButtonBoxStyle>
         <Link to="/diary">
-          <button>돌아가기</button>
+          <button type="button" class="btn btn-secondary">
+            돌아가기
+          </button>
         </Link>
         <Link to={'/diary/modify/' + id}>
-          <button>수정</button>
+          <button type="button" class="btn btn-secondary">
+            수정
+          </button>
         </Link>
-        <button onClick={submitDelete}>삭제</button>
+        <button type="button" class="btn btn-secondary" onClick={submitDelete}>
+          삭제
+        </button>
       </ButtonBoxStyle>
-    </div>
+    </DetailStyle>
   );
 };
 
