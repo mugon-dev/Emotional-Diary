@@ -41,4 +41,5 @@ public interface ApiInterface {
 
     @GET("together/get/{id}")
     Call<Together> getGroupName(@Header("Authorization") String auth, @Path("id") int id);
+
 }

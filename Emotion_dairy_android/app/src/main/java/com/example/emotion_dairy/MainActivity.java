@@ -83,6 +83,10 @@ public class MainActivity extends AppCompatActivity {
         //Fragment Manager
 
     }
+    public void getGroupBoardList(int tno,int last){
+
+    }
+
     public void getGroupList(int tno,int last){
         String auth = PreferenceManager.getString(this,"Auth");
         Call<Together> call = api.getGroupName(auth,tno);
@@ -96,12 +100,10 @@ public class MainActivity extends AppCompatActivity {
                     Log.d("log","그룹리스트 & 아이디 : "+g);
                 }
                 if(last==1){
-                    for(GroupList g : groupLists){
-                        Log.d("log","여기가 라스트 : "+g);
-                    }
                     Gson gson = new GsonBuilder().create();
                     Type listType = new TypeToken<ArrayList<GroupList>>(){}.getType();
                     String jsonGroup = gson.toJson(groupLists,listType);
+                    PreferenceManager.removeKey(MainActivity.this,"Group");
                     PreferenceManager.setString(MainActivity.this,"Group",jsonGroup);
 
                     String strGroup1 = PreferenceManager.getString(MainActivity.this,"Group");
