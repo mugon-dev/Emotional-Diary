@@ -147,7 +147,7 @@ public class HomeFragment extends Fragment {
                         break;
                     }
                 }
-                if(result.get(index)!=null) {
+                if(index!=-1) {
                     contentView.setText(result.get(index).getContents());
                 }
             }

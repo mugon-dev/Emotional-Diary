@@ -45,13 +45,13 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
                 android:gravity="center"
-                android:text="ㅋㅋ"
+                android:text="날짜를 선택하세요."
                 android:textSize="30dp" />
 
             <TextView
                 android:id="@+id/tv_contentview"
                 android:layout_width="match_parent"
-                android:layout_height="157dp"
+                android:layout_height="150dp"
                 android:background="@color/backColor"
                 android:ems="10"
                 android:hint="내용을 입력하세요"
