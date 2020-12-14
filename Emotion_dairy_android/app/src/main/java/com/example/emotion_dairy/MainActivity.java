@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.applandeo.materialcalendarview.EventDay;
 import com.example.emotion_dairy.Retrofit.ApiInterface;
 import com.example.emotion_dairy.Retrofit.DTO.ResGetGroup;
+import com.example.emotion_dairy.Retrofit.DTO.Together;
 import com.example.emotion_dairy.Retrofit.HttpClient;
 import com.example.emotion_dairy.SharedPreferences.PreferenceManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -46,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     List<ResGetGroup> list = new ArrayList<ResGetGroup>();
+    List<GroupList> groupLists = new ArrayList<GroupList>();
+    List<Integer> gList=new ArrayList<Integer>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -80,8 +83,42 @@ public class MainActivity extends AppCompatActivity {
         //Fragment Manager
 
     }
+    public void getGroupList(int tno,int last){
+        String auth = PreferenceManager.getString(this,"Auth");
+        Call<Together> call = api.getGroupName(auth,tno);
+        call.enqueue(new Callback<Together>() {
+            @Override
+            public void onResponse(Call<Together> call, Response<Together> response) {
+                Together together = response.body();
+                GroupList groupList = new GroupList(together.getTno(),together.getTname());
+                groupLists.add(groupList);
+                for(GroupList g : groupLists){
+                    Log.d("log","그룹리스트 & 아이디 : "+g);
+                }
+                if(last==1){
+                    for(GroupList g : groupLists){
+                        Log.d("log","여기가 라스트 : "+g);
+                    }
+                    Gson gson = new GsonBuilder().create();
+                    Type listType = new TypeToken<ArrayList<GroupList>>(){}.getType();
+                    String jsonGroup = gson.toJson(groupLists,listType);
+                    PreferenceManager.setString(MainActivity.this,"Group",jsonGroup);
+
+                    String strGroup1 = PreferenceManager.getString(MainActivity.this,"Group");
+                    Log.d("log","마지막테스트 그룹 제이슨 : "+strGroup1);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Together> call, Throwable t) {
+                Log.d("log","그룹 에러메세지 : "+t.getMessage());
+
+            }
+        });
+    }
+
     public void getData(){
-        List<GroupList> gList=new ArrayList<GroupList>();
+
         String auth = PreferenceManager.getString(this,"Auth");
         Call<List<ResGetGroup>> call=api.getGroup(auth);
         call.enqueue(new Callback<List<ResGetGroup>>() {
@@ -89,16 +126,17 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<List<ResGetGroup>> call, Response<List<ResGetGroup>> response) {
                 list=response.body();
                 for(int i=0;i<list.size();i++){
-                    GroupList group = new GroupList(list.get(i).getTogether().getTno(),list.get(i).getTogether().getTname());
-                    gList.add(group);
+                    int strGroup = list.get(i).getTno();
+                    gList.add(strGroup);
                 }
-                Log.d("log","그룹데이터 : "+gList.get(0));
-                Gson gson = new GsonBuilder().create();
-                Type listType = new TypeToken<ArrayList<GroupList>>(){}.getType();
-                String jsonGroup = gson.toJson(gList,listType);
-                PreferenceManager.setString(MainActivity.this,"Group",jsonGroup);
-                Log.d("log","json data : "+jsonGroup);
-                Log.d("log","통신성공");
+                for(int a : gList){
+                    int idx = gList.size();
+                    if(a==gList.get(idx-1)) {
+                        getGroupList(a, 1);
+                    }else{
+                        getGroupList(a,0);
+                    }
+                }
             }
 
             @Override

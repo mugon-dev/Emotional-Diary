@@ -7,6 +7,7 @@ import com.example.emotion_dairy.Retrofit.DTO.ReqLoginDTO;
 import com.example.emotion_dairy.Retrofit.DTO.ResGetGroup;
 import com.example.emotion_dairy.Retrofit.DTO.ResLoginDTO;
 import com.example.emotion_dairy.Retrofit.DTO.SoloBoardDTO;
+import com.example.emotion_dairy.Retrofit.DTO.Together;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,4 +38,7 @@ public interface ApiInterface {
 
     @GET("tmember/get")
     Call<List<ResGetGroup>> getGroup(@Header("Authorization") String auth);
+
+    @GET("together/get/{id}")
+    Call<Together> getGroupName(@Header("Authorization") String auth, @Path("id") int id);
 }
