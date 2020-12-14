@@ -111,7 +111,7 @@ public class BoardWrite extends AppCompatActivity {
                 boardData.setTitle(edWriteTitle.getText().toString());
                 boardData.setContents(edWriteContent.getText().toString());
                 Log.d("log",boardData.toString());
-                //boardWrite(boardData);
+                boardWrite(boardData);
             }
         });
         btnDateSelect.setOnClickListener(new View.OnClickListener() {

@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         FloatingActionButton fab = findViewById(R.id.fab);
         api= HttpClient.getRetrofit().create(ApiInterface.class);
-        getData();
+ //       getData();
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -102,10 +102,10 @@ public class HomeFragment extends Fragment {
         //추가
         List<EventDay> events = new ArrayList<>();
 
-        //달력에 오늘날짜 이벤트 추가
-        Calendar calendar = Calendar.getInstance();
-        Log.d("log", calendar.toString());
-        events.add(new EventDay(calendar, R.drawable.sample_icon));
+//        //달력에 오늘날짜 이벤트 추가
+//        Calendar calendar = Calendar.getInstance();
+//        Log.d("log", calendar.toString());
+//        events.add(new EventDay(calendar, R.drawable.sample_icon));
 
         //달력에 특정 날짜 이벤트 추가
 //        Calendar calendar1 = Calendar.getInstance();
@@ -147,8 +147,9 @@ public class HomeFragment extends Fragment {
                         break;
                     }
                 }
-                contentView.setText(result.get(index).getContents());
-
+                if(result.get(index)!=null) {
+                    contentView.setText(result.get(index).getContents());
+                }
             }
         });
 
@@ -181,6 +182,7 @@ public class HomeFragment extends Fragment {
                 List<EventDay> events = new ArrayList<>();
                 Log.d("log", "데이터 통신 성공");
                 Log.d("log", result.toString());
+
                 for(int i=0;i<result.size();i++){
                     Log.d("log","result"+i+" : "+result.get(i).getCreateTime());
 
@@ -190,8 +192,42 @@ public class HomeFragment extends Fragment {
                         Date date = dateFormat.parse(result.get(i).getCreateTime());
                         cal.setTime(date);
                         Log.d("log",cal.toString());
-                        events.add(new EventDay(cal,R.drawable.sample_icon));
-                        cv.setEvents(events);
+                        //분석 결과별로 이모티콘 뿌리기
+                        switch (result.get(i).getEmotion()) {
+                            case "Anger":
+                                events.add(new EventDay(cal, R.drawable.anger));
+                                cv.setEvents(events);
+                                break;
+                            case "Anticipation":
+                                events.add(new EventDay(cal, R.drawable.anticipation));
+                                cv.setEvents(events);
+                                break;
+                            case "Disgust":
+                                events.add(new EventDay(cal, R.drawable.disgust));
+                                cv.setEvents(events);
+                                break;
+                            case "Fear":
+                                events.add(new EventDay(cal, R.drawable.fear));
+                                cv.setEvents(events);
+                                break;
+                            case "Joy":
+                                events.add(new EventDay(cal, R.drawable.joy));
+                                cv.setEvents(events);
+                                break;
+                            case "Sadness":
+                                events.add(new EventDay(cal, R.drawable.sadness));
+                                cv.setEvents(events);
+                                break;
+                            case "Surprise":
+                                events.add(new EventDay(cal, R.drawable.surprise));
+                                cv.setEvents(events);
+                                break;
+                            case "Trust":
+                                events.add(new EventDay(cal, R.drawable.trust));
+                                cv.setEvents(events);
+                                break;
+                        }
+
 
                     } catch (ParseException e) {
                         Log.d("log",e.getMessage());
