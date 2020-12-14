@@ -70,12 +70,14 @@ public class MemberController {
 
 	
 
-	@GetMapping("/get/{id}")
-	public Member memberone(@PathVariable int id) {
-
-		Member member = memberRepository.findByMno(id);
-
-		return member;
+	@GetMapping("/get")
+	public ResponseEntity<?> memberone() {
+		int mid = (int) session.getAttribute("id");
+		if (session.getAttribute("id") != null) {
+			Member member = memberRepository.findByMno(mid);
+			return new ResponseEntity<Member>(member, HttpStatus.OK);
+		}
+		return new ResponseEntity<String>("You don't have authorization", HttpStatus.FORBIDDEN);
 	}
 
 	// 수정

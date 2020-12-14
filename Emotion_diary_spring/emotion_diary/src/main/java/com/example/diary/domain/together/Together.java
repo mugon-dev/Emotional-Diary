@@ -33,7 +33,7 @@ public class Together {
 	@Column(length = 500)
 	private String tcode;
 	
-	@JsonIgnoreProperties({"together"})
+	@JsonIgnoreProperties({"together","board"})
 	@JoinColumn(name="mno")
 	@ManyToOne()
 	private Member member;
