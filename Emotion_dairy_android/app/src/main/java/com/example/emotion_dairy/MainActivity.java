@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.applandeo.materialcalendarview.EventDay;
 import com.example.emotion_dairy.Retrofit.ApiInterface;
 import com.example.emotion_dairy.Retrofit.DTO.ResGetGroup;
+import com.example.emotion_dairy.Retrofit.DTO.ResMyInfo;
 import com.example.emotion_dairy.Retrofit.DTO.SoloBoardDTO;
 import com.example.emotion_dairy.Retrofit.DTO.Together;
 import com.example.emotion_dairy.Retrofit.HttpClient;
@@ -44,6 +45,8 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
+    TextView tvId;
+
     ApiInterface api;
 
     private AppBarConfiguration mAppBarConfiguration;
@@ -59,7 +62,12 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         FloatingActionButton fab = findViewById(R.id.fab);
         api= HttpClient.getRetrofit().create(ApiInterface.class);
-        getData();
+
+        //헤더 뷰 찾기
+        View headerView = findViewById(R.id.nav_view);
+        tvId=headerView.findViewById(R.id.navHeaderId);
+
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -79,11 +87,31 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-        //회원정보 ( 닉네임, 그룹 1,2,3 가져옴 )
-
+        //그룹 가져옴;
+        getData();
+        //회원 정보 가져옴;
+        getMyInfo();
         //Fragment Manager
 
     }
+
+    public void getMyInfo(){
+        String auth = PreferenceManager.getString(this,"Auth");
+        Call<ResMyInfo> call = api.getMyInfo(auth);
+        call.enqueue(new Callback<ResMyInfo>() {
+            @Override
+            public void onResponse(Call<ResMyInfo> call, Response<ResMyInfo> response) {
+                ResMyInfo resMyInfo = response.body();
+                Log.d("log","나의 정보 : "+resMyInfo.getName());
+            }
+
+            @Override
+            public void onFailure(Call<ResMyInfo> call, Throwable t) {
+                Log.d("log","getMyInfo() 에러 : "+t.getMessage());
+            }
+        });
+    }
+
 
 
 

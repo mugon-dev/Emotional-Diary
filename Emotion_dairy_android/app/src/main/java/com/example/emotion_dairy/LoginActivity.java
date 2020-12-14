@@ -1,18 +1,25 @@
 package com.example.emotion_dairy;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
 import com.example.emotion_dairy.Retrofit.ApiInterface;
 import com.example.emotion_dairy.Retrofit.DTO.ReqLoginDTO;
 import com.example.emotion_dairy.Retrofit.DTO.ResLoginDTO;
 import com.example.emotion_dairy.Retrofit.HttpClient;
 import com.example.emotion_dairy.SharedPreferences.PreferenceManager;
+
+import java.io.IOException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -22,12 +29,16 @@ import retrofit2.Response;
 public class LoginActivity extends AppCompatActivity {
     ApiInterface api;
     EditText edId,edPw;
+    ImageView iv;
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
         edId=findViewById(R.id.edId);
         edPw=findViewById(R.id.edPw);
+        iv=findViewById(R.id.ivWordCloud);
+        String imageUrl = "http://10.100.102.90:7000/static/my/wordcloud2.png";
+        Glide.with(this).load(imageUrl).into(iv);
         api = HttpClient.getRetrofit().create(ApiInterface.class);
     }
 
