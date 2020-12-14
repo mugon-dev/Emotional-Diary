@@ -93,19 +93,17 @@ public class BoardController {
 //		Member principal = (Member) session.getAttribute("principal");
 		int id = (int) session.getAttribute("id");
 		System.out.println("보드꺼." + id);
-
-		BoardSaveRequestDto dto = new BoardSaveRequestDto();
-		dto.setBno(board.getBno());
-		dto.setContents(board.getContents());
-		dto.setTitle(board.getTitle());
-
-		Board emotion = restfulController.send(dto);
-//		emotion=emotion.replace("\\","");
-
 		if (session.getAttribute("id") != null) {
 			Member member = memberRepository.findByMno(id);
+			BoardSaveRequestDto dto = new BoardSaveRequestDto();
+			dto.setContents(board.getContents());
+			dto.setTitle(board.getTitle());
+			Board emotion = restfulController.send(dto);
 			board.setEmotion(emotion.getEmotion());
 			boardService.글쓰기(board, member);
+						
+	//		emotion=emotion.replace("\\","");
+
 			return new ResponseEntity<String>("ok", HttpStatus.CREATED);
 		} else {
 			return new ResponseEntity<String>("fail", HttpStatus.FORBIDDEN);
