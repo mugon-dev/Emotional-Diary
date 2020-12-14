@@ -3,7 +3,7 @@ package com.example.emotion_dairy.Retrofit.DTO;
 public class ResGetGroup {
     int tmno;
     MemberDTO member;
-    Together together;
+    int tno;
 
     public void setTmno(int tmno) {
         this.tmno = tmno;
@@ -13,8 +13,8 @@ public class ResGetGroup {
         this.member = member;
     }
 
-    public void setTogether(Together together) {
-        this.together = together;
+    public void setTno(int tno) {
+        this.tno = tno;
     }
 
     public int getTmno() {
@@ -25,8 +25,8 @@ public class ResGetGroup {
         return member;
     }
 
-    public Together getTogether() {
-        return together;
+    public int getTno() {
+        return tno;
     }
 
     @Override
@@ -34,7 +34,7 @@ public class ResGetGroup {
         return "ResGetGroup{" +
                 "tmno=" + tmno +
                 ", member=" + member +
-                ", together=" + together +
+                ", together=" + tno +
                 '}';
     }
 }
