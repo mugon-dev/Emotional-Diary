@@ -1,12 +1,17 @@
 package com.example.emotion_dairy;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.applandeo.materialcalendarview.EventDay;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -46,7 +51,7 @@ public class ListViewAdapter extends BaseAdapter{
             Log.d("log","들어옴;;;;;");
             TextView titleTextView = (TextView) convertView.findViewById(R.id.tv_title);
             TextView nameTextView = (TextView) convertView.findViewById(R.id.tv_name);
-            TextView dateTextView = (TextView) convertView.findViewById(R.id.tv_date);
+            ImageView emotionImageView = (ImageView) convertView.findViewById(R.id.iv_emotion);
 
             // Data Set(listViewItemList)에서 position에 위치한 데이터 참조 획득
             ListViewItem listViewItem = listViewItemList.get(position);
@@ -54,7 +59,39 @@ public class ListViewAdapter extends BaseAdapter{
             // 아이템 내 각 위젯에 데이터 반영 ( Test 중 )
             titleTextView.setText(listViewItem.getTitle());
             nameTextView.setText(listViewItem.getName());
-            dateTextView.setText(listViewItem.getDate());
+
+        switch (listViewItem.getEmotion()) {
+            case "Anger":
+                emotionImageView.setImageAlpha(R.drawable.anger);
+                break;
+            case "Anticipation":
+                emotionImageView.setImageAlpha(R.drawable.anticipation);
+                break;
+            case "Disgust":
+                emotionImageView.setImageAlpha(R.drawable.disgust);
+                break;
+
+            case "Fear":
+                emotionImageView.setImageAlpha(R.drawable.fear);
+                break;
+            case "Joy":
+                emotionImageView.setImageAlpha(R.drawable.joy);
+                break;
+            case "Sadness":
+                emotionImageView.setImageAlpha(R.drawable.sadness);
+                break;
+            case "Surprise":
+                emotionImageView.setImageAlpha(R.drawable.surprise);
+                break;
+            case "Trust":
+                emotionImageView.setImageAlpha(R.drawable.trust);
+                break;
+        }
+
+
+
+      //      emotionImageView.setImageDrawable(listViewItem.getEmotion());
+
             //iconImageView.setImageDrawable(listViewItem.getIcon());
             //titleTextView.setText(listViewItem.getTitle());
             //descTextView.setText(listViewItem.getDesc());
@@ -74,13 +111,12 @@ public class ListViewAdapter extends BaseAdapter{
     }
 
     // 아이템 데이터 추가를 위한 함수.
-    public void addItem(String title, String content,String name, String date) {
+    public void addItem(String title, String name, String emotion) {
         ListViewItem item = new ListViewItem();
 
         item.setTitle(title);
-        item.setContent(content);
         item.setName(name);
-        item.setDate(date);
+        item.setEmotion(emotion);
 
         listViewItemList.add(item);
     }

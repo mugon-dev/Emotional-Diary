@@ -1,5 +1,7 @@
 package com.example.emotion_dairy;
 
+import android.graphics.drawable.Drawable;
+
 import java.util.Date;
 
 public class ListViewItem {
@@ -7,6 +9,15 @@ public class ListViewItem {
     private String name;
     private String title;
     private String content;
+    private String emotion;
+
+    public String getEmotion() {
+        return emotion;
+    }
+
+    public void setEmotion(String emotion) {
+        this.emotion = emotion;
+    }
 
     @Override
     public String toString() {
