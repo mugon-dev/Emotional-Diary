@@ -13,61 +13,50 @@ const MyDiaryStyle = styled.div`
   padding: 10px 10px;
 `;
 
-const MyDiary = () => {
+const MyDiary = ({history}) => {
   const [boards, setBoards] = useState([]);
-  let eventDb = [
-    {
-      id: 1,
-      title: 'All-day event',
-      start: '2020-12-02',
-    },
-    {
-      id: 2,
-      title: 'Timed event',
-      start: '2020-12-03',
-    },
-    {
-      id: 3,
-      title: '내가 생성',
-      start: '2020-12-04',
-    },
-  ];
   useEffect(() => {
-    fetch('http://10.100.102.31:8000/board/my', {
-      method: 'GET',
-      headers: {
-        Authorization: localStorage.getItem('Authorization'),
-      },
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        console.log('res.bno', res.bno);
-
-        setBoards({
-          id: res.bno,
-          title: res.title,
-          start: res.createTime,
+    fetch("http://10.100.102.31:8000/board/my",{
+        method: "GET",
+        headers: {
+            Authorization: localStorage.getItem("Authorization"),
+        },})
+        .then((res)=>res.json())
+        .then((res)=>{
+            let db = res.map((ress,index)=>{
+              return (
+                  index,{
+                      "id":ress.bno,
+                      "title":ress.title,
+                      "start":ress.createTime,
+                  }
+              )
+          });
+          setBoards(db)
         });
-        //setBoards(res);
-        console.log('aaa', boards);
-      });
-  }, []);
+
+},[]);
+
   const [selectDate, setSelectDate] = useState({
     start: '',
     end: '',
     allDay: '',
   });
 
-  function INITIAL_EVENTS() {
-    //최초 데이터 불러오는것
-  }
+  
 
   function renderEventContent() {
     //잘모름
   }
 
-  function handleEventClick() {
+  function handleEventClick(clickInfo) {
     //클릭했을때 동작
+    // 다이어리 등록되었을때 그 항목 클릭 ->디테일페이지 이동하게 만들기
+    history.push("/diary/detail/"+clickInfo.event.id)
+    // history.push({
+    //   pathname: "/detail/"+clickInfo.event.id,
+    //   state:{}
+    // })
   }
 
   function handleEvents() {}
@@ -77,7 +66,8 @@ const MyDiary = () => {
     return String(eventGuid++);
   } */
   function handleDateSelect(selectInfo) {
-    console.log(boards);
+    // 빈 달력 클릭
+    console.log(boards)
     //let title = prompt('Please enter a new title for your event');
     let calendarApi = selectInfo.view.calendar;
     setSelectDate({
