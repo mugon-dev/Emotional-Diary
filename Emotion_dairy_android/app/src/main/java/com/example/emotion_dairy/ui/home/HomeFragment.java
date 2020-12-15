@@ -153,6 +153,9 @@ public class HomeFragment extends Fragment {
                     titleView.setText((result.get(index).getTitle()));
                     titleView.requestFocus();
                 }else{
+                    //글쓰기 페이지 이동
+                    Intent intent = new Intent(getContext(),BoardWrite.class);
+
                     btnWrite.setVisibility(View.VISIBLE);
                     updateBtn.setVisibility(View.INVISIBLE);
                     titleView.setVisibility(View.INVISIBLE);

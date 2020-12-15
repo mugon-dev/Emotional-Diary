@@ -19,6 +19,7 @@ import com.example.emotion_dairy.Retrofit.DTO.ResLoginDTO;
 import com.example.emotion_dairy.Retrofit.HttpClient;
 import com.example.emotion_dairy.SharedPreferences.PreferenceManager;
 
+import java.io.File;
 import java.io.IOException;
 
 import retrofit2.Call;
@@ -37,9 +38,34 @@ public class LoginActivity extends AppCompatActivity {
         edId=findViewById(R.id.edId);
         edPw=findViewById(R.id.edPw);
         iv=findViewById(R.id.ivWordCloud);
-        String imageUrl = "http://10.100.102.90:7000/static/my/wordcloud2.png";
+        String imageUrl = "http://10.100.102.90:7000/static/wordcloud0.png";
         Glide.with(this).load(imageUrl).into(iv);
         api = HttpClient.getRetrofit().create(ApiInterface.class);
+
+        File cache = this.getCacheDir();
+        File appDir = new File(cache.getParent());
+        if (appDir.exists()) {
+            String[] children = appDir.list();
+            for (String s : children) {
+                //다운로드 파일은 지우지 않도록 설정
+                //if(s.equals("lib") || s.equals("files")) continue;
+                deleteDir(new File(appDir, s));
+                Log.d("test", "File /data/data/"+this.getPackageName()+"/" + s + " DELETED");
+            }
+        }
+    }
+
+    private static boolean deleteDir(File dir) {
+        if (dir != null && dir.isDirectory()) {
+            String[] children = dir.list();
+            for (int i = 0; i < children.length; i++) {
+                boolean success = deleteDir(new File(dir, children[i]));
+                if (!success) {
+                    return false;
+                }
+            }
+        }
+        return dir.delete();
     }
 
     //로그인 버튼 이벤트

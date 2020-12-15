@@ -3,6 +3,7 @@ package com.example.emotion_dairy.ui.slideshow;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,6 +20,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.loader.content.AsyncTaskLoader;
 
 import com.bumptech.glide.Glide;
 import com.example.emotion_dairy.GroupList;
@@ -32,6 +34,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -212,15 +218,76 @@ public class SlideshowFragment extends Fragment {
 
     }
 
+    private class DownloadFilesTask extends AsyncTask<String,Void,Bitmap> {
+
+        @Override
+        protected Bitmap doInBackground(String... strings) {
+            Bitmap bmp =null;
+            String imageUrl = strings[0];
+            try {
+                URL url = new URL(imageUrl);
+                bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+
+            } catch (MalformedURLException e) {
+                Log.d("log","URL에러 : "+e.getMessage());
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap bitmap) {
+            //super.onPostExecute(bitmap);
+            ivAnalysis.setImageBitmap(bitmap);
+        }
+    }
+    private static boolean deleteDir(File dir) {
+        if (dir != null && dir.isDirectory()) {
+            String[] children = dir.list();
+            for (int i = 0; i < children.length; i++) {
+                boolean success = deleteDir(new File(dir, children[i]));
+                if (!success) {
+                    return false;
+                }
+            }
+        }
+        return dir.delete();
+    }
+
     public void setImage(int tno,String idx){
+        File cache = getActivity().getCacheDir();
+        File appDir = new File(cache.getParent());
+        if (appDir.exists()) {
+            String[] children = appDir.list();
+            for (String s : children) {
+                //다운로드 파일은 지우지 않도록 설정
+                //if(s.equals("lib") || s.equals("files")) continue;
+                deleteDir(new File(appDir, s));
+                Log.d("test", "File /data/data/"+getActivity().getPackageName()+"/" + s + " DELETED");
+            }
+        }
         int myNo = PreferenceManager.getInt(getContext(),"myNo");
         Log.d("log","이미지셋 내 번호 : "+myNo);
         if(tno == 0){
             String imageUrl = "http://10.100.102.90:7000/static/my/"+idx+myNo+".png";
+            //String imageUrl = "http://10.100.102.90:7000/static/wordcloud0.png";
             Glide.with(this).load(imageUrl).into(ivAnalysis);
+//            DownloadFilesTask task = new DownloadFilesTask();
+//            task.execute(imageUrl);
+
         }else{
             String imageUrl = "http://10.100.102.90:7000/static/together/"+idx+tno+".png";
             Glide.with(this).load(imageUrl).into(ivAnalysis);
+//            String imageUrl = "http://10.100.102.90:7000/static/together/"+idx+tno+".png";
+//            DownloadFilesTask task = new DownloadFilesTask();
+//            task.execute(imageUrl);
         }
     }
 
