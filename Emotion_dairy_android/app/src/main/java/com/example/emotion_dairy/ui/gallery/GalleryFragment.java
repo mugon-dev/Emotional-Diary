@@ -1,5 +1,6 @@
 package com.example.emotion_dairy.ui.gallery;
 
+import android.app.AlertDialog;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -203,4 +204,7 @@ mvc.setOnDateChangedListener(new OnDateSelectedListener() {
             }
         }
     }
+
+
+
 }

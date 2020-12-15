@@ -109,15 +109,6 @@ public class HomeFragment extends Fragment {
         //추가
         List<EventDay> events = new ArrayList<>();
 
-//        //달력에 오늘날짜 이벤트 추가
-//        Calendar calendar = Calendar.getInstance();
-//        Log.d("log", calendar.toString());
-//        events.add(new EventDay(calendar, R.drawable.sample_icon));
-
-        //달력에 특정 날짜 이벤트 추가
-//        Calendar calendar1 = Calendar.getInstance();
-//        CalendarDay.from
-//        calendar1
 
         CalendarView calendarView = (CalendarView) root.findViewById(R.id.calendarView);
         getBoard(calendarView);
@@ -134,11 +125,8 @@ public class HomeFragment extends Fragment {
                 Calendar clickedDayCalendar = eventDay.getCalendar();
                 Calendar selectedDate = calendarView.getFirstSelectedDate();
                 Log.d("log", "날짜 찍음");
-                //        Log.d("log", Integer.toString(clickedDayCalendar.getWeekYear()));
-                //      Log.d("log", Integer.toString(clickedDayCalendar.get));
                 Log.d("log", clickedDayCalendar.getTime().toString());
-                //  Log.d("log",)
-                //tv_date.setText(clickedDayCalendar.getTime().toString().substring(0,10));
+
 
                 //선택날짜 출력하기
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");

@@ -117,8 +117,13 @@ public class MainActivity extends AppCompatActivity {
 
     public void getMyInfo(){
         String auth = PreferenceManager.getString(this,"Auth");
+<<<<<<< Updated upstream
         Call<ResMyInfo> call = api.getMyInfo(auth);
         call.enqueue(new Callback<ResMyInfo>() {
+=======
+        Call<Together> call = api.getGroupName(auth,);
+        call.enqueue(new Callback<Together>() {
+>>>>>>> Stashed changes
             @Override
             public void onResponse(Call<ResMyInfo> call, Response<ResMyInfo> response) {
                 ResMyInfo resMyInfo = response.body();
