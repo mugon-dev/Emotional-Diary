@@ -88,7 +88,7 @@ public class SlideshowFragment extends Fragment {
                 Log.d("log","선택 그룹 번호 : "+list.get(i).getTno());
                 selectedNo=list.get(i).getTno();
                 //선택시 분석 시작
-                Bitmap bitmap = BitmapFactory.decodeResource(getContext().getResources(),R.drawable.logo);
+                Bitmap bitmap = BitmapFactory.decodeResource(getContext().getResources(),R.drawable.test);
                 ivAnalysis.setImageBitmap(bitmap);
                 analysis(selectedNo);
             }
