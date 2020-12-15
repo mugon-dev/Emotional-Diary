@@ -51,6 +51,8 @@ const OurDiary = (props) => {
               title: ress.title,
               start: ress.createTime,
               emotion: ress.emotion,
+              textColor: 'black',
+              borderColor: 'whitesmoke',
             }
           );
         });
@@ -85,7 +87,11 @@ const OurDiary = (props) => {
   function handleEvents() {}
 
   function handleDateSelect(selectInfo) {
-    history.push('/diary/write/' + selectInfo.startStr);
+    //history.push('/diary/write/' + selectInfo.startStr);
+    history.push({
+      state: { tno: id },
+      pathname: '/diary/write/' + selectInfo.startStr,
+    });
   }
   return (
     <OurDiaryStyle>

@@ -9,7 +9,6 @@ const MyDiaryWriteStyle = styled.div`
   max-width: 850px;
   height: 100%;
   padding: 40px 20px 10px 20px;
-  border: 1px solid #003458;
 `;
 const TitleStyle = styled.div`
   font-size: 40px;
@@ -40,12 +39,13 @@ const ButtonStyle = styled.button`
   border: 1px solid #003458;
 `; */
 const DiaryWrite = (props) => {
+  console.log('write: ', props.location.state.tno);
   const history = useHistory();
   const date = props.match.params.date;
   const id = localStorage.getItem('userNo');
   const [diary, setDiary] = useState({
     memberId: id,
-    tno: '',
+    tno: props.location.state.tno,
     title: '',
     contents: '',
     createTime: date,
@@ -62,8 +62,6 @@ const DiaryWrite = (props) => {
   }
   function submitWrite(e) {
     e.preventDefault();
-
-    console.log('submitPost() 실행');
 
     fetch('http://10.100.102.31:8000/board/save', {
       method: 'POST',

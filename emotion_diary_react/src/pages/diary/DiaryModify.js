@@ -4,14 +4,26 @@ import styled from 'styled-components';
 
 const ModifyStyle = styled.div`
   display: grid;
-  grid-template-columns: 100%;
+  grid-template-columns: auto;
   width: 100%;
   max-width: 850px;
   height: 100%;
+  padding: 40px 20px 10px 20px;
+  // border: 1px solid #003458;
+`;
+const TitleStyle = styled.div`
+  font-size: 40px;
+  height: 10%;
+  text-align: center;
 `;
 const ButtonBoxStyle = styled.div`
   display: grid;
-  grid-template-columns: auto auto;
+  grid-template-columns: 20% 20%;
+  margin: 40px 0px 0px 0px;
+  justify-content: end;
+`;
+const ButtonStyle = styled.button`
+  width: 80px;
 `;
 const DiaryModify = (props) => {
   const [diary, setDiary] = useState({});
@@ -69,6 +81,8 @@ const DiaryModify = (props) => {
   return (
     <ModifyStyle>
       <form>
+        <TitleStyle> 오늘 무슨일 있었나요?</TitleStyle>
+        <label>제목</label>
         <input
           className="form-control form-control-lg"
           type="text"
@@ -76,20 +90,25 @@ const DiaryModify = (props) => {
           value={diary.title}
           onChange={inputHandle}
         />
+        <br />
+        <label>내용</label>
         <textarea
           className="form-control form-control-lg"
           name="contents"
-          rows="3"
+          rows="8"
           onChange={inputHandle}
           value={diary.contents}
         />
         <ButtonBoxStyle>
           <Link to="/diary">
-            <button className="btn btn-secondary">취소</button>
+            <ButtonStyle className="btn btn-secondary btn-sm">취소</ButtonStyle>
           </Link>
-          <button className="btn btn-secondary" onClick={submitModify}>
+          <ButtonStyle
+            className="btn btn-secondary btn-sm"
+            onClick={submitModify}
+          >
             수정
-          </button>
+          </ButtonStyle>
         </ButtonBoxStyle>
       </form>
     </ModifyStyle>

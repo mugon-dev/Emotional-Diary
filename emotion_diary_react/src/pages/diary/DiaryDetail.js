@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
 const DetailStyle = styled.div`
@@ -9,8 +9,23 @@ const DetailStyle = styled.div`
   max-width: 850px;
   height: 98%;
   margin-top: 40px;
-  padding: 40px 20px 10px 20px;
+  padding: 25px 20px 10px 20px;
+  background-color: white;
   //border: 1px solid #003458;
+`;
+const DateStyle = styled.div`
+  display: grid;
+  grid-template-columns: 70% 30%;
+`;
+
+const ImageStyle = styled.img`
+  width: 70%;
+`;
+const TitleStyle = styled.div`
+  font-size: 32px;
+`;
+const ContentStyle = styled.div`
+  font-size: 28px;
 `;
 const ButtonBoxStyle = styled.div`
   display: grid;
@@ -73,13 +88,14 @@ const DiaryDetail = (props) => {
   }
   return (
     <DetailStyle className="jumbotron">
-      <h1 class="display-3">{diary.createTime}</h1>
+      <DateStyle>
+        <h3 class="display-4">{diary.createTime}</h3>
+        <ImageStyle src={'/images/' + diary.emotion + '.png'} alt="" />
+      </DateStyle>
       <LabelStyle>제목</LabelStyle>
-      <div>{diary.title}</div>
+      <TitleStyle>{diary.title}</TitleStyle>
       <LabelStyle>내용</LabelStyle>
-      <div>{diary.contents}</div>
-
-      <div>{diary.emotion}</div>
+      <ContentStyle>{diary.contents}</ContentStyle>
       <ButtonBoxStyle>
         <ButtonStyle
           type="button"

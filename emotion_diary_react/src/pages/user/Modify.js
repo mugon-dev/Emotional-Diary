@@ -8,9 +8,10 @@ const ModifyStyle = styled.div`
   display: grid;
   grid-template-columns: auto;
   width: 100%;
+  max-width: 850px;
   height: 100%;
   padding: 50px 10px 10px 10px;
-  border: 1px solid #003458;
+  //border: 1px solid #003458;
 `;
 const LabelStyle = styled.div`
   font-size: 23px;
@@ -18,7 +19,7 @@ const LabelStyle = styled.div`
 
 const ButtonBoxStyle = styled.div`
   display: grid;
-  grid-template-columns: auto auto;
+  grid-template-columns: auto auto auto;
   grid-column-gap: 10px;
   justify-content: end;
   margin: 10px;
@@ -154,19 +155,19 @@ const Modify = (props) => {
         <ButtonBoxStyle>
           <button
             type="button"
-            className="btn btn-secondary"
+            className="btn btn-secondary btn-sm"
             onClick={secession}
           >
             회원 탈퇴
           </button>
           <Link to="/diary">
-            <button type="button" className="btn btn-secondary">
+            <button type="button" className="btn btn-secondary btn-sm">
               취소
             </button>
           </Link>
           <button
             type="button"
-            className="btn btn-secondary"
+            className="btn btn-secondary btn-sm"
             onClick={submitModify}
           >
             수정
