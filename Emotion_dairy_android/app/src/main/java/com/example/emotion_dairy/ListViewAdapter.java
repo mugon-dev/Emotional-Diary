@@ -9,9 +9,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.applandeo.materialcalendarview.EventDay;
+import com.example.emotion_dairy.ui.gallery.GalleryFragment;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -52,6 +57,10 @@ public class ListViewAdapter extends BaseAdapter{
             TextView titleTextView = (TextView) convertView.findViewById(R.id.tv_title);
             TextView nameTextView = (TextView) convertView.findViewById(R.id.tv_name);
             ImageView emotionImageView = (ImageView) convertView.findViewById(R.id.iv_emotion);
+            TextView dl_title = (TextView) convertView.findViewById(R.id.di_title);
+        TextView dl_name = (TextView) convertView.findViewById(R.id.di_name);
+        TextView dl_contents = (TextView) convertView.findViewById(R.id.di_contents);
+
 
             // Data Set(listViewItemList)에서 position에 위치한 데이터 참조 획득
             ListViewItem listViewItem = listViewItemList.get(position);
@@ -89,12 +98,21 @@ public class ListViewAdapter extends BaseAdapter{
         }
 
 
+        LinearLayout linear = (LinearLayout) convertView.findViewById(R.id.list_item_area);
+        linear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CustomDialog customDialog = new CustomDialog(context);
+                Log.d("log",listViewItemList.get(position).getTitle());
+                Log.d("log",listViewItemList.get(position).getName());
+                Log.d("log",listViewItemList.get(position).getContent());
 
-      //      emotionImageView.setImageDrawable(listViewItem.getEmotion());
+                customDialog.callFunction(listViewItemList.get(position).getTitle(),listViewItemList.get(position).getName(),listViewItemList.get(position).getContent());
+            }
+        });
 
-            //iconImageView.setImageDrawable(listViewItem.getIcon());
-            //titleTextView.setText(listViewItem.getTitle());
-            //descTextView.setText(listViewItem.getDesc());
+
+
 
             return convertView;
     }
@@ -111,13 +129,20 @@ public class ListViewAdapter extends BaseAdapter{
     }
 
     // 아이템 데이터 추가를 위한 함수.
-    public void addItem(String title, String name, String emotion) {
+    public void addItem(String title, String name, String emotion, String content) {
         ListViewItem item = new ListViewItem();
 
         item.setTitle(title);
         item.setName(name);
         item.setEmotion(emotion);
+        item.setContent(content);
 
         listViewItemList.add(item);
     }
+
+
+
+
+
+
 }

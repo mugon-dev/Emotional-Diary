@@ -22,6 +22,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.applandeo.materialcalendarview.CalendarView;
 import com.applandeo.materialcalendarview.EventDay;
+import com.example.emotion_dairy.CustomDialog;
 import com.example.emotion_dairy.GroupList;
 import com.example.emotion_dairy.ListViewAdapter;
 import com.example.emotion_dairy.ListViewItem;
@@ -81,8 +82,6 @@ public class GalleryFragment extends Fragment {
         // Adapter 생성
 
 
-
-
         mvc = root.findViewById(R.id.calendarView3);
         mvc.state().edit().isCacheCalendarPositionEnabled(false)
                 .setFirstDayOfWeek(1)
@@ -116,7 +115,7 @@ mvc.setOnDateChangedListener(new OnDateSelectedListener() {
                 Log.d("log",soloBoardDTOList.get(i).getMember().getName());
                 Log.d("log",soloBoardDTOList.get(i).getCreateTime());
 
-                adapter.addItem(soloBoardDTOList.get(i).getTitle(),soloBoardDTOList.get(i).getMember().getName(),soloBoardDTOList.get(i).getEmotion());
+                adapter.addItem(soloBoardDTOList.get(i).getTitle(),soloBoardDTOList.get(i).getMember().getName(),soloBoardDTOList.get(i).getEmotion(),soloBoardDTOList.get(i).getContents());
             }
         }
 
@@ -176,9 +175,6 @@ mvc.setOnDateChangedListener(new OnDateSelectedListener() {
 
             }
         });
-
-
-
 
 
 
