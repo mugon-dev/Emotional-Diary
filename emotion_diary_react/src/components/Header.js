@@ -10,7 +10,7 @@ const HeaderStyle = styled.div`
   height: 90%;
   justify-content: space-between;
   grid-template-columns: 100%;
-  border: 2px solid #003458;
+  border: 3px solid #003458;
   text-align: left;
   border-radius: 10px;
   padding: 100px 10px 10px 10px;
@@ -47,7 +47,7 @@ const ButtonStyle = styled.button`
 const GroupStyle = styled.div`
   display: grid;
   padding-left: ${(props) => (props.title ? '0px' : '20px')};
-  grid-template-columns: ${(props) => (props.title ? '60% 10%' : '65% 35%')};
+  grid-template-columns: ${(props) => (props.title ? '60% 50%' : '65% 35%')};
 `;
 const Header = () => {
   const isLogin = useSelector((store) => store.isLogin);
@@ -70,7 +70,7 @@ const Header = () => {
 
   //로그아웃
   function submitLogout() {
-    if (window.confirm('정말로 탈퇴하시겠습니까?')) {
+    if (window.confirm('정말로 로그아웃하시겠습니까?')) {
       localStorage.clear();
       dispatch(logout());
       console.log(isLogin);
@@ -102,12 +102,20 @@ const Header = () => {
       </Link>
       <GroupStyle title>
         <ButtonStyle>우리일기</ButtonStyle>
+      </GroupStyle>
+      <GroupStyle title>
+        <Link to="/diary/apply">
+          <ButtonStyle>
+            <span class="badge badge-pill badge-success">가입하기</span>
+          </ButtonStyle>
+        </Link>
         <Link to="/diary/join">
           <ButtonStyle>
             <span class="badge badge-pill badge-success">만들기</span>
           </ButtonStyle>
         </Link>
       </GroupStyle>
+
       {groups.map(({ tmno, member, together }) => (
         <GroupStyle>
           <ButtonStyle key={tmno} onClick={() => refreshPage(together.tno)}>
@@ -126,7 +134,7 @@ const Header = () => {
           </ButtonStyle>
         </GroupStyle>
       ))}
-      <Link to="/">
+      <Link to="/diary/analysis">
         <ButtonStyle>내글 분석</ButtonStyle>
       </Link>
     </HeaderStyle>

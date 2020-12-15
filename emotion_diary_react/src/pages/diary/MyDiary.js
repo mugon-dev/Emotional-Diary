@@ -89,7 +89,11 @@ const MyDiary = ({ history }) => {
   function handleEvents() {}
 
   function handleDateSelect(selectInfo) {
-    history.push('/diary/write/' + selectInfo.startStr);
+    //history.push('/diary/write/' + selectInfo.startStr);
+    history.push({
+      state: { tno: 0 },
+      pathname: '/diary/write/' + selectInfo.startStr,
+    });
   }
   return (
     <MyDiaryStyle>

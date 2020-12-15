@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-const OurDiaryJoinStyle = styled.div`
+const OurDiaryApplyStyle = styled.div`
   width: 100%;
   max-width: 850px;
   height: 100%;
@@ -27,7 +27,7 @@ const ButtonStyle = styled.button`
   width: 80px;
 `;
 
-const OurDiaryJoin = () => {
+const OurDiaryApply = () => {
   //tcode tname
   ///together/save
   const [group, setGroup] = useState({
@@ -52,8 +52,8 @@ const OurDiaryJoin = () => {
   }
   function submitJoin(e) {
     e.preventDefault();
-    console.log('그룹생성', JSON.stringify(group));
-    fetch('http://10.100.102.31:8000/together/save', {
+    console.log('그룹 가입', JSON.stringify(group));
+    fetch('http://10.100.102.31:8000/tmember/save', {
       method: 'POST',
       headers: {
         Authorization: localStorage.getItem('Authorization'),
@@ -74,9 +74,9 @@ const OurDiaryJoin = () => {
       });
   }
   return (
-    <OurDiaryJoinStyle>
+    <OurDiaryApplyStyle>
       <form>
-        <TitleStyle>그룹만들기</TitleStyle>
+        <TitleStyle>그룹 가입하기</TitleStyle>
         <div className="form-group">
           <LabelStyle>그룹 명</LabelStyle>
           <input
@@ -95,7 +95,7 @@ const OurDiaryJoin = () => {
             name="tcode"
             value={group.tcode}
             onChange={inputHandle}
-            placeholder="인증할 코드를 입력하세요"
+            placeholder="코드를 입력하세요"
           />
         </div>
         <ButtonBoxStyle>
@@ -113,12 +113,12 @@ const OurDiaryJoin = () => {
             className="btn btn-secondary btn-sm"
             onClick={submitJoin}
           >
-            회원가입
+            가입
           </ButtonStyle>
         </ButtonBoxStyle>
       </form>
-    </OurDiaryJoinStyle>
+    </OurDiaryApplyStyle>
   );
 };
 
-export default OurDiaryJoin;
+export default OurDiaryApply;
