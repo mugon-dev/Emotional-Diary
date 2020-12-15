@@ -5,21 +5,33 @@ import bootstrapPlugin from '@fullcalendar/bootstrap';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
+// .fc-day-number.fc-sat.fc-past { color:#0000FF; }     /* 토요일 */
+//  .fc-day-number.fc-sun.fc-past { color:#FF0000; }    /* 일요일 */
+
 const MyDiaryStyle = styled.div`
   display: grid;
-  grid-template-columns: 100%;
+  grid-template-columns: auto;
   grid-template-rows: 10% 90%;
   width: 100%;
   max-width: 850px;
   height: 100%;
-  padding-bottom: 30px;
-  justify-content: center;
+  //justify-content: center;
   //align-items: baseline;
 `;
 const TitleStyle = styled.div`
   font-size: 40px;
-  // border: 1px solid #003458;
+  height: 10%;
   text-align: center;
+`;
+const EventStyle = styled.div`
+  display: grid;
+  text-align: right;
+  font-size: 16px;
+  background-color: #9ddde9;
+  border: 1px solid whitesmoke;
+`;
+const EmotionStyle = styled.img`
+  width: 30%;
 `;
 const MyDiary = ({ history }) => {
   const [diary, setDiary] = useState([]);
@@ -41,11 +53,8 @@ const MyDiary = ({ history }) => {
               title: ress.title,
               start: ress.createTime,
               emotion: ress.emotion,
-              //color:
-              backgroundColor: 'red',
-              //rendering: 'background',
-              textColor: 'red',
-              borderColor: 'black',
+              textColor: 'black',
+              borderColor: 'whitesmoke',
             }
           );
         });
@@ -57,14 +66,16 @@ const MyDiary = ({ history }) => {
     // 리스트 그리기
     return (
       <>
-        <div>
-          <p>{eventInfo.event.title}</p>
-          <img
+        <EventStyle>
+          <EmotionStyle
             className="eventimage"
             alt=""
-            // src="http://10.100.102.90:7000/static/board/pie6.png"
+            src={
+              '/images/' + eventInfo.event._def.extendedProps.emotion + '.png'
+            }
           />
-        </div>
+          <p>{eventInfo.event.title}</p>
+        </EventStyle>
       </>
     );
   }
@@ -90,9 +101,11 @@ const MyDiary = ({ history }) => {
           center: 'title',
           right: 'next',
         }}
-        titleFormat={{}}
+        dayMaxEventRows={true}
+        titleFormat={{ year: 'numeric', month: 'long' }}
+        titleRangeSeparator={true}
         themeSystem="bootstrap"
-        contentHeight="100"
+        contentHeight="auto"
         handleWindowResize={true}
         locale="ko"
         initialView="dayGridMonth"

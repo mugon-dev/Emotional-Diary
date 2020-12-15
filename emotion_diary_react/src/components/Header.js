@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { logout } from '../store';
 
@@ -8,11 +8,12 @@ const HeaderStyle = styled.div`
   display: grid;
   width: 100%;
   height: 90%;
+  justify-content: space-between;
   grid-template-columns: 100%;
   border: 2px solid #003458;
   text-align: left;
   border-radius: 10px;
-  padding: 150px 10px 10px 10px;
+  padding: 100px 10px 10px 10px;
   font-size: 20px;
   background-color: #eaeae3;
 `;
@@ -33,22 +34,24 @@ const ButtonStyle = styled.button`
   background-color: transparent;
   font-family: 'TDTDTadakTadak';
   font-size: ${(props) => (props.user ? '15px' : '20px')};
-  // border: transparent;
+  border: transparent;
+  height: fit-content;
   outline: transparent;
-  text-align: left;
-`;
-const GroupBoxStyle = styled.div`
-  text-align: left;
+  text-align: start;
+  font-weight: bold;
+  :focus {
+    border: none;
+    outline: none;
+  }
 `;
 const GroupStyle = styled.div`
   display: grid;
-  grid-template-columns: 70% 30%;
+  padding-left: ${(props) => (props.title ? '0px' : '20px')};
+  grid-template-columns: ${(props) => (props.title ? '60% 10%' : '65% 35%')};
 `;
-const ButtonSpanStyle = styled.span``;
 const Header = () => {
   const isLogin = useSelector((store) => store.isLogin);
   const user = localStorage.getItem('userName');
-  const history = useHistory();
   const dispatch = useDispatch();
 
   const [groups, setGroups] = useState([]);
@@ -67,15 +70,16 @@ const Header = () => {
 
   //로그아웃
   function submitLogout() {
-    localStorage.clear();
-    dispatch(logout());
-    console.log(isLogin);
+    if (window.confirm('정말로 탈퇴하시겠습니까?')) {
+      localStorage.clear();
+      dispatch(logout());
+      console.log(isLogin);
+    } else {
+    }
   }
   function modify(tno) {
     window.location.replace('/diary/ourmodify/' + tno);
   }
-  console.log(groups);
-
   function refreshPage(id) {
     window.location.replace('/diary/our/' + id);
   }
@@ -96,31 +100,35 @@ const Header = () => {
       <Link to="/diary/">
         <ButtonStyle>나의 일기</ButtonStyle>
       </Link>
-      <Link to="/diary/join">
-        우리일기
-        <ButtonStyle>
-          <span class="badge badge-pill badge-success">만들기</span>
-        </ButtonStyle>
-      </Link>
-      <GroupBoxStyle>
-        {groups.map(({ tmno, member, together }) => (
-          <GroupStyle key={tmno}>
-            <ButtonStyle onClick={() => refreshPage(together.tno)}>
-              {together.tname}
-            </ButtonStyle>
-            {/*    <button type="button" className="btn btn-warning btn-sm">
+      <GroupStyle title>
+        <ButtonStyle>우리일기</ButtonStyle>
+        <Link to="/diary/join">
+          <ButtonStyle>
+            <span class="badge badge-pill badge-success">만들기</span>
+          </ButtonStyle>
+        </Link>
+      </GroupStyle>
+      {groups.map(({ tmno, member, together }) => (
+        <GroupStyle>
+          <ButtonStyle key={tmno} onClick={() => refreshPage(together.tno)}>
+            {together.tname}
+          </ButtonStyle>
+          {/*    <button type="button" className="btn btn-warning btn-sm">
                 수정
               </button> */}
+          <ButtonStyle>
             <span
               class="badge badge-pill badge-warning"
               onClick={() => modify(together.tno)}
             >
               수정
             </span>
-          </GroupStyle>
-        ))}
-      </GroupBoxStyle>
-      <div>내글 분석</div>
+          </ButtonStyle>
+        </GroupStyle>
+      ))}
+      <Link to="/">
+        <ButtonStyle>내글 분석</ButtonStyle>
+      </Link>
     </HeaderStyle>
   );
 };

@@ -8,17 +8,26 @@ import { useHistory } from 'react-router-dom';
 
 const OurDiaryStyle = styled.div`
   display: grid;
-  max-width: 80%;
-  align-content: baseline;
-  grid-template-columns: 100%;
-  padding: 10px 10px;
-  border: 1px solid #003458;
+  grid-template-columns: auto;
+  grid-template-rows: 10% 90%;
+  width: 100%;
+  max-width: 850px;
+  height: 100%;
 `;
 const TitleStyle = styled.div`
-  margin: 20px 0px 20px 0px;
   font-size: 40px;
-  border: 1px solid #003458;
+  height: 10%;
   text-align: center;
+`;
+const EventStyle = styled.div`
+  display: grid;
+  text-align: right;
+  font-size: 16px;
+  background-color: #9ddde9;
+  border: 1px solid whitesmoke;
+`;
+const EmotionStyle = styled.img`
+  width: 30%;
 `;
 const OurDiary = (props) => {
   const history = useHistory();
@@ -53,14 +62,16 @@ const OurDiary = (props) => {
     // 리스트 그리기
     return (
       <>
-        <div>
-          <p>{eventInfo.event.title}</p>
-          <img
+        <EventStyle>
+          <EmotionStyle
             className="eventimage"
             alt=""
-            // src="http://10.100.102.90:7000/static/board/pie6.png"
+            src={
+              '/images/' + eventInfo.event._def.extendedProps.emotion + '.png'
+            }
           />
-        </div>
+          <p>{eventInfo.event.title}</p>
+        </EventStyle>
       </>
     );
   }

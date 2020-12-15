@@ -4,13 +4,24 @@ import styled from 'styled-components';
 
 const DetailStyle = styled.div`
   display: grid;
-  border: 1px solid #003458;
+  grid-template-columns: auto;
+  width: 100%;
+  max-width: 850px;
+  height: 98%;
+  margin-top: 40px;
+  padding: 40px 20px 10px 20px;
+  //border: 1px solid #003458;
 `;
 const ButtonBoxStyle = styled.div`
   display: grid;
   grid-template-columns: auto auto auto;
   grid-column-gap: 10px;
+  justify-content: end;
+  height: fit-content;
   margin: 10px;
+`;
+const ButtonStyle = styled.button`
+  width: 80px;
 `;
 const LabelStyle = styled.div`
   font-size: 23px;
@@ -61,9 +72,8 @@ const DiaryDetail = (props) => {
     }
   }
   return (
-    <DetailStyle>
-      <div>{diary.bno}</div>
-      <div>{diary.createTime}의 일기</div>
+    <DetailStyle className="jumbotron">
+      <h1 class="display-3">{diary.createTime}</h1>
       <LabelStyle>제목</LabelStyle>
       <div>{diary.title}</div>
       <LabelStyle>내용</LabelStyle>
@@ -71,26 +81,33 @@ const DiaryDetail = (props) => {
 
       <div>{diary.emotion}</div>
       <ButtonBoxStyle>
-        <Link to="/diary">
-          <button type="button" className="btn btn-secondary">
-            돌아가기
-          </button>
-        </Link>
-        <Link to={'/diary/modify/' + id}>
-          <button type="button" className="btn btn-secondary">
-            수정
-          </button>
-        </Link>
-        <button
+        <ButtonStyle
           type="button"
-          className="btn btn-secondary"
+          className="btn btn-secondary btn-sm"
+          onClick={() => {
+            history.push('/diary');
+          }}
+        >
+          돌아가기
+        </ButtonStyle>
+        <ButtonStyle
+          type="button"
+          className="btn btn-secondary btn-sm"
+          onClick={() => {
+            history.push('/diary/modify/' + id);
+          }}
+        >
+          수정
+        </ButtonStyle>
+        <ButtonStyle
+          type="button"
+          className="btn btn-secondary btn-sm"
           onClick={submitDelete}
         >
           삭제
-        </button>
+        </ButtonStyle>
       </ButtonBoxStyle>
     </DetailStyle>
   );
 };
-
 export default DiaryDetail;

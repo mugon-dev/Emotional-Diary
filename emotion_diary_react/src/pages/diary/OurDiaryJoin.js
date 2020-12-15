@@ -52,7 +52,8 @@ const OurDiaryJoin = () => {
     })
       .then((res) => res.text())
       .then((res) => {
-        if (res === 'together ok!') {
+        console.log(res);
+        if (res === 'ok') {
           alert('가입을 했습니다.');
           window.location.replace('/diary');
         } else {

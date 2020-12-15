@@ -22,7 +22,7 @@ const MainStyle = styled.div`
   border: 2px solid #003458;
   border-radius: 10px;
   background-color: #eaeae3;
-  padding: 10px 10px 10px 10px;
+  padding: 0px 10px 0px 10px;
 
   &::-webkit-scrollbar {
     //세로 스크롤 넓이

@@ -1,21 +1,35 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
-const ButtonBoxStyle = styled.div`
+
+const MyDiaryWriteStyle = styled.div`
+  display: grid;
+  grid-template-columns: auto;
+  width: 100%;
+  max-width: 850px;
+  height: 100%;
+  padding: 40px 20px 10px 20px;
+  border: 1px solid #003458;
+`;
+const TitleStyle = styled.div`
+  font-size: 40px;
+  height: 10%;
+  text-align: center;
+`;
+/* const ButtonBoxStyle = styled.div`
   display: grid;
   grid-template-columns: auto auto auto;
   grid-column-gap: 10px;
   margin: 10px;
-`;
-const MyDiaryWriteStyle = styled.div`
+`; */
+const ButtonBoxStyle = styled.div`
   display: grid;
-  //align-content: center;
-  width: 100%;
-  max-width: 850px;
-  height: 100%;
-  grid-template-columns: auto;
-  padding: 10px 10px;
-  border: 1px solid #003458;
+  grid-template-columns: 20% 20%;
+  margin: 40px 0px 0px 0px;
+  justify-content: end;
+`;
+const ButtonStyle = styled.button`
+  width: 80px;
 `;
 /* const MyDiaryFormStyle = styled.form`
   display: grid;
@@ -74,6 +88,7 @@ const DiaryWrite = (props) => {
   return (
     <MyDiaryWriteStyle>
       <form>
+        <TitleStyle> 오늘 무슨일 있었나요?</TitleStyle>
         <label>제목</label>
         <input
           className="form-control form-control-lg"
@@ -82,20 +97,21 @@ const DiaryWrite = (props) => {
           value={diary.title}
           onChange={inputHandle}
         />
+        <br />
         <label>내용</label>
         <textarea
           className="form-control form-control-lg"
           name="contents"
-          rows="3"
+          rows="8"
           onChange={inputHandle}
           value={diary.contents}
         ></textarea>
         <ButtonBoxStyle>
-          <button className="btn btn-secondary" onClick={submitWrite}>
+          <ButtonStyle className="btn btn-secondary" onClick={submitWrite}>
             작성
-          </button>
+          </ButtonStyle>
           <Link to="/diary">
-            <button className="btn btn-secondary">취소</button>
+            <ButtonStyle className="btn btn-secondary">취소</ButtonStyle>
           </Link>
         </ButtonBoxStyle>
       </form>
