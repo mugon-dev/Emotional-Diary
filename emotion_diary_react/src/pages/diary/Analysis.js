@@ -9,18 +9,39 @@ const ButtonStyle = styled.button`
   outline: transparent;
   text-align: left;
 `;
+const AnalysisStyle = styled.div`
+  display: grid;
+  grid-template-columns: auto;
+  width: 100%;
+  max-width: 850px;
+  height: 100%;
+  padding: 40px 20px 10px 20px;
+`;
 const GroupBoxStyle = styled.div`
+  display: grid;
   text-align: left;
+`;
+const KindStyle = styled.div`
+  display: grid;
+  grid-template-columns: auto auto auto auto auto;
+`;
+const ImgStyle = styled.img`
+  display: grid;
+  width: 100%;
 `;
 const GroupStyle = styled.div`
   display: grid;
   grid-template-columns: 70% 30%;
 `;
-const ButtonSpanStyle = styled.span``;
 const Analysis = () => {
   const [groups, setGroups] = useState([]);
   const [images, setImages] = useState();
+  const [image, setImage] = useState({
+    src: '',
+  });
   const [showImage, setShowImage] = useState(false);
+
+  //그룹목록
   useEffect(() => {
     fetch('http://10.100.102.31:8000/tmember/get', {
       method: 'GET',
@@ -33,6 +54,7 @@ const Analysis = () => {
         setGroups(res);
       });
   }, []);
+
   function myDiary() {
     const user = localStorage.getItem('userNo');
     fetch('http://10.100.102.31:8000/board/analysis/my', {
@@ -44,6 +66,7 @@ const Analysis = () => {
       .then((res) => res.text())
       .then((res) => {
         if (res === 'ok') {
+          console.log('mydiary');
           setImages({
             wordcloud:
               'http://10.100.102.90:7000/static/my/wordcloud' + user + '.png',
@@ -53,7 +76,6 @@ const Analysis = () => {
             raider:
               'http://10.100.102.90:7000/static/my/raider' + user + '.png',
           });
-          setShowImage(true);
         }
       });
   }
@@ -84,37 +106,58 @@ const Analysis = () => {
               props +
               '.png',
           });
-          setShowImage(true);
         }
       });
   }
 
+  function selectGraph(props) {
+    console.log('images', props);
+    console.log('images.wordcloud', images.wordcloud);
+    if (props === '1') {
+      console.log('images.wordcloud', images.wordcloud);
+      setImage({
+        src: images.wordcloud,
+      });
+      console.log('gggg');
+      console.log('image', image);
+      setShowImage(true);
+    } else if (props === 2) {
+      setImage(images.line);
+    } else if (props === 3) {
+      setImage(images.bar);
+    } else if (props === 4) {
+      setImage(images.pie);
+    } else if (props === 5) {
+      setImage(images.raider);
+    }
+  }
   return (
-    <div>
-      내글 분석 얍
+    <AnalysisStyle>
+      <ButtonStyle onClick={() => myDiary()}>나의 모든 일기</ButtonStyle>
+      <ButtonStyle onClick={() => groupDiary('0')}>나의 일기</ButtonStyle>
       <GroupBoxStyle>
-        <ButtonStyle onClick={() => myDiary()}>내글 전체</ButtonStyle>
-        <ButtonStyle>나만 보는 글</ButtonStyle>
-        <ButtonStyle>그룹</ButtonStyle>
         {groups.map(({ tmno, member, together }) => (
-          <GroupStyle key={tmno}>
-            <ButtonStyle onClick={() => groupDiary(together.tno)}>
-              {together.tname}
-            </ButtonStyle>
-          </GroupStyle>
+          <ButtonStyle key={tmno} onClick={() => groupDiary(together.tno)}>
+            {together.tname}
+          </ButtonStyle>
         ))}
       </GroupBoxStyle>
+      <div>눌러주세요</div>
+      <KindStyle>
+        <button onClick={() => selectGraph(1)}>wordcloud</button>
+        <button onClick={() => selectGraph(2)}>line</button>
+        <button onClick={() => selectGraph(3)}>bar</button>
+        <button onClick={() => selectGraph(4)}>pie</button>
+        <button onClick={() => selectGraph(5)}>raider</button>
+      </KindStyle>
       <div>
         {showImage ? (
           <div>
-            <img src={images.wordcloud}></img>
-            <img src={images.line}></img>
-            <img src={images.bar}></img>
-            <img src={images.raider}></img>
+            <ImgStyle src={image} alt="" />
           </div>
         ) : null}
       </div>
-    </div>
+    </AnalysisStyle>
   );
 };
 

@@ -9,6 +9,7 @@ import Modify from '../pages/user/Modify';
 import OurDiary from '../pages/diary/OurDiary';
 import OurDiaryJoin from '../pages/diary/OurDiaryJoin';
 import OurDiaryModify from '../pages/diary/OurDiaryModify';
+import Analysis from '../pages/diary/Analysis';
 
 const MainStyle = styled.div`
   //스크롤때문에 안맞아 보일수 있음 but 맞음
@@ -19,7 +20,7 @@ const MainStyle = styled.div`
   justify-items: center;
   align-items: center;
   overflow: scroll;
-  border: 2px solid #003458;
+  border: 3px solid #003458;
   border-radius: 10px;
   background-color: #eaeae3;
   padding: 0px 10px 0px 10px;
@@ -52,6 +53,7 @@ const Main = () => {
         <Route path="/diary/write/:date" component={DiaryWrite} />
         <Route path="/diary/join" component={OurDiaryJoin} />
         <Route path="/diary/ourmodify/:id" component={OurDiaryModify} />
+        <Route path="/diary/analysis" component={Analysis} />
       </Switch>
     </MainStyle>
   );

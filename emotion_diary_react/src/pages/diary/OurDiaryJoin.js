@@ -2,20 +2,31 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-const ButtonBoxStyle = styled.div`
-  display: grid;
-  grid-template-columns: auto auto auto;
-  grid-column-gap: 10px;
-  margin: 10px;
+const OurDiaryJoinStyle = styled.div`
+  width: 100%;
+  max-width: 850px;
+  height: 100%;
 `;
-const LabelStyle = styled.div`
-  font-size: 23px;
-`;
+
 const TitleStyle = styled.div`
   font-size: 50px;
   text-align: center;
   margin: 20px 20px;
 `;
+const LabelStyle = styled.div`
+  font-size: 23px;
+`;
+const ButtonBoxStyle = styled.div`
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-column-gap: 10px;
+  margin: 40px 0px 0px 0px;
+  justify-content: end;
+`;
+const ButtonStyle = styled.button`
+  width: 80px;
+`;
+
 const OurDiaryJoin = () => {
   //tcode tname
   ///together/save
@@ -63,7 +74,7 @@ const OurDiaryJoin = () => {
       });
   }
   return (
-    <div>
+    <OurDiaryJoinStyle>
       <form>
         <TitleStyle>그룹만들기</TitleStyle>
         <div className="form-group">
@@ -89,20 +100,24 @@ const OurDiaryJoin = () => {
         </div>
         <ButtonBoxStyle>
           <Link to="/login">
-            <button type="button" className="btn btn-secondary" onClick={reset}>
+            <ButtonStyle
+              type="button"
+              className="btn btn-secondary btn-sm"
+              onClick={reset}
+            >
               취소
-            </button>
+            </ButtonStyle>
           </Link>
-          <button
+          <ButtonStyle
             type="button"
-            className="btn btn-secondary"
+            className="btn btn-secondary btn-sm"
             onClick={submitJoin}
           >
             회원가입
-          </button>
+          </ButtonStyle>
         </ButtonBoxStyle>
       </form>
-    </div>
+    </OurDiaryJoinStyle>
   );
 };
 

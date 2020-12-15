@@ -10,7 +10,7 @@ const HeaderStyle = styled.div`
   height: 90%;
   justify-content: space-between;
   grid-template-columns: 100%;
-  border: 2px solid #003458;
+  border: 3px solid #003458;
   text-align: left;
   border-radius: 10px;
   padding: 100px 10px 10px 10px;
@@ -70,7 +70,7 @@ const Header = () => {
 
   //로그아웃
   function submitLogout() {
-    if (window.confirm('정말로 탈퇴하시겠습니까?')) {
+    if (window.confirm('정말로 로그아웃하시겠습니까?')) {
       localStorage.clear();
       dispatch(logout());
       console.log(isLogin);
@@ -126,7 +126,7 @@ const Header = () => {
           </ButtonStyle>
         </GroupStyle>
       ))}
-      <Link to="/">
+      <Link to="/diary/analysis">
         <ButtonStyle>내글 분석</ButtonStyle>
       </Link>
     </HeaderStyle>
