@@ -51,6 +51,8 @@ const OurDiary = (props) => {
               title: ress.title,
               start: ress.createTime,
               emotion: ress.emotion,
+              textColor: 'black',
+              borderColor: 'whitesmoke',
             }
           );
         });

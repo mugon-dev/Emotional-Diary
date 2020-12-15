@@ -47,7 +47,7 @@ const ButtonStyle = styled.button`
 const GroupStyle = styled.div`
   display: grid;
   padding-left: ${(props) => (props.title ? '0px' : '20px')};
-  grid-template-columns: ${(props) => (props.title ? '60% 10%' : '65% 35%')};
+  grid-template-columns: ${(props) => (props.title ? '60% 50%' : '65% 35%')};
 `;
 const Header = () => {
   const isLogin = useSelector((store) => store.isLogin);
@@ -102,12 +102,20 @@ const Header = () => {
       </Link>
       <GroupStyle title>
         <ButtonStyle>우리일기</ButtonStyle>
+      </GroupStyle>
+      <GroupStyle title>
+        <Link to="/diary/apply">
+          <ButtonStyle>
+            <span class="badge badge-pill badge-success">가입하기</span>
+          </ButtonStyle>
+        </Link>
         <Link to="/diary/join">
           <ButtonStyle>
             <span class="badge badge-pill badge-success">만들기</span>
           </ButtonStyle>
         </Link>
       </GroupStyle>
+
       {groups.map(({ tmno, member, together }) => (
         <GroupStyle>
           <ButtonStyle key={tmno} onClick={() => refreshPage(together.tno)}>

@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-const OurDiaryModifyStyle = styled.div`
+const OurDiaryApplyStyle = styled.div`
   width: 100%;
   max-width: 850px;
   height: 100%;
 `;
+
 const TitleStyle = styled.div`
   font-size: 50px;
   text-align: center;
@@ -26,30 +27,14 @@ const ButtonStyle = styled.button`
   width: 80px;
 `;
 
-const OurDiaryModify = (props) => {
-  const tno = props.match.params.id;
+const OurDiaryApply = () => {
+  //tcode tname
+  ///together/save
   const [group, setGroup] = useState({
-    tno: tno,
     tname: '',
     tcode: '',
   });
-  console.log('tno', tno);
-
-  useEffect(() => {
-    fetch('http://10.100.102.31:8000/together/get/' + tno, {
-      method: 'GET',
-      headers: {
-        Authorization: localStorage.getItem('Authorization'),
-      },
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        setGroup(res);
-        console.log('res', res);
-      });
-  }, []);
   function inputHandle(e) {
-    console.log(group);
     setGroup((prevState) => {
       // 함수형으로 쓰는 이유 : setstate 두번쓸때 값을 들고오기 우ㅐㅎ서
       return {
@@ -65,10 +50,11 @@ const OurDiaryModify = (props) => {
       tcode: '',
     });
   }
-  function submitModify(e) {
+  function submitJoin(e) {
     e.preventDefault();
-    fetch('http://10.100.102.31:8000/together/update/' + tno, {
-      method: 'PUT',
+    console.log('그룹 가입', JSON.stringify(group));
+    fetch('http://10.100.102.31:8000/tmember/save', {
+      method: 'POST',
       headers: {
         Authorization: localStorage.getItem('Authorization'),
         'Content-Type': 'application/json; charset=utf-8',
@@ -79,18 +65,18 @@ const OurDiaryModify = (props) => {
       .then((res) => {
         console.log(res);
         if (res === 'ok') {
-          alert('수정 했습니다.');
+          alert('가입을 했습니다.');
           window.location.replace('/diary');
         } else {
           console.log(res);
-          alert('수정을 실패했습니다.');
+          alert('가입을 실패했습니다.');
         }
       });
   }
   return (
-    <OurDiaryModifyStyle>
+    <OurDiaryApplyStyle>
       <form>
-        <TitleStyle>그룹 수정</TitleStyle>
+        <TitleStyle>그룹 가입하기</TitleStyle>
         <div className="form-group">
           <LabelStyle>그룹 명</LabelStyle>
           <input
@@ -109,7 +95,7 @@ const OurDiaryModify = (props) => {
             name="tcode"
             value={group.tcode}
             onChange={inputHandle}
-            placeholder="인증할 코드를 입력하세요"
+            placeholder="코드를 입력하세요"
           />
         </div>
         <ButtonBoxStyle>
@@ -125,14 +111,14 @@ const OurDiaryModify = (props) => {
           <ButtonStyle
             type="button"
             className="btn btn-secondary btn-sm"
-            onClick={submitModify}
+            onClick={submitJoin}
           >
-            수정
+            가입
           </ButtonStyle>
         </ButtonBoxStyle>
       </form>
-    </OurDiaryModifyStyle>
+    </OurDiaryApplyStyle>
   );
 };
 
-export default OurDiaryModify;
+export default OurDiaryApply;

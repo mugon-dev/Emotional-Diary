@@ -10,6 +10,7 @@ import OurDiary from '../pages/diary/OurDiary';
 import OurDiaryJoin from '../pages/diary/OurDiaryJoin';
 import OurDiaryModify from '../pages/diary/OurDiaryModify';
 import Analysis from '../pages/diary/Analysis';
+import OurDiaryApply from '../pages/diary/OurDiaryApply';
 
 const MainStyle = styled.div`
   //스크롤때문에 안맞아 보일수 있음 but 맞음
@@ -54,6 +55,7 @@ const Main = () => {
         <Route path="/diary/join" component={OurDiaryJoin} />
         <Route path="/diary/ourmodify/:id" component={OurDiaryModify} />
         <Route path="/diary/analysis" component={Analysis} />
+        <Route path="/diary/apply" component={OurDiaryApply} />
       </Switch>
     </MainStyle>
   );
