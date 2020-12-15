@@ -5,8 +5,7 @@
     <color name="colorAccent">#D81B60</color>
 
     <color name="lineColor">#f2f1f1</color>
-
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
-    <color name="backColor">#EAEAE3</color>
+    F<color name="backColor">#E1DCD9</color>
 </resources>
