@@ -39,4 +39,14 @@ public class MemberService {
 		}
 	}
 	
+	@Transactional
+	public int check(String id) {
+		
+		if(memberRepository.findByChId(id) != null) {
+			return 1;
+		}else {
+			return 0;
+		}
+		
+	}
 }

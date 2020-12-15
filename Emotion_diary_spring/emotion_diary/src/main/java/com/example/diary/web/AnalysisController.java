@@ -72,10 +72,18 @@ public class AnalysisController {
 		public void getTest2() {
 			String root = System.getProperty("user.dir") + "/src/main/resources/Anlaysis/";
 			String emolex = root + "emolex.xlsx";
-			PyFunction analysis_one_content = (PyFunction) intPre.get("analysis_one_content", PyFunction.class);
-			Board board = boardService.글상세(1);
-			PyObject pyobj = analysis_one_content.__call__(new PyString(board.getContents()), new PyString(emolex));
+			intPre = new PythonInterpreter();
+			intPre.execfile("src\\main\\java\\com\\example\\diary\\analysis\\Analysis.py");
 			
+			PyFunction pyFuntion = (PyFunction) intPre.get("testFunc", PyFunction.class);
+			int a = 10, b = 20;
+			PyObject pyobj = pyFuntion.__call__(new PyInteger(a), new PyInteger(b));
+			System.out.println(pyobj.toString());
+			
+//			PyFunction analysis_one_content = (PyFunction) intPre.get("analysis_one_content", PyFunction.class);
+//			Board board = boardService.글상세(1);
+//			PyObject pyobj = analysis_one_content.__call__(new PyString(board.getContents()), new PyString(emolex));
+//			return pyobj.toString();
 		}
 
 }

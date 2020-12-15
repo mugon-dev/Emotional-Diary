@@ -1,5 +1,6 @@
 package com.example.diary.domain.member;
 
+import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -24,22 +25,23 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 public class Member {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int mno;
-	
+
 	@Column(length = 50)
 	private String id;
-	
+
 	@Column(length = 50)
 	private String pw;
-	
+
 	@Column(length = 40)
 	private String name;
 
-	
-	@JsonIgnoreProperties({"member"})
+	@JsonIgnoreProperties({ "member"})
 	@OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
 	private List<Board> board;
+
+
 }
