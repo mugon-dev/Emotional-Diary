@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 //import jwt_decode from 'jwt-decode';
 import { login } from '../../store';
@@ -8,58 +8,47 @@ import { login } from '../../store';
 const LoginStyle = styled.div`
   display: grid;
 `;
+const TitleStyle = styled.div`
+  font-size: 60px;
+  text-align: center;
+  // border: 1px solid #003458;
+  margin: 100px 10px 0px 10px;
+`;
+const ImageStyle = styled.img`
+  // margin-top: 100px;
+  width: 100%;
+  //border: 1px solid #003458;
+`;
 const LoginBoxStyle = styled.div`
   display: grid;
-  //height: 500px;
-  grid-template-columns: 50% 40%;
-  // border: 1px solid #003458;
+  height: 500px;
+  grid-template-columns: 50% 50%;
+  //border: 1px solid #003458;
   align-items: center;
+  //justify-items: center; 절대 쓰면 안됨 % 깨짐
   margin: 10px 10px;
+  //padding: 0px 10px 0px 0px;
 `;
-/* const InputStyle = styled.input`
-  display: grid;
-  height: 35px;
-  width: 100%;
-  color: rgb(100, 100, 100);
-  font-size: 15px;
-  border: 1px solid #003458;
-  border-radius: 6px;
-`; 
-const ButtonStyle = styled.button`
-  background-color: transparent;
-  color: #003458;
-  width: 80px;
-  height: 45px;
-  font-size: 15px;
-  font-weight: 700;
-  border-radius: 6px;
-  border: 1px solid #003458;
-  cursor: pointer;
-  margin: 10px;
-`;
-*/
 const LabelStyle = styled.div`
   font-size: 23px;
 `;
 const ButtonBoxStyle = styled.div`
   display: grid;
-  grid-template-columns: auto auto auto;
-  grid-column-gap: 10px;
+  grid-template-columns: 20% 20% 20%;
+  grid-column-gap: 30px;
   justify-content: end;
-  margin: 10px;
 `;
-const TitleStyle = styled.div`
-  font-size: 60px;
-  text-align: center;
-  border: 1px solid #003458;
+const FormStyle = styled.form`
+  margin: 20px;
 `;
-
+const ButtonStyle = styled.button`
+  width: 80px;
+`;
 const Login = () => {
   const [user, setUser] = useState({
     id: '',
     pw: '',
   });
-
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -70,6 +59,10 @@ const Login = () => {
     });
   }
 
+  function join(e) {
+    history.push('/join');
+  }
+
   function reset(e) {
     e.preventDefault();
     setUser({
@@ -77,18 +70,6 @@ const Login = () => {
       pw: '',
     });
   }
-
-  // function jwttoken() {
-  //   let mid = 0;
-  //   if (localStorage.getItem('Authorization') != null) {
-  //     let jwtTokenTemp = localStorage.getItem('Authorization');
-  //     let jwtToken = jwtTokenTemp.replace('Bearer ', '');
-  //     console.log('토큰 : ', jwtToken);
-  //     mid = jwt_decode(jwtToken).id;
-  //     console.log('mid', mid);
-  //     localStorage.setItem('id', mid);
-  //   }
-  // }
 
   const submitLogin = (e) => {
     e.preventDefault();
@@ -139,22 +120,22 @@ const Login = () => {
     <LoginStyle>
       <TitleStyle>당신의 감정은 어떠한가요 ?</TitleStyle>
       <LoginBoxStyle>
-        <h1>워드 클라우드 사진</h1>
-        <form>
-          <div class="form-group">
+        <ImageStyle src="images/logo.png" alt="" />
+        <FormStyle>
+          <div className="form-group">
             <LabelStyle>아이디</LabelStyle>
             <input
-              class="form-control form-control-lg"
+              className="form-control form-control-lg"
               type="text"
               name="id"
               onChange={inputHandle}
               value={user.id}
             />
           </div>
-          <div class="form-group">
+          <div className="form-group">
             <LabelStyle>비밀번호</LabelStyle>
             <input
-              class="form-control form-control-lg"
+              className="form-control form-control-lg"
               type="password"
               name="pw"
               onChange={inputHandle}
@@ -162,23 +143,29 @@ const Login = () => {
             />
           </div>
           <ButtonBoxStyle>
-            <Link to="/join">
-              <button type="button" class="btn btn-secondary">
-                회원가입
-              </button>
-            </Link>
-            <button
+            <ButtonStyle
               type="button"
-              class="btn btn-secondary"
+              className="btn btn-secondary btn-sm"
+              onClick={join}
+            >
+              회원가입
+            </ButtonStyle>
+            <ButtonStyle
+              type="button"
+              className="btn btn-secondary btn-sm"
               onClick={submitLogin}
             >
               로그인
-            </button>
-            <button type="button" class="btn btn-secondary" onClick={reset}>
+            </ButtonStyle>
+            <ButtonStyle
+              type="button"
+              className="btn btn-secondary btn-sm"
+              onClick={reset}
+            >
               취소
-            </button>
+            </ButtonStyle>
           </ButtonBoxStyle>
-        </form>
+        </FormStyle>
       </LoginBoxStyle>
     </LoginStyle>
   );

@@ -7,25 +7,26 @@ import DiaryDetail from '../pages/diary/DiaryDetail';
 import MyDiary from '../pages/diary/MyDiary';
 import Modify from '../pages/user/Modify';
 import OurDiary from '../pages/diary/OurDiary';
+import OurDiaryJoin from '../pages/diary/OurDiaryJoin';
 
 const MainStyle = styled.div`
+  //스크롤때문에 안맞아 보일수 있음 but 맞음
   display: grid;
-  grid-template-columns: auto;
+  grid-template-columns: 100%;
   height: 90%;
-  width: 95%;
-  //overflow: scroll;
-  //margin: 25px 25px;
-  justify-content: center;
+  width: 100%;
   justify-items: center;
+  align-items: center;
+  overflow: scroll;
   border: 2px solid #003458;
   border-radius: 10px;
   background-color: #eaeae3;
 
-  /* &::-webkit-scrollbar {
-    //세로 스크롤 넓이 
+  &::-webkit-scrollbar {
+    //세로 스크롤 넓이
     width: 8px;
 
-    // 가로 스크롤 높이 
+    // 가로 스크롤 높이
     height: 8px;
 
     border-radius: 6px;
@@ -34,7 +35,7 @@ const MainStyle = styled.div`
   &::-webkit-scrollbar-thumb {
     background-color: rgba(0, 0, 0, 0.3);
     border-radius: 6px;
-  } */
+  }
 `;
 
 const Main = () => {
@@ -42,11 +43,12 @@ const Main = () => {
     <MainStyle>
       <Switch>
         <Route exact path="/diary/" component={MyDiary} />
-        <Route exact path="/diary/:id" component={OurDiary} />
+        <Route exact path="/diary/our/:id" component={OurDiary} />
         <Route path="/diary/usermodify/:id" component={Modify} />
         <Route path="/diary/modify/:id" component={DiaryModify} />
         <Route path="/diary/detail/:id" component={DiaryDetail} />
         <Route path="/diary/write/:date" component={DiaryWrite} />
+        <Route path="/diary/join" component={OurDiaryJoin} />
       </Switch>
     </MainStyle>
   );

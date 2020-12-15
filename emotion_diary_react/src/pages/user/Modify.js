@@ -8,6 +8,7 @@ const ModifyStyle = styled.div`
   display: grid;
   grid-template-columns: auto;
   width: 100%;
+  height: 100%;
   padding: 50px 10px 10px 10px;
   border: 1px solid #003458;
 `;
@@ -64,6 +65,7 @@ const Modify = (props) => {
       .then((res) => {
         if (res === 'ok') {
           alert('회원 정보 수정이 되었습니다.');
+          localStorage.setItem('userName', user.name);
           history.push('/diary');
         } else {
           alert('회원 정보 수정을 실패하였습니다.');
@@ -108,10 +110,10 @@ const Modify = (props) => {
     <ModifyStyle>
       <form>
         회원 정보를 수정 해주세요
-        <div class="form-group">
+        <div className="form-group">
           <LabelStyle>userId</LabelStyle>
           <input
-            class="form-control form-control-lg"
+            className="form-control form-control-lg"
             type="text"
             name="id"
             onChange={inputHandle}
@@ -119,10 +121,10 @@ const Modify = (props) => {
             readOnly={true}
           />
         </div>
-        <div class="form-group">
+        <div className="form-group">
           <LabelStyle>userName</LabelStyle>
           <input
-            class="form-control form-control-lg"
+            className="form-control form-control-lg"
             type="text"
             name="name"
             onChange={inputHandle}
@@ -132,7 +134,7 @@ const Modify = (props) => {
         <div class="form-group">
           <LabelStyle>pw</LabelStyle>
           <input
-            class="form-control form-control-lg"
+            className="form-control form-control-lg"
             type="password"
             name="pw"
             onChange={inputHandle}
@@ -150,17 +152,21 @@ const Modify = (props) => {
           />
         </div> */}
         <ButtonBoxStyle>
-          <button type="button" class="btn btn-secondary" onClick={secession}>
+          <button
+            type="button"
+            className="btn btn-secondary"
+            onClick={secession}
+          >
             회원 탈퇴
           </button>
           <Link to="/diary">
-            <button type="button" class="btn btn-secondary">
+            <button type="button" className="btn btn-secondary">
               취소
             </button>
           </Link>
           <button
             type="button"
-            class="btn btn-secondary"
+            className="btn btn-secondary"
             onClick={submitModify}
           >
             수정

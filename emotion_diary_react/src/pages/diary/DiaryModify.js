@@ -5,7 +5,7 @@ import styled from 'styled-components';
 const ModifyStyle = styled.div`
   display: grid;
   grid-template-columns: auto;
-  width: 400%;
+  // width: 400%;
 `;
 const ButtonBoxStyle = styled.div`
   display: grid;
@@ -27,6 +27,7 @@ const DiaryModify = (props) => {
       .then((res) => {
         setDiary(res);
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function submitModify(e) {
@@ -67,14 +68,14 @@ const DiaryModify = (props) => {
     <ModifyStyle>
       <form>
         <input
-          class="form-control form-control-lg"
+          className="form-control form-control-lg"
           type="text"
           name="title"
           value={diary.title}
           onChange={inputHandle}
         />
         <textarea
-          class="form-control form-control-lg"
+          className="form-control form-control-lg"
           name="contents"
           rows="3"
           onChange={inputHandle}
@@ -82,9 +83,9 @@ const DiaryModify = (props) => {
         />
         <ButtonBoxStyle>
           <Link to="/diary">
-            <button class="btn btn-secondary">취소</button>
+            <button className="btn btn-secondary">취소</button>
           </Link>
-          <button class="btn btn-secondary" onClick={submitModify}>
+          <button className="btn btn-secondary" onClick={submitModify}>
             수정
           </button>
         </ButtonBoxStyle>

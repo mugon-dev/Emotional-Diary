@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import Intro from './pages/Intro';
 import Login from './pages/user/Login';
 import Join from './pages/user/Join';
-import DiaryHome from './pages/diary/DiaryHome';
+import DiaryHome from './components/DiaryHome';
 import styled from 'styled-components';
 import Footer from './components/Footer';
 
@@ -12,17 +12,18 @@ const AppStyle = styled.div`
   grid-template-columns: 100%;
   justify-items: center;
   align-items: center;
-  height: 1070px;
+  height: 1050px;
   width: 100%;
   font-family: 'TDTDTadakTadak';
   background-color: #eaeae3;
 `;
 const AppBoxStyle = styled.div`
-  border: 2px solid #003458;
+  border: 5px solid #003458;
   border-radius: 10px;
-  height: 85%;
-  width: 90%;
-  margin: 50px 100px 0px 150px;
+  height: 850px;
+  width: 80%;
+  max-width: 1500px;
+  margin: 50px 150px 0px 150px;
   background-color: #eaeae3;
 `;
 function App() {

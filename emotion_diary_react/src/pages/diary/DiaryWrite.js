@@ -5,13 +5,15 @@ const ButtonBoxStyle = styled.div`
   display: grid;
   grid-template-columns: auto auto auto;
   grid-column-gap: 10px;
-  justify-content: end;
+  //justify-content: end;
   margin: 10px;
 `;
 const MyDiaryWriteStyle = styled.div`
   display: grid;
-  align-content: center;
-  grid-template-columns: 100%;
+  //align-content: center;
+  width: 100%;
+  height: 100%;
+  grid-template-columns: auto;
   padding: 10px 10px;
   border: 1px solid #003458;
 `;
@@ -73,7 +75,7 @@ const DiaryWrite = (props) => {
       <form>
         <label>제목</label>
         <input
-          class="form-control form-control-lg"
+          className="form-control form-control-lg"
           type="text"
           name="title"
           value={diary.title}
@@ -81,18 +83,18 @@ const DiaryWrite = (props) => {
         />
         <label>내용</label>
         <textarea
-          class="form-control form-control-lg"
+          className="form-control form-control-lg"
           name="contents"
           rows="3"
           onChange={inputHandle}
           value={diary.contents}
         ></textarea>
         <ButtonBoxStyle>
-          <button class="btn btn-secondary" onClick={submitWrite}>
+          <button className="btn btn-secondary" onClick={submitWrite}>
             작성
           </button>
           <Link to="/diary">
-            <button class="btn btn-secondary">취소</button>
+            <button className="btn btn-secondary">취소</button>
           </Link>
         </ButtonBoxStyle>
       </form>

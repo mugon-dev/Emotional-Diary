@@ -8,6 +8,7 @@ import reducer from './store';
 
 import 'bootswatch/dist/sketchy/bootstrap.min.css';
 import '@fortawesome/fontawesome-free/css/all.css';
+
 const store = createStore(reducer);
 
 ReactDOM.render(

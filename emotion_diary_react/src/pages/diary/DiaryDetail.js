@@ -4,15 +4,12 @@ import styled from 'styled-components';
 
 const DetailStyle = styled.div`
   display: grid;
-  width: 300%;
   border: 1px solid #003458;
 `;
 const ButtonBoxStyle = styled.div`
   display: grid;
-  width: 100%;
   grid-template-columns: auto auto auto;
   grid-column-gap: 10px;
-  justify-content: end;
   margin: 10px;
 `;
 const LabelStyle = styled.div`
@@ -35,6 +32,7 @@ const DiaryDetail = (props) => {
         console.log(res);
         setDiary(res);
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function submitDelete(e) {
@@ -74,16 +72,20 @@ const DiaryDetail = (props) => {
       <div>{diary.emotion}</div>
       <ButtonBoxStyle>
         <Link to="/diary">
-          <button type="button" class="btn btn-secondary">
+          <button type="button" className="btn btn-secondary">
             돌아가기
           </button>
         </Link>
         <Link to={'/diary/modify/' + id}>
-          <button type="button" class="btn btn-secondary">
+          <button type="button" className="btn btn-secondary">
             수정
           </button>
         </Link>
-        <button type="button" class="btn btn-secondary" onClick={submitDelete}>
+        <button
+          type="button"
+          className="btn btn-secondary"
+          onClick={submitDelete}
+        >
           삭제
         </button>
       </ButtonBoxStyle>

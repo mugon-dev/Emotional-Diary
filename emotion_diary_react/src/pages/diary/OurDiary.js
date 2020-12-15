@@ -10,7 +10,6 @@ const OurDiaryStyle = styled.div`
   display: grid;
   max-width: 80%;
   align-content: baseline;
-  //justify-content: center;
   grid-template-columns: 100%;
   padding: 10px 10px;
   border: 1px solid #003458;
@@ -78,7 +77,7 @@ const OurDiary = (props) => {
   }
   return (
     <OurDiaryStyle>
-      <TitleStyle>우리의의 일기</TitleStyle>
+      <TitleStyle>우리의 일기</TitleStyle>
       <FullCalendar
         plugins={[dayGridPlugin, interactionPlugin, bootstrapPlugin]}
         headerToolbar={{

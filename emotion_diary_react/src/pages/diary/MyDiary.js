@@ -8,10 +8,10 @@ import styled from 'styled-components';
 const MyDiaryStyle = styled.div`
   display: grid;
   grid-template-columns: 100%;
-  width: 100%;
-  height: 100%;
-  justify-items: center;
-  padding: 10px 10px;
+  //width: 600px;
+  //height: 500px;
+  justify-content: center;
+  //padding: 10px 10px;
   border: 1px solid red;
 `;
 const TitleStyle = styled.div`
@@ -21,7 +21,6 @@ const TitleStyle = styled.div`
   text-align: center;
 `;
 const MyDiary = ({ history }) => {
-  console.log('mydiary');
   const [diary, setDiary] = useState([]);
 
   useEffect(() => {
@@ -41,6 +40,11 @@ const MyDiary = ({ history }) => {
               title: ress.title,
               start: ress.createTime,
               emotion: ress.emotion,
+              //color:
+              backgroundColor: 'red',
+              //rendering: 'background',
+              textColor: 'red',
+              borderColor: 'black',
             }
           );
         });
