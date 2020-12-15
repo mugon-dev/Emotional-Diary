@@ -1,0 +1,113 @@
+import React, { useEffect, useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
+import styled from 'styled-components';
+
+const DetailStyle = styled.div`
+  display: grid;
+  grid-template-columns: auto;
+  width: 100%;
+  max-width: 850px;
+  height: 98%;
+  margin-top: 40px;
+  padding: 40px 20px 10px 20px;
+  //border: 1px solid #003458;
+`;
+const ButtonBoxStyle = styled.div`
+  display: grid;
+  grid-template-columns: auto auto auto;
+  grid-column-gap: 10px;
+  justify-content: end;
+  height: fit-content;
+  margin: 10px;
+`;
+const ButtonStyle = styled.button`
+  width: 80px;
+`;
+const LabelStyle = styled.div`
+  font-size: 23px;
+`;
+const DiaryDetail = (props) => {
+  const [diary, setDiary] = useState([]);
+  const id = props.match.params.id;
+  const history = useHistory();
+
+  useEffect(() => {
+    fetch('http://10.100.102.31:8000/board/get/' + id, {
+      method: 'GET',
+      headers: {
+        Authorization: localStorage.getItem('Authorization'),
+      },
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res);
+        setDiary(res);
+      });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  function submitDelete(e) {
+    e.preventDefault();
+
+    console.log('submitDelete() 실행');
+    console.log(id);
+
+    if (window.confirm('삭제하시겠습니까?')) {
+      fetch('http://10.100.102.31:8000/board/' + id, {
+        method: 'DELETE',
+        headers: {
+          Authorization: localStorage.getItem('Authorization'),
+        },
+      })
+        .then((res) => res.text())
+        .then((res) => {
+          if (res === 'ok') {
+            alert('삭제 되었습니다.');
+            history.push('/diary/');
+          } else {
+            alert('삭세 실패했습니다.');
+          }
+        });
+    } else {
+    }
+  }
+  return (
+    <DetailStyle className="jumbotron">
+      <h1 class="display-3">{diary.createTime}</h1>
+      <LabelStyle>제목</LabelStyle>
+      <div>{diary.title}</div>
+      <LabelStyle>내용</LabelStyle>
+      <div>{diary.contents}</div>
+
+      <div>{diary.emotion}</div>
+      <ButtonBoxStyle>
+        <ButtonStyle
+          type="button"
+          className="btn btn-secondary btn-sm"
+          onClick={() => {
+            history.push('/diary');
+          }}
+        >
+          돌아가기
+        </ButtonStyle>
+        <ButtonStyle
+          type="button"
+          className="btn btn-secondary btn-sm"
+          onClick={() => {
+            history.push('/diary/modify/' + id);
+          }}
+        >
+          수정
+        </ButtonStyle>
+        <ButtonStyle
+          type="button"
+          className="btn btn-secondary btn-sm"
+          onClick={submitDelete}
+        >
+          삭제
+        </ButtonStyle>
+      </ButtonBoxStyle>
+    </DetailStyle>
+  );
+};
+export default DiaryDetail;
