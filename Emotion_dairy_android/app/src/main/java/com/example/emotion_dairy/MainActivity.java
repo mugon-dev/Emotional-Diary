@@ -122,7 +122,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResMyInfo> call, Response<ResMyInfo> response) {
                 ResMyInfo resMyInfo = response.body();
-                Log.d("log","나의 정보 : "+resMyInfo.getName());
+                Log.d("log","나의 정보 : "+resMyInfo.getMno());
+                PreferenceManager.setInt(MainActivity.this,"myNo",resMyInfo.getMno());
                 tvId.setText(resMyInfo.getName());
             }
 

@@ -7,9 +7,9 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
-    <string name="menu_home">Home</string>
-    <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_home">내글보기</string>
+    <string name="menu_gallery">그룹 글 보기</string>
+    <string name="menu_slideshow">분석</string>
 
         <string name="material_calendar_monday">월</string>
         <string name="material_calendar_tuesday">화</string>
