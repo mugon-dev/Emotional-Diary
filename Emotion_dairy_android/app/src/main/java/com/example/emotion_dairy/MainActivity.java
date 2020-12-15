@@ -136,37 +136,37 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    public void getGroupList(int tno){
-        String auth = PreferenceManager.getString(this,"Auth");
-        Call<Together> call = api.getGroupName(auth,tno);
-        call.enqueue(new Callback<Together>() {
-            @Override
-            public void onResponse(Call<Together> call, Response<Together> response) {
-                Together together = response.body();
-                GroupList groupList = new GroupList(together.getTno(),together.getTname());
-                groupLists.add(groupList);
-                for(GroupList g : groupLists){
-                    Log.d("log","그룹리스트 뽑아봄 : " + g);
-                }
-
-                 Gson gson = new GsonBuilder().create();
-                 Type listType = new TypeToken<ArrayList<GroupList>>(){}.getType();
-                 String jsonGroup = gson.toJson(groupLists,listType);
-                 PreferenceManager.removeKey(MainActivity.this,"Group");
-                 PreferenceManager.setString(MainActivity.this,"Group",jsonGroup);
-
-                 String strGroup1 = PreferenceManager.getString(MainActivity.this,"Group");
-                 Log.d("log","마지막테스트 그룹 제이슨 : "+strGroup1);
-
-            }
-
-            @Override
-            public void onFailure(Call<Together> call, Throwable t) {
-                Log.d("log","그룹 에러메세지 : "+t.getMessage());
-
-            }
-        });
-    }
+//    public void getGroupList(int tno){
+//        String auth = PreferenceManager.getString(this,"Auth");
+//        Call<Together> call = api.getGroupName(auth,tno);
+//        call.enqueue(new Callback<Together>() {
+//            @Override
+//            public void onResponse(Call<Together> call, Response<Together> response) {
+//                Together together = response.body();
+//                GroupList groupList = new GroupList(together.getTno(),together.getTname());
+//                groupLists.add(groupList);
+//                for(GroupList g : groupLists){
+//                    Log.d("log","그룹리스트 뽑아봄 : " + g);
+//                }
+//
+//                 Gson gson = new GsonBuilder().create();
+//                 Type listType = new TypeToken<ArrayList<GroupList>>(){}.getType();
+//                 String jsonGroup = gson.toJson(groupLists,listType);
+//                 PreferenceManager.removeKey(MainActivity.this,"Group");
+//                 PreferenceManager.setString(MainActivity.this,"Group",jsonGroup);
+//
+//                 String strGroup1 = PreferenceManager.getString(MainActivity.this,"Group");
+//                 Log.d("log","마지막테스트 그룹 제이슨 : "+strGroup1);
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Call<Together> call, Throwable t) {
+//                Log.d("log","그룹 에러메세지 : "+t.getMessage());
+//
+//            }
+//        });
+//    }
 
     public void getData(){
 
@@ -177,12 +177,22 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<List<ResGetGroup>> call, Response<List<ResGetGroup>> response) {
                 list=response.body();
                 for(int i=0;i<list.size();i++){
-                    int strGroup = list.get(i).getTno();
-                    gList.add(strGroup);
+//                    int strGroup = list.get(i).getTno();
+//                    gList.add(strGroup);
+                    GroupList groupList = new GroupList(list.get(i).getTogether().getTno(),list.get(i).getTogether().getTname());
+                    groupLists.add(groupList);
                 }
-                for(int a : gList){
-                    getGroupList(a);
-                }
+                Gson gson = new GsonBuilder().create();
+                Type listType = new TypeToken<ArrayList<GroupList>>(){}.getType();
+                String jsonGroup = gson.toJson(groupLists,listType);
+                PreferenceManager.removeKey(MainActivity.this,"Group");
+                PreferenceManager.setString(MainActivity.this,"Group",jsonGroup);
+
+                //SharedPreference Group 데이터 테스트
+                String strGroup1 = PreferenceManager.getString(MainActivity.this,"Group");
+                Log.d("log","마지막테스트 그룹 제이슨 : "+strGroup1);
+
+
             }
 
 
