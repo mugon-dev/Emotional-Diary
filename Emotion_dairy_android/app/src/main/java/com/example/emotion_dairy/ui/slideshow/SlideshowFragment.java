@@ -1,5 +1,8 @@
 package com.example.emotion_dairy.ui.slideshow;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -85,6 +88,8 @@ public class SlideshowFragment extends Fragment {
                 Log.d("log","선택 그룹 번호 : "+list.get(i).getTno());
                 selectedNo=list.get(i).getTno();
                 //선택시 분석 시작
+                Bitmap bitmap = BitmapFactory.decodeResource(getContext().getResources(),R.drawable.logo);
+                ivAnalysis.setImageBitmap(bitmap);
                 analysis(selectedNo);
             }
 
@@ -97,6 +102,11 @@ public class SlideshowFragment extends Fragment {
         tvWordcloud.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                tvLine.setTypeface(null, Typeface.NORMAL);
+                tvBar.setTypeface(null,Typeface.NORMAL);
+                tvPie.setTypeface(null, Typeface.NORMAL);
+                tvRaider.setTypeface(null, Typeface.NORMAL);
+                tvWordcloud.setTypeface(null, Typeface.BOLD);
                 setImage(selectedNo,"wordcloud");
             }
         });
@@ -104,6 +114,11 @@ public class SlideshowFragment extends Fragment {
         tvLine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                tvLine.setTypeface(null, Typeface.BOLD);
+                tvBar.setTypeface(null,Typeface.NORMAL);
+                tvPie.setTypeface(null, Typeface.NORMAL);
+                tvRaider.setTypeface(null, Typeface.NORMAL);
+                tvWordcloud.setTypeface(null, Typeface.NORMAL);
                 setImage(selectedNo,"line");
             }
         });
@@ -111,6 +126,11 @@ public class SlideshowFragment extends Fragment {
         tvBar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                tvLine.setTypeface(null, Typeface.NORMAL);
+                tvBar.setTypeface(null,Typeface.BOLD);
+                tvPie.setTypeface(null, Typeface.NORMAL);
+                tvRaider.setTypeface(null, Typeface.NORMAL);
+                tvWordcloud.setTypeface(null, Typeface.NORMAL);
                 setImage(selectedNo,"bar");
             }
         });
@@ -118,6 +138,11 @@ public class SlideshowFragment extends Fragment {
         tvPie.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                tvLine.setTypeface(null, Typeface.NORMAL);
+                tvBar.setTypeface(null,Typeface.NORMAL);
+                tvPie.setTypeface(null, Typeface.BOLD);
+                tvRaider.setTypeface(null, Typeface.NORMAL);
+                tvWordcloud.setTypeface(null, Typeface.NORMAL);
                 setImage(selectedNo,"pie");
             }
         });
@@ -125,6 +150,11 @@ public class SlideshowFragment extends Fragment {
         tvRaider.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                tvLine.setTypeface(null, Typeface.NORMAL);
+                tvBar.setTypeface(null,Typeface.NORMAL);
+                tvPie.setTypeface(null, Typeface.NORMAL);
+                tvRaider.setTypeface(null, Typeface.BOLD);
+                tvWordcloud.setTypeface(null, Typeface.NORMAL);
                 setImage(selectedNo,"raider");
             }
         });
@@ -132,6 +162,13 @@ public class SlideshowFragment extends Fragment {
     }
 
     public void analysis(int tno){
+
+        tvLine.setTypeface(null, Typeface.NORMAL);
+        tvBar.setTypeface(null,Typeface.NORMAL);
+        tvPie.setTypeface(null, Typeface.NORMAL);
+        tvRaider.setTypeface(null, Typeface.NORMAL);
+        tvWordcloud.setTypeface(null, Typeface.BOLD);
+
         if(tno==0) {
             String auth = PreferenceManager.getString(getContext(), "Auth");
             Call<String> call = api.analysisMy(auth);
@@ -140,6 +177,7 @@ public class SlideshowFragment extends Fragment {
                 public void onResponse(Call<String> call, Response<String> response) {
                     if (response.body().equals("ok")) {
                         Log.d("log", "분석완료");
+                        setImage(tno,"wordcloud");
                     } else {
                         Log.d("log", "분석실패");
                     }
@@ -159,6 +197,7 @@ public class SlideshowFragment extends Fragment {
                 public void onResponse(Call<String> call, Response<String> response) {
                     if (response.body().equals("ok")) {
                         Log.d("log", "분석완료");
+                        setImage(tno,"wordcloud");
                     } else {
                         Log.d("log", "분석실패");
                     }

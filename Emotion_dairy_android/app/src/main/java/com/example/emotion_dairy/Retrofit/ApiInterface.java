@@ -65,4 +65,8 @@ public interface ApiInterface {
     //그룹 생성
     @POST("together/save")
     Call<String> createGroup(@Header("Authorization") String auth, @Body ReqJoinGroup reqJoinGroup);
+
+    //로그 아웃
+    @GET("member/logout")
+    Call<String> logout(@Header("Authorization") String auth);
 }

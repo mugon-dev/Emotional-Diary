@@ -79,6 +79,12 @@ public class MainActivity extends AppCompatActivity {
         btnGroup=headerView.findViewById(R.id.btnGroup);
         btnLogout=headerView.findViewById(R.id.btnLogout);
 
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                logout();
+            }
+        });
 
         btnGroup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,6 +131,28 @@ public class MainActivity extends AppCompatActivity {
         getMyInfo();
         //Fragment Manager
 
+    }
+
+    public void logout(){
+        String auth = PreferenceManager.getString(this,"Auth");
+        Call<String> call = api.logout(auth);
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                PreferenceManager.clear(MainActivity.this);
+                Log.d("log","logout return message : " + response.body());
+                if(response.body().equals("logout")){
+                    Log.d("log","로그아웃 성공");
+                    Intent intent = new Intent(MainActivity.this,LoginActivity.class);
+                    startActivity(intent);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                Log.d("log","로그아웃 실패 :" +t.getMessage());
+            }
+        });
     }
 
     public void getMyInfo(){
