@@ -48,4 +48,12 @@ public interface ApiInterface {
 
     @GET("member/get")
     Call<ResMyInfo> getMyInfo(@Header("Authorization") String auth);
+
+    //내글 분석
+    @GET("board/analysis/my")
+    Call<String> analysisMy(@Header("Authorization") String auth);
+
+    //그룹 글 분석
+    @GET("board/analysis/group/{tno}")
+    Call<String> analysisGroup(@Header("Authorization") String auth, @Path("tno") int tno);
 }

@@ -151,6 +151,7 @@ public class HomeFragment extends Fragment {
                     contentView.setText(result.get(index).getContents());
                     Log.d("log",result.get(index).getTitle());
                     titleView.setText((result.get(index).getTitle()));
+                    titleView.requestFocus();
                 }else{
                     btnWrite.setVisibility(View.VISIBLE);
                     updateBtn.setVisibility(View.INVISIBLE);
