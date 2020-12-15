@@ -5,13 +5,13 @@ const ButtonBoxStyle = styled.div`
   display: grid;
   grid-template-columns: auto auto auto;
   grid-column-gap: 10px;
-  //justify-content: end;
   margin: 10px;
 `;
 const MyDiaryWriteStyle = styled.div`
   display: grid;
   //align-content: center;
   width: 100%;
+  max-width: 850px;
   height: 100%;
   grid-template-columns: auto;
   padding: 10px 10px;
@@ -31,6 +31,7 @@ const DiaryWrite = (props) => {
   const id = localStorage.getItem('userNo');
   const [diary, setDiary] = useState({
     memberId: id,
+    tno: '',
     title: '',
     contents: '',
     createTime: date,

@@ -8,23 +8,24 @@ import styled from 'styled-components';
 const MyDiaryStyle = styled.div`
   display: grid;
   grid-template-columns: 100%;
-  //width: 600px;
-  //height: 500px;
+  grid-template-rows: 10% 90%;
+  width: 100%;
+  max-width: 850px;
+  height: 100%;
+  padding-bottom: 30px;
   justify-content: center;
-  //padding: 10px 10px;
-  border: 1px solid red;
+  //align-items: baseline;
 `;
 const TitleStyle = styled.div`
-  //margin: 20px 0px 20px 0px;
   font-size: 40px;
-  border: 1px solid #003458;
+  // border: 1px solid #003458;
   text-align: center;
 `;
 const MyDiary = ({ history }) => {
   const [diary, setDiary] = useState([]);
 
   useEffect(() => {
-    fetch('http://10.100.102.31:8000/board/my', {
+    fetch('http://10.100.102.31:8000/board/myGroup', {
       method: 'GET',
       headers: {
         Authorization: localStorage.getItem('Authorization'),
@@ -89,8 +90,9 @@ const MyDiary = ({ history }) => {
           center: 'title',
           right: 'next',
         }}
+        titleFormat={{}}
         themeSystem="bootstrap"
-        contentHeight="auto"
+        contentHeight="100"
         handleWindowResize={true}
         locale="ko"
         initialView="dayGridMonth"

@@ -4,8 +4,10 @@ import styled from 'styled-components';
 
 const ModifyStyle = styled.div`
   display: grid;
-  grid-template-columns: auto;
-  // width: 400%;
+  grid-template-columns: 100%;
+  width: 100%;
+  max-width: 850px;
+  height: 100%;
 `;
 const ButtonBoxStyle = styled.div`
   display: grid;

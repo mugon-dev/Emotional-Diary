@@ -23,9 +23,10 @@ const TitleStyle = styled.div`
 const OurDiary = (props) => {
   const history = useHistory();
   const [diary, setDiary] = useState([]);
+  const id = props.match.params.id;
 
   useEffect(() => {
-    fetch('http://10.100.102.31:8000/board/my', {
+    fetch('http://10.100.102.31:8000/board/group/' + id, {
       method: 'GET',
       headers: {
         Authorization: localStorage.getItem('Authorization'),

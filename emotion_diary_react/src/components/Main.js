@@ -8,6 +8,7 @@ import MyDiary from '../pages/diary/MyDiary';
 import Modify from '../pages/user/Modify';
 import OurDiary from '../pages/diary/OurDiary';
 import OurDiaryJoin from '../pages/diary/OurDiaryJoin';
+import OurDiaryModify from '../pages/diary/OurDiaryModify';
 
 const MainStyle = styled.div`
   //스크롤때문에 안맞아 보일수 있음 but 맞음
@@ -21,6 +22,7 @@ const MainStyle = styled.div`
   border: 2px solid #003458;
   border-radius: 10px;
   background-color: #eaeae3;
+  padding: 10px 10px 10px 10px;
 
   &::-webkit-scrollbar {
     //세로 스크롤 넓이
@@ -43,12 +45,13 @@ const Main = () => {
     <MainStyle>
       <Switch>
         <Route exact path="/diary/" component={MyDiary} />
-        <Route exact path="/diary/our/:id" component={OurDiary} />
+        <Route path="/diary/our/:id" component={OurDiary} />
         <Route path="/diary/usermodify/:id" component={Modify} />
         <Route path="/diary/modify/:id" component={DiaryModify} />
         <Route path="/diary/detail/:id" component={DiaryDetail} />
         <Route path="/diary/write/:date" component={DiaryWrite} />
         <Route path="/diary/join" component={OurDiaryJoin} />
+        <Route path="/diary/ourmodify/:id" component={OurDiaryModify} />
       </Switch>
     </MainStyle>
   );
