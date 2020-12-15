@@ -3,6 +3,7 @@ package com.example.emotion_dairy.Retrofit;
 import com.example.emotion_dairy.BoardData;
 import com.example.emotion_dairy.Retrofit.DTO.Authorization;
 import com.example.emotion_dairy.Retrofit.DTO.ReqJoinDTO;
+import com.example.emotion_dairy.Retrofit.DTO.ReqJoinGroup;
 import com.example.emotion_dairy.Retrofit.DTO.ReqLoginDTO;
 import com.example.emotion_dairy.Retrofit.DTO.ResGetGroup;
 import com.example.emotion_dairy.Retrofit.DTO.ResLoginDTO;
@@ -56,4 +57,12 @@ public interface ApiInterface {
     //그룹 글 분석
     @GET("board/analysis/group/{tno}")
     Call<String> analysisGroup(@Header("Authorization") String auth, @Path("tno") int tno);
+
+    //그룹 가입
+    @POST("tmember/save")
+    Call<String> joinGroup(@Header("Authorization") String auth, @Body ReqJoinGroup reqJoinGroup);
+
+    //그룹 생성
+    @POST("together/save")
+    Call<String> createGroup(@Header("Authorization") String auth, @Body ReqJoinGroup reqJoinGroup);
 }

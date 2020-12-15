@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
     NavigationView navigationView;
     TextView tvId;
     ImageView ivHeaderWC;
-    Button btnHboardWrite;
+    Button btnHboardWrite,btnGroup,btnLogout;
 
     ApiInterface api;
 
@@ -76,6 +76,18 @@ public class MainActivity extends AppCompatActivity {
         tvId=(TextView) headerView.findViewById(R.id.navHeaderId);
         ivHeaderWC=(ImageView) headerView.findViewById(R.id.navHeaderImageView);
         btnHboardWrite=headerView.findViewById(R.id.btnHboardWrite);
+        btnGroup=headerView.findViewById(R.id.btnGroup);
+        btnLogout=headerView.findViewById(R.id.btnLogout);
+
+
+        btnGroup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this,groupJoin.class);
+                startActivity(intent);
+            }
+        });
+
         String imageUrl = "http://10.100.102.90:7000/static/my/wordcloud2.png";
         Glide.with(this).load(imageUrl).into(ivHeaderWC);
 
