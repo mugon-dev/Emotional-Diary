@@ -118,7 +118,11 @@ const Header = () => {
 
       {groups.map(({ tmno, member, together }) => (
         <GroupStyle>
-          <ButtonStyle key={tmno} onClick={() => refreshPage(together.tno)}>
+          <ButtonStyle
+            user
+            key={tmno}
+            onClick={() => refreshPage(together.tno)}
+          >
             {together.tname}
           </ButtonStyle>
           {/*    <button type="button" className="btn btn-warning btn-sm">
