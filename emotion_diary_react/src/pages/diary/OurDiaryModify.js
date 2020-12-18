@@ -78,7 +78,7 @@ const OurDiaryModify = (props) => {
       .then((res) => res.text())
       .then((res) => {
         console.log(res);
-        if (res === 'ok') {
+        if (res === 'together update') {
           alert('수정 했습니다.');
           window.location.replace('/diary');
         } else {

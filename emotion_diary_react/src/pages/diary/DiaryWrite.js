@@ -77,7 +77,11 @@ const DiaryWrite = (props) => {
         console.log('gkdl', diary);
         if (res === 'ok') {
           alert('글이 등록되었습니다.');
-          history.push('/diary');
+          if (props.location.state.tno === 0) {
+            history.push('/diary');
+          } else {
+            history.push('/diary/our/' + props.location.state.tno);
+          }
         } else {
           alert('글 등록이 실패하였습니다.');
         }
