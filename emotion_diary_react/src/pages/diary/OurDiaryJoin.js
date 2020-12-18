@@ -65,11 +65,11 @@ const OurDiaryJoin = () => {
       .then((res) => {
         console.log(res);
         if (res === 'ok') {
-          alert('가입을 했습니다.');
+          alert('그룹을 생성 했습니다.');
           window.location.replace('/diary');
         } else {
           console.log(res);
-          alert('가입을 실패했습니다.');
+          alert('그룹 생성을 실패했습니다.');
         }
       });
   }
@@ -113,7 +113,7 @@ const OurDiaryJoin = () => {
             className="btn btn-secondary btn-sm"
             onClick={submitJoin}
           >
-            회원가입
+            그룹생성
           </ButtonStyle>
         </ButtonBoxStyle>
       </form>

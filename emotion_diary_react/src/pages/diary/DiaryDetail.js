@@ -45,6 +45,8 @@ const DiaryDetail = (props) => {
   const [diary, setDiary] = useState([]);
   const id = props.match.params.id;
   const history = useHistory();
+  const [same, setSame] = useState(false);
+  const userNo = localStorage.getItem('userNo');
 
   useEffect(() => {
     fetch('http://10.100.102.31:8000/board/get/' + id, {
@@ -55,8 +57,11 @@ const DiaryDetail = (props) => {
     })
       .then((res) => res.json())
       .then((res) => {
-        console.log(res);
+        console.log(res.member.mno);
         setDiary(res);
+        if (res.member.mno == userNo) {
+          setSame(true);
+        }
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -86,6 +91,10 @@ const DiaryDetail = (props) => {
     } else {
     }
   }
+  function test() {
+    console.log('detail', diary.member.mno);
+    console.log('memberid', localStorage.getItem('userNo'));
+  }
   return (
     <DetailStyle className="jumbotron">
       <DateStyle>
@@ -106,22 +115,28 @@ const DiaryDetail = (props) => {
         >
           돌아가기
         </ButtonStyle>
-        <ButtonStyle
-          type="button"
-          className="btn btn-secondary btn-sm"
-          onClick={() => {
-            history.push('/diary/modify/' + id);
-          }}
-        >
-          수정
-        </ButtonStyle>
-        <ButtonStyle
-          type="button"
-          className="btn btn-secondary btn-sm"
-          onClick={submitDelete}
-        >
-          삭제
-        </ButtonStyle>
+        {/* 보드 id 멤버 id 비교 */}
+        {same ? (
+          <>
+            <ButtonStyle
+              type="button"
+              className="btn btn-secondary btn-sm"
+              onClick={() => {
+                history.push('/diary/modify/' + id);
+              }}
+            >
+              수정
+            </ButtonStyle>
+            <ButtonStyle
+              type="button"
+              className="btn btn-secondary btn-sm"
+              // onClick={submitDelete}
+              onClick={submitDelete}
+            >
+              삭제
+            </ButtonStyle>
+          </>
+        ) : null}
       </ButtonBoxStyle>
     </DetailStyle>
   );
